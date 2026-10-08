@@ -13,6 +13,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 - [[Tasks]] — **the checklist. This week first.**
 - [[docs/Complete plan]] — today → demo day
+- [[docs/Get the data]] — **how teammates download Snyder**
 - [[docs/What I need]] — blockers to start
 - [[docs/Score upgrades]] — what raises the score
 - [[docs/Product vision]]
@@ -48,7 +49,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-Week 1 (Sep 23–29). Earthdata works. MVP is **wildfire**. Primary event is the **Snyder Fire** (same-track GCOV pair 17 Jun → 23 Jul). Thunder Bay 36 is the Canadian stretch. Sentinel-1 fallback unused. Next: team page / repo, then download the Snyder pair (Week 2). [[Tasks]] [[research/NISAR data access]]
+**8 Oct 2026** — Weeks 2–3. Snyder GCOV pair is on disk. 80 m crop shows a **coherent change pattern** — keep Snyder, do not switch. Next: official perimeter overlay, then log-ratio + mask. GitHub exists (`umeraamir69/Nasa-SpaceApp`); do not push from this session. Demo **14–15 Nov**. [[research/Scar check]] [[Tasks]]
 
 ## How we use this vault
 

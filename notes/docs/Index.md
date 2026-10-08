@@ -18,6 +18,7 @@ Durable EchoLens documentation. Scratch stays in [[Inbox]] and `sessions/`.
 - [[docs/Tech stack]]
 - [[docs/Processing pipeline]]
 - [[docs/Risk log]]
+- [[docs/Get the data]] — **teammates: start here for download**
 - [[docs/What I need]]
 - [[docs/EchoLens Project Start Plan]] — original HTML
 

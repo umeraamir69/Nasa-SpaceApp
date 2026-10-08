@@ -35,7 +35,7 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 ### Weeks 2–3 — Sep 30 – Oct 13
 
 - [x] Download two real passes (before/after) — Snyder GCOV `048_A_021` in `data/snyder/gcov/`
-- [ ] Confirm visible change in the data; switch event if not
+- [x] Confirm visible change in the data — keep Snyder ([[research/Scar check]]); do not switch
 - [ ] Document the download process in [[research/NISAR data access]]
 - [ ] Offline Python POC: GCOV log-ratio + GUNW coherence (no sklearn)
 - [ ] Produce one proof-of-concept change image **and** a confidence mask

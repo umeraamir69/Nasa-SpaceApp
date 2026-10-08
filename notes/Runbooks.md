@@ -10,6 +10,7 @@ How to do recurring work. New runbooks use [[templates/runbook]].
 
 ## Index
 
+- [[docs/Get the data]] — complete teammate guide
 - [[Runbooks/Earthdata login]]
 - [[Runbooks/Download NISAR]]
 - [[Runbooks/Reproduce Snyder search]]

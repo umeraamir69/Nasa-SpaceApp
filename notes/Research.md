@@ -14,5 +14,6 @@ Notes, sources, and explorations. New notes go in `research/`.
 - [[research/Change types]]
 - [[research/Candidate events]]
 - [[research/What GCOV is]]
+- [[research/Scar check]]
 
 Related: [[00 Home]]
