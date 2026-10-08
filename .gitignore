@@ -1,0 +1,12 @@
+notes/.obsidian/workspace.json
+notes/.obsidian/workspace-mobile.json
+notes/.obsidian/cache
+notes/.trash/
+.DS_Store
+venv/
+.env
+data/**
+!data/.gitkeep
+__pycache__/
+*.pyc
+.pytest_cache/

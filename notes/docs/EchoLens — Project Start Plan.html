@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EchoLens — Project Start Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f0e; --bg-panel: #101614; --line: #1f2b27; --line-soft: #182420;
+    --text: #e6e9e4; --text-dim: #96a49b; --text-faint: #5b6a61;
+    --radar: #7ee08c; --radar-dim: #1f3d27; --flood: #4fa7d9; --flood-dim: #1a3547;
+    --amber: #e0b062; --amber-dim: #3d331f; --radius: 3px;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f2f4ee; --bg-panel: #ffffff; --line: #d7ddcd; --line-soft: #e4e8db;
+      --text: #17201a; --text-dim: #4a5748; --text-faint: #8a9482;
+      --radar: #1f7a37; --radar-dim: #d7ecd9; --flood: #1a6fa3; --flood-dim: #d3e9f5;
+      --amber: #9a6c1f; --amber-dim: #f2e6cc;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f2f4ee; --bg-panel: #ffffff; --line: #d7ddcd; --line-soft: #e4e8db;
+    --text: #17201a; --text-dim: #4a5748; --text-faint: #8a9482;
+    --radar: #1f7a37; --radar-dim: #d7ecd9; --flood: #1a6fa3; --flood-dim: #d3e9f5;
+    --amber: #9a6c1f; --amber-dim: #f2e6cc;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif; line-height: 1.55;
+    padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+  .hero { border-bottom: 1px solid var(--line); padding: 60px 0 36px; background: radial-gradient(circle at 85% -10%, rgba(126,224,140,0.08), transparent 45%), var(--bg); }
+  .hero .tag { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--radar); margin-bottom: 16px; }
+  .hero h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(28px, 4.6vw, 42px); line-height: 1.1; margin: 0 0 14px; max-width: 18ch; }
+  .hero p.lede { font-size: 16.5px; color: var(--text-dim); max-width: 64ch; margin: 0 0 24px; }
+  .countdown-bar { display: flex; align-items: center; gap: 14px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-faint); flex-wrap: wrap; }
+  .countdown-bar .pill { background: var(--radar-dim); color: var(--radar); padding: 5px 12px; border-radius: 20px; font-size: 12.5px; }
+
+  section { padding: 46px 0; border-bottom: 1px solid var(--line-soft); }
+  section:last-of-type { border-bottom: none; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--flood); margin: 0 0 8px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 24px; margin: 0 0 18px; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 16px; margin: 0 0 6px; }
+  p { margin: 0 0 12px; color: var(--text-dim); font-size: 14.5px; }
+  strong { color: var(--text); font-weight: 600; }
+  code { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--radar); background: var(--radar-dim); padding: 1px 6px; border-radius: 2px; }
+  pre { background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; overflow-x: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-dim); margin: 0 0 14px; }
+  pre code { background: none; padding: 0; color: var(--text-dim); }
+  a { color: var(--flood); }
+
+  .weeks { position: relative; }
+  .week { display: grid; grid-template-columns: 130px 1fr; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line-soft); }
+  .week:first-child { border-top: none; }
+  .week .when { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-faint); padding-top: 2px; }
+  .week .when b { display: block; color: var(--radar); font-size: 13px; margin-bottom: 4px; }
+  .week h3 { margin-bottom: 8px; }
+  .week ul { margin: 0; padding-left: 18px; color: var(--text-dim); font-size: 14.5px; }
+  .week li { margin-bottom: 5px; }
+
+  .checklist { list-style: none; margin: 0; padding: 0; }
+  .checklist li { display: flex; gap: 12px; padding: 9px 0; border-top: 1px solid var(--line-soft); font-size: 14.5px; color: var(--text-dim); }
+  .checklist li:first-child { border-top: none; }
+  .checklist li::before { content: ""; flex-shrink: 0; width: 15px; height: 15px; margin-top: 2px; border: 1.5px solid var(--text-faint); border-radius: 3px; }
+
+  .callout { border-left: 2px solid var(--amber); background: var(--amber-dim); padding: 14px 18px; border-radius: 0 var(--radius) var(--radius) 0; font-size: 14px; color: var(--text); margin-bottom: 16px; }
+  .callout b { color: var(--amber); }
+
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .opt { background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .opt .kicker { margin-bottom: 8px; }
+  .opt p { font-size: 13.5px; margin-bottom: 8px; }
+  .opt .fit { font-size: 12.5px; color: var(--radar); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { text-align: left; font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 11.5px; color: var(--text-faint); padding: 0 12px 10px 0; border-bottom: 1px solid var(--line); }
+  td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--line-soft); color: var(--text-dim); vertical-align: top; }
+  td:first-child { color: var(--radar); font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: 13px; }
+  .overflow-x { overflow-x: auto; }
+
+  footer { padding: 36px 0 56px; }
+  footer p { font-size: 13px; color: var(--text-faint); }
+  ::selection { background: var(--radar-dim); color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag">PROJECT START PLAN · ECHOLENS</div>
+    <h1>How we get from today to demo day</h1>
+    <p class="lede">The hackathon itself is only 48 hours &#8212; but the confirmed challenge just changed one key detail: data comes from <strong>NISAR</strong> (NASA-ISRO SAR mission), not generic SAR sources. This is the roadmap from now until Nov 14, so the real building starts before the clock does.</p>
+    <div class="countdown-bar">
+      <span class="pill">TODAY: SEP 23</span>
+      <span>&#8594;</span>
+      <span class="pill">EVENT: NOV 14&#8211;15</span>
+      <span>&#8594;</span>
+      <span style="color:var(--text-faint)">~7 weeks of runway</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <div class="kicker">00 &mdash; WHAT CHANGED</div>
+    <h2>The official statement, and what it confirms</h2>
+    <p>Challenge: <strong>track and visualize surface change using NISAR (NASA-ISRO SAR) radar data</strong>, at any location worldwide. Fair game: wetland loss, wildfires, earthquakes, farming activity, glacier movement, and more &#8212; you choose which one(s).</p>
+    <div class="callout"><b>Correction from earlier:</b> the previous plan assumed Sentinel-1 as the default data source. NISAR is specified by name, so data access needs to be verified against NISAR's actual public availability &#8212; this is the first thing to check, this week, not at hour 2 of the hackathon.</div>
+  </section>
+
+  <section>
+    <div class="kicker">01 &mdash; THIS WEEK</div>
+    <h2>Immediate actions (Sep 23&#8211;29)</h2>
+    <div class="weeks">
+      <div class="week">
+        <div class="when"><b>DAY 1&#8211;2</b>Now</div>
+        <div><h3>Get data access sorted</h3><ul>
+          <li>Create a NASA Earthdata Login account (free, instant): <a href="https://urs.earthdata.nasa.gov/" target="_blank">urs.earthdata.nasa.gov</a></li>
+          <li>Check NISAR data availability on <a href="https://search.earthdata.nasa.gov/" target="_blank">Earthdata Search</a> and <a href="https://search.asf.alaska.edu/" target="_blank">ASF Vertex</a> &#8212; NISAR launched in 2025, so confirm what's actually downloadable for candidate regions</li>
+          <li><strong>If NISAR coverage is thin</strong> for your target area/event, note it now &#8212; Sentinel-1 (same SAR principles, mature archive) is the fallback, framed as "NISAR-compatible methodology" in the pitch</li>
+        </ul></div>
+      </div>
+      <div class="week">
+        <div class="when"><b>DAY 2&#8211;4</b>Now</div>
+        <div><h3>Pick the change type + a real event</h3><ul>
+          <li>Choose ONE primary change type to focus the MVP on (see Section 02 for the shortlist)</li>
+          <li>Find a real, documented event with known before/after dates &#8212; a specific wildfire, flood, or earthquake with a public record</li>
+          <li>This single decision determines your data pull, your demo story, and your pitch &#8212; don't defer it</li>
+        </ul></div>
+      </div>
+      <div class="week">
+        <div class="when"><b>DAY 4&#8211;7</b>This week</div>
+        <div><h3>Finish team formation</h3><ul>
+          <li>Submit your team page (challenge: Dancing with the SARs, details already prepared)</li>
+          <li>Recruit remaining teammates against the skill gaps: SAR/data processing, backend, frontend, pitch/narrative</li>
+          <li>Stand up a shared repo (GitHub) and a team channel (Discord/WhatsApp) now, so onboarding a new member later is instant</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">02 &mdash; PICK YOUR CHANGE TYPE</div>
+    <h2>Choose one, don't try to cover all</h2>
+    <p>The challenge allows any surface-change type. Pick the one with the best combination of: clear visual signature in radar, well-documented real events, and achievable in your timeframe.</p>
+    <div class="options">
+      <div class="opt"><div class="kicker">RECOMMENDED</div><h3>Wildfire burn scars</h3><p>Strong radar signature, many recent well-documented fires with exact dates, high real-world relevance (disaster response angle).</p><div class="fit">Best for: clear before/after story</div></div>
+      <div class="opt"><div class="kicker">STRONG ALTERNATIVE</div><h3>Flooding</h3><p>Very visible in SAR (water reflects radar differently than land), fast-onset events make dramatic before/after pairs.</p><div class="fit">Best for: disaster-response framing</div></div>
+      <div class="opt"><div class="kicker">HARDER</div><h3>Glacier movement</h3><p>Real and scientifically rich, but change is slower and less visually dramatic for a 3-minute demo.</p><div class="fit">Best for: teams with extra time to spare</div></div>
+      <div class="opt"><div class="kicker">HARDER</div><h3>Farming activity / wetland loss</h3><p>Interesting but the signal is subtler and harder to sell visually to non-expert judges in a short demo.</p><div class="fit">Best for: teams prioritizing novelty over demo drama</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">03 &mdash; WEEKS 2&#8211;3</div>
+    <h2>Research &amp; data validation (Sep 30 &#8211; Oct 13)</h2>
+    <div class="weeks">
+      <div class="week">
+        <div class="when"><b>WK 2</b>Sep 30&#8211;Oct 6</div>
+        <div><h3>Pull and inspect real sample data</h3><ul>
+          <li>Download two actual passes (before/after your chosen event) &#8212; confirm the data genuinely shows visible change before building anything else</li>
+          <li>If it doesn't, pick a different event now, while there's still time</li>
+          <li>Document the download/access process so the whole team can repeat it</li>
+        </ul></div>
+      </div>
+      <div class="week">
+        <div class="when"><b>WK 3</b>Oct 7&#8211;13</div>
+        <div><h3>Prototype the algorithm, offline</h3><ul>
+          <li>Build a standalone Python script: despeckle filter + change-detection (log-ratio or coherence difference) on your two real passes</li>
+          <li>Goal: a working proof-of-concept image showing the detected change, run outside any app &#8212; this de-risks the hardest technical part before hackathon weekend</li>
+          <li>Read up on the specific despeckle/change-detection techniques so the "why it's trustworthy" pitch beat is backed by something real</li>
+        </ul></div>
+      </div>
+    </div>
+    <p style="margin-top:8px;"><strong>Oct 28 note:</strong> full challenge statement details may add more specifics &#8212; revisit scope that week and adjust if needed.</p>
+  </section>
+
+  <section>
+    <div class="kicker">04 &mdash; WEEKS 4&#8211;6</div>
+    <h2>Build the skeleton (Oct 14 &#8211; Nov 3)</h2>
+    <div class="weeks">
+      <div class="week">
+        <div class="when"><b>WK 4</b>Oct 14&#8211;20</div>
+        <div><h3>App skeleton</h3><ul>
+          <li>Stand up the web app shell: React frontend, FastAPI/Flask backend, empty map view</li>
+          <li>Backend serves static/mock GeoJSON so frontend work isn't blocked on the algorithm</li>
+        </ul></div>
+      </div>
+      <div class="week">
+        <div class="when"><b>WK 5</b>Oct 21&#8211;27</div>
+        <div><h3>Wire real output in</h3><ul>
+          <li>Connect your Week 3 algorithm output into the backend, serve it as real GeoJSON</li>
+          <li>Build the before/after toggle and plain-language summary panel on the frontend</li>
+        </ul></div>
+      </div>
+      <div class="week">
+        <div class="when"><b>WK 6</b>Oct 28 &#8211; Nov 3</div>
+        <div><h3>Revisit scope, second case study</h3><ul>
+          <li>Cross-check everything against the full challenge statement (released Oct 28)</li>
+          <li>If time allows, prep a second region/event as a stretch goal for the hackathon weekend</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">05 &mdash; WEEK 7</div>
+    <h2>Final prep before event (Nov 4&#8211;13)</h2>
+    <ul class="checklist">
+      <li>Full pipeline runs end-to-end at least once, unattended, without errors</li>
+      <li>Case study data (both passes, processed output) saved locally and backed up &#8212; don't depend on live downloads during the event</li>
+      <li>Draft the pitch narrative and assign speaking sections</li>
+      <li>Confirm every team member's role for the 48-hour weekend (see the hackathon-day plan)</li>
+      <li>Pack chargers, offline copies of data/code, and a laptop with everything pre-installed</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="kicker">06 &mdash; EVENT WEEKEND</div>
+    <h2>Nov 14&#8211;15: the 48 hours themselves</h2>
+    <p>This is where the hour-by-hour hackathon-day plan takes over &#8212; data pipeline validation, integration, polish, and pitch rehearsal, already mapped to the 5 judging criteria. Because the algorithm and app skeleton are already proven by Week 7, event weekend becomes about <strong>integration, polish, and a second case study</strong> instead of building from zero under time pressure.</p>
+  </section>
+
+  <section>
+    <div class="kicker">07 &mdash; QUICK START CODE</div>
+    <h2>First technical step, right now</h2>
+    <p>Get Earthdata access working and confirm you can pull real data before anything else:</p>
+    <pre><code>pip install earthaccess rasterio numpy matplotlib
+
+python3 -c "
+import earthaccess
+earthaccess.login()  # uses your Earthdata credentials
+results = earthaccess.search_data(
+    short_name='NISAR_L1_...',  # confirm exact product name via Earthdata Search
+    temporal=('2025-01-01', '2026-09-01'),
+)
+print(len(results), 'granules found')
+"</code></pre>
+    <p>If the NISAR product name/search returns nothing usable for your region yet, fall back to searching Sentinel-1 (<code>short_name='SENTINEL-1'</code>) on the same portal as a placeholder while confirming NISAR's real coverage.</p>
+  </section>
+
+  <section>
+    <div class="kicker">08 &mdash; TECH STACK, IN DETAIL</div>
+    <h2>Languages, frameworks, and why</h2>
+    <p>One language per layer, chosen for what SAR/geospatial work actually needs &#8212; Python has the strongest scientific/geospatial ecosystem, JavaScript owns the browser. Don't fight that split.</p>
+    <div class="overflow-x">
+    <table>
+      <tr><th>Layer</th><th>Language</th><th>Libraries / tools</th><th>Why</th></tr>
+      <tr><td>Data access</td><td>Python</td><td><code>earthaccess</code>, <code>requests</code></td><td>Official NASA Earthdata client; handles auth + search + download in a few lines</td></tr>
+      <tr><td>SAR processing</td><td>Python</td><td><code>rasterio</code>, <code>GDAL</code>, <code>numpy</code>, <code>scipy</code></td><td>Industry-standard geospatial raster I/O; numpy/scipy do the actual despeckle + change-detection math</td></tr>
+      <tr><td>Optional ML layer</td><td>Python</td><td><code>scikit-learn</code></td><td>Only if classifying change types beyond simple thresholding &#8212; stretch goal, not MVP</td></tr>
+      <tr><td>Backend API</td><td>Python</td><td><code>FastAPI</code> (or Flask)</td><td>Fast to stand up, auto-generates docs, easy to serve GeoJSON endpoints</td></tr>
+      <tr><td>Frontend</td><td>JavaScript / TypeScript</td><td><code>React</code>, <code>Leaflet</code> or <code>Mapbox GL JS</code></td><td>React for UI state (before/after toggle, summary panel); Leaflet is free/open-source, Mapbox looks sharper if you want the polish</td></tr>
+      <tr><td>Styling</td><td>CSS</td><td>Tailwind CSS (optional)</td><td>Speeds up UI work under time pressure &#8212; skip if the team is faster hand-writing CSS</td></tr>
+      <tr><td>Data format (Python &#8594; JS)</td><td>&mdash;</td><td>GeoJSON</td><td>Native to both <code>rasterio</code>&#8217;s ecosystem and every JS mapping library &#8212; no custom serialization needed</td></tr>
+      <tr><td>Version control</td><td>&mdash;</td><td>Git + GitHub</td><td>Required for submission anyway; set up the repo in Week 1, not event weekend</td></tr>
+      <tr><td>Hosting (for the demo)</td><td>&mdash;</td><td>Vercel/Netlify (frontend), Render/Railway (backend)</td><td>Free tiers, deploy-on-push &#8212; judges can open a live link, no local setup needed</td></tr>
+    </table>
+    </div>
+    <p style="margin-top:16px;"><strong>Setup once, in Week 1:</strong></p>
+    <pre><code># Python side
+python3 -m venv venv && source venv/bin/activate
+pip install earthaccess rasterio numpy scipy fastapi uvicorn
+
+# JS side
+npx create-react-app echolens-frontend
+cd echolens-frontend && npm install leaflet react-leaflet</code></pre>
+    <p>If anyone on the team hasn&#8217;t used <code>rasterio</code>/<code>GDAL</code> before, budget real time in Week 2 to just learn reading/writing raster data &#8212; it has a learning curve that&#8217;s much better absorbed before the clock is running than during hour 8 of the hackathon.</p>
+  </section>
+
+  <section>
+    <div class="kicker">09 &mdash; RISK LOG</div>
+    <h2>Watch these early</h2>
+    <div class="overflow-x">
+    <table>
+      <tr><th>Risk</th><th>Mitigation</th></tr>
+      <tr><td>NISAR data unavailable for chosen region</td><td>Check in Week 1, not Week 6 &#8212; switch region or fall back to Sentinel-1 early</td></tr>
+      <tr><td>Chosen event shows no clear radar signal</td><td>Validate in Week 2 before writing any app code</td></tr>
+      <tr><td>Team recruitment drags on</td><td>Submit the team page now with "Seeking Members" checked; recruit in parallel with research</td></tr>
+      <tr><td>Algorithm still unproven going into event weekend</td><td>Weeks 2&#8211;3 exist specifically to de-risk this before the clock starts</td></tr>
+    </table>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p>EchoLens &middot; Dancing with the SARs &middot; NASA Space Apps Toronto 2026 &middot; Nov 14&#8211;15, Centennial College</p>
+  </div>
+</footer>
+
+</body>
+</html>

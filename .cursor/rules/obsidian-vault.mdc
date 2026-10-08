@@ -1,0 +1,19 @@
+---
+description: Use the notes/ Obsidian vault for docs and project notes
+alwaysApply: true
+---
+
+# Obsidian vault
+
+This repo is **EchoLens** (NASA Space Apps Toronto 2026, Dancing with the SARs). The vault is `notes/`. Cursor reads and writes the same markdown files. Start from `notes/00 Home.md` and `notes/Tasks.md`.
+
+- Durable docs: `notes/docs/`
+- Capture: `notes/Inbox.md` or `notes/inbox/`
+- Sessions: `notes/sessions/YYYY-MM-DD.md` from `notes/templates/session.md`
+- Decisions: `notes/decisions/` from `notes/templates/decision.md`
+- Research: `notes/research/`
+- Runbooks: use `notes/templates/runbook.md` and link from `notes/Runbooks.md`
+- Start from `notes/00 Home.md`
+- Link with `[[wikilinks]]` inside the vault
+- Never store real secrets here
+- Do not put project docs only in chat; write them into `notes/`
