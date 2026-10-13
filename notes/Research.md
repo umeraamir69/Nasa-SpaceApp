@@ -15,5 +15,8 @@ Notes, sources, and explorations. New notes go in `research/`.
 - [[research/Candidate events]]
 - [[research/What GCOV is]]
 - [[research/Scar check]]
+- [[research/Snyder perimeter]]
+- [[research/Change detection]]
+- [[research/Why SAR optical]]
 
 Related: [[00 Home]]

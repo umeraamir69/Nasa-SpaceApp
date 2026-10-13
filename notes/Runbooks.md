@@ -15,5 +15,8 @@ How to do recurring work. New runbooks use [[templates/runbook]].
 - [[Runbooks/Download NISAR]]
 - [[Runbooks/Reproduce Snyder search]]
 - [[Runbooks/Open H5 files]]
+- [[Runbooks/Change Snyder]]
+- [[Runbooks/Run the app]]
+- [[Runbooks/Snyder pipeline]]
 
 Related: [[00 Home]]

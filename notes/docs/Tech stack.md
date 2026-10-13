@@ -20,15 +20,17 @@ One language per layer. Python owns SAR/geospatial; JavaScript owns the browser.
 | VCS | — | Git + GitHub | Required for submission; Week 1, not weekend |
 | Hosting | — | Vercel/Netlify + Render/Railway | Live link for judges |
 
-## Week 1 setup (when we start code)
+## App (Week 4)
+
+Vite React in `web/`, FastAPI in `app/`. Leaflet (plain, not react-leaflet). CRA is not used.
 
 ```text
-python3 -m venv venv && source venv/bin/activate
-pip install earthaccess rasterio numpy scipy fastapi uvicorn
-
-npx create-react-app echolens-frontend
-cd echolens-frontend && npm install leaflet react-leaflet
+source venv/bin/activate
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+cd web && npm run dev
 ```
+
+Open http://127.0.0.1:5173 — [[Runbooks/Run the app]]
 
 If nobody has used `rasterio` / GDAL, budget Week 2 just to learn reading/writing rasters. Do not learn that at hour 8 of the hackathon.
 

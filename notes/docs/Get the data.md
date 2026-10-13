@@ -15,7 +15,7 @@ Do **not** put Earthdata passwords, tokens, or `.h5` files in git or in this vau
 
 ## 1. Clone and Python env
 
-Needs Python 3.11+ (3.14 is fine), ~16 GB free disk, and a NASA Earthdata account.
+Needs Python 3.11+ (3.14 is fine), **~16 GB free** for the GCOV pair, plus **~2.5 GB** if you also pull GUNW, and a NASA Earthdata account.
 
 ```text
 git clone https://github.com/umeraamir69/Nasa-SpaceApp.git
@@ -49,9 +49,14 @@ That writes `~/.netrc` (mode 600). The scripts then use `strategy=netrc`. Option
 | `scripts/inspect_h5.py` | Prints layers / date / track. Does not load 10 m. | `python scripts/inspect_h5.py` |
 | `scripts/preview_gcov.py` | 80 m June / July / difference PNGs | `python scripts/preview_gcov.py` |
 | `scripts/crop_snyder.py` | Crops 80 m to the Snyder fire box | `python scripts/crop_snyder.py` |
+| `scripts/fetch_snyder_perimeter.py` | Official NIFC WFIGS Snyder polygon | `python scripts/fetch_snyder_perimeter.py` |
+| `scripts/change_snyder.py` | Despeckle + log-ratio + mask + GeoJSON | `python scripts/change_snyder.py` |
+| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI over the Snyder box | `python scripts/fetch_optical.py` |
+| `scripts/pipeline_snyder.py` | Perimeter + change + optical (no NISAR download) | `python scripts/pipeline_snyder.py` |
+| `scripts/download_gunw.py` | Same-track GUNW (coherence second vote) | `python scripts/download_gunw.py` |
 | `scripts/open_panoply.sh` | Panoply on Java 21. **Panoply cannot open these .h5 files.** | skip for data |
 
-Search the Canadian stretch too (do not download until Snyder processing is done):
+Search the Canadian stretch (do not download until the app serves Snyder GeoJSON):
 
 ```text
 python scripts/search_nisar.py --event thunder-bay
@@ -112,7 +117,7 @@ Click-by-click: [[Runbooks/Reproduce Snyder search]]
 - **Never** commit `~/.netrc`, `.env`, tokens, or passwords
 - `data/**` is already in `.gitignore`
 - Do not mix BETA + PROVISIONAL in one pair
-- Do not download Thunder Bay until Snyder’s change script is proven
+- Do not download Thunder Bay until the app serves Snyder GeoJSON ([[research/Change detection]])
 
 ## If something fails
 
@@ -124,4 +129,4 @@ Click-by-click: [[Runbooks/Reproduce Snyder search]]
 | `partial_*` files | Re-run download; wait; ~14 GB total |
 | Panoply dimscale error | Expected. Use `preview_gcov.py` |
 
-Related: [[Runbooks/Earthdata login]] [[Runbooks/Download NISAR]] [[research/NISAR data access]] [[docs/Processing pipeline]]
+Related: [[Runbooks/Earthdata login]] [[Runbooks/Download NISAR]] [[Runbooks/Snyder pipeline]] [[research/NISAR data access]] [[docs/Processing pipeline]]

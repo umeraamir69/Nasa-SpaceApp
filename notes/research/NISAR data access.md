@@ -39,4 +39,10 @@ Both Snyder GCOV granules are on disk (2026-09-23):
 - `data/snyder/gcov/NISAR_L2_PR_GCOV_023_048_A_021_..._20260617....h5` (6.9 GB, before)
 - `data/snyder/gcov/NISAR_L2_PR_GCOV_026_048_A_021_..._20260723....h5` (7.1 GB, after)
 
+GUNW on disk (2026-10-13), same track, `python scripts/download_gunw.py`:
+
+- `...GUNW_024_048_A_021_025..._20260629..._20260711...` (~2.3 GB, **co-event**, used as second vote)
+
+The 11–23 Jul pair was downloaded then removed — disk was full. No 17–29 Jun pre-fire GUNW on `048_A_021`. Coherence barely drops inside the scar — see [[research/Change detection]].
+
 Related: [[research/Candidate events]] [[decisions/ADR-001 Change type wildfire]] [[decisions/ADR-002 Primary event Snyder Fire]]

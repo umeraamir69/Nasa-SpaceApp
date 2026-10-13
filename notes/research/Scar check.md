@@ -34,6 +34,6 @@ The whole-box mean is **up**, not down. That is expected for a mixed box (river 
 
 ## Caveat
 
-We have not yet laid an official perimeter on the map. Until FIRMS/NIFC/InciWeb is overlaid, we do not know which color is the burn vs river/phenology. Keep Snyder; next step is that overlay, then the real log-ratio + mask script.
+Official perimeter is now overlaid ([[research/Snyder perimeter]]). The HV darkening sits **inside** the NIFC outline; the bright patch to the east is outside it. Keep Snyder. Full POC: [[research/Change detection]].
 
 Related: [[decisions/ADR-002 Primary event Snyder Fire]] [[research/Candidate events]] [[docs/Processing pipeline]]

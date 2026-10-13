@@ -14,6 +14,9 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 - [[Tasks]] — **the checklist. This week first.**
 - [[docs/Complete plan]] — today → demo day
 - [[docs/Get the data]] — **how teammates download Snyder**
+- [[Runbooks/Run the app]] — **Week 4 map** (http://127.0.0.1:5173)
+- [[docs/Pitch]] — **3-minute script**
+- [[research/Why SAR optical]] — cloudy Sentinel-2 over Snyder
 - [[docs/What I need]] — blockers to start
 - [[docs/Score upgrades]] — what raises the score
 - [[docs/Product vision]]
@@ -49,7 +52,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**8 Oct 2026** — Weeks 2–3. Snyder GCOV pair is on disk. 80 m crop shows a **coherent change pattern** — keep Snyder, do not switch. Next: official perimeter overlay, then log-ratio + mask. GitHub exists (`umeraamir69/Nasa-SpaceApp`); do not push from this session. Demo **14–15 Nov**. [[research/Scar check]] [[Tasks]]
+**13 Oct 2026** — Map serves Snyder GeoJSON + cloudy Sentinel-2 (**Optical** chip). Pitch click path includes that why-SAR beat. Next: rehearse the pitch on the live map; Oct 28 full statement; Thunder Bay only if disk allows. Demo **14–15 Nov**. [[Runbooks/Run the app]] [[Tasks]]
 
 ## How we use this vault
 

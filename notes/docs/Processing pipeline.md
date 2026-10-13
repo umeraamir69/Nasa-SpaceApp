@@ -29,15 +29,19 @@ OpenCV can blur an image. It does not know UTM, incidence angle, or GeoJSON. We 
 
 3. **Despeckle.** Radar looks salty. A small Lee / median filter (`scipy.ndimage`) so change is not just speckle.
 
-4. **Change image.** Log-ratio: `after_dB - before_dB`. A burn scar is a **drop** in backscatter (negative). Threshold that drop. That is the algorithm. No sklearn.
+4. **Change image.** Log-ratio: `after_dB - before_dB`. Inside the NIFC Snyder perimeter, **HVHV drops** (median −1.24 dB). Threshold that drop at 1.5 dB. No sklearn. Script: `python scripts/change_snyder.py`.
 
-5. **Trust mask.** Drop pixels the product `mask` says are invalid. Later: GUNW coherence drop as a second vote. This is the “why we trust it” layer.
+5. **Trust mask.** Drop pixels the product `mask` says are invalid (`0` or `255`). Confidence levels: valid → change → both-pol / in-perimeter → GUNW. GUNW HH coherence is downloaded (`python scripts/download_gunw.py`) but on this arid L-band pair it barely drops (0.73 inside vs 0.76 outside). Detection stays on GCOV HV.
 
-6. **Check against a fire perimeter.** Overlay FIRMS / InciWeb / news polygon. If our blob sits inside the Snyder perimeter, the method is real. If not, we say so or pick another pair.
+6. **Check against a fire perimeter.** Overlay NIFC WFIGS `2026-UTDRD-005113` ([[research/Snyder perimeter]]). The HV darkening sits inside the yellow outline; a bright patch east of the fire is **outside** it. Keep Snyder.
 
-7. **Vectorize.** Changed pixels → polygons → **GeoJSON** + a km² number.
+7. **Vectorize.** Changed pixels → polygons → **GeoJSON** + a km² number (`outputs/snyder/change.geojson`, 40.9 km² at the 1.5 dB cut).
 
-8. **App.** FastAPI serves that GeoJSON. React + Leaflet: before / after / change / confidence + a briefing card.
+8. **Why-SAR optical.** Window-read a cloudy Sentinel-2 TCI (`S2C_12SXJ_20260707_1_L2A`, 34% cloud) into the same box. Script: `python scripts/fetch_optical.py`. [[research/Why SAR optical]]
+
+9. **App.** FastAPI serves that GeoJSON. React + Leaflet: before / after / change / confidence / optical + a briefing card. Run: [[Runbooks/Run the app]].
+
+Unattended (after the two GCOV `.h5` files are on disk): `python scripts/pipeline_snyder.py`. [[Runbooks/Snyder pipeline]]
 
 ## What we are not doing
 

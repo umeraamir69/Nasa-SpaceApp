@@ -16,7 +16,7 @@ Lock two real NISAR granules and one 2026 summer event **before** any of this. [
 1. **Real NISAR L2** — GCOV backscatter + GUNW coherence. Drop `NISAR_L1_...`. [[docs/Tech stack]]
 2. **Ground-truth overlay** — FIRMS / agency / news perimeter on the same map. Cite the source. Honesty > a clean false map.
 3. **Trust mask** — confident change vs noise (slope/layover, speckle). Plain-language card: dates, what changed, why we believe it.
-4. **Why-SAR pair** (if time) — one cloudy optical scene next to the SAR pair.
+4. **Why-SAR pair** — **done.** Sentinel-2 7 Jul (34% cloud) on the Optical chip. [[research/Why SAR optical]]
 5. **Named user + km²** — incident briefing, not “explore the globe.”
 6. **3-minute script in Week 5** — not leftover time in Week 7.
 
