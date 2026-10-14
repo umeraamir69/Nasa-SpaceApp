@@ -163,8 +163,8 @@ export default function App() {
                   className={raster === r.id ? "chip on" : "chip"}
                   onClick={() => {
                     setRaster(r.id);
-                    if (r.id === "optical") setShowChange(false);
-                    if (r.id === "change") setShowChange(true);
+                    // Polygons hide on Before/After/Optical so the raster is the beat.
+                    setShowChange(r.id === "change");
                   }}
                   type="button"
                 >

@@ -58,7 +58,7 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 
 - [ ] Full pipeline runs unattended once (script exists; run it on a machine with free disk)
 - [ ] Case study data + processed output saved locally and backed up
-- [ ] Rehearse the Week 5 pitch; assign speaking sections
+- [x] Rehearse the Week 5 pitch on the live map — first pass 13 Oct ([[docs/Pitch]] rehearsal log). Still need one out-loud stopwatch.
 - [ ] Confirm weekend roles
 - [ ] Offline copies of data/code; deps pre-installed
 

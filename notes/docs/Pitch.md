@@ -27,7 +27,7 @@ We are not exploring the globe. We are answering one question: **what burned, wh
 
 ### 0:25 – 0:50 · The exam with an answer key
 
-If we pointed the code at a random forest and it drew a blob, we would not know if the blob was real. So we picked a fire with an answer key: the **Snyder Fire**, Colorado–Utah, late June 2026. Official perimeter from NIFC WFIGS, incident `2026-UTDRD-005113`. Same NISAR track, June 17 before, July 23 after.
+If we pointed the code at a random forest and it drew a blob, we would not know if the blob was real. So we picked a fire with an answer key: the **Snyder Fire**, Colorado–Utah, late June 2026. Official NIFC perimeter. Same NISAR track, June 17 before, July 23 after.
 
 Snyder is the exam. EchoLens is the method you reuse on the next fire.
 
@@ -37,15 +37,15 @@ Snyder is the exam. EchoLens is the method you reuse on the next fire.
 
 This is not a photograph. Blue is darker after the fire. That dark patch is the scar. The yellow line is not ours — that is the official NIFC perimeter. Our change sits **inside** it.
 
-*[Click **Before**.]* June 17. Radar brightness, 80-metre pixels, same grid.
+*[Click **Before**.]* June 17. Radar brightness, same grid.
 
 *[Click **After**.]* July 23. Same look angle, same track.
 
-*[Click **Change**.]* July minus June, in decibels. The bright patch to the east is **outside** the fire. We do not call it burn. That is why a whole-box average would have lied.
+*[Click **Change**.]* July minus June, in decibels. The bright patch to the east is **outside** the fire. We do not call it burn.
 
-*[Click **Confidence**.]* Grey is valid radar. Colour is change we are willing to ship. We threw out invalid GCOV pixels and speckle islands.
+*[Click **Confidence**.]* Grey is valid radar. Colour is change we are willing to ship.
 
-*[Click **Optical**. Toggle EchoLens change off.]* Sentinel-2, 7 July, same box. White is cloud. That is why we do not wait for a clear photo.
+*[Click **Optical**.]* Sentinel-2, 7 July, same box. White is cloud. That is why we do not wait for a clear photo.
 
 **40.9 square kilometres.** NIFC mapped about 122. We are conservative on purpose: precision against that official line is **1.0**. We under-map. We do not cry wolf.
 
@@ -55,13 +55,9 @@ The algorithm is short on purpose. No neural net. Gamma-0 power to dB, a 3-by-3 
 
 We also pulled GUNW coherence for a second vote. On this arid mesa, L-band barely notices — 0.73 inside the fire, 0.76 outside. So we **do not fake a coherence mask**. Detection stays on backscatter. Honesty is the trust layer.
 
-Optical on 7 July is cloud over this box. The radar pair still exists. That is the why-SAR beat.
-
 ### 2:25 – 2:50 · Who it is for
 
-The user is not “anyone with a globe.” It is an incident briefing: dates, square kilometres, a cited perimeter, and a sentence for why the outline is real. Next fire: last pass before, next pass after, same script. NISAR L2 is days, not a webcam. That is still fast enough to see a scar through smoke.
-
-Thunder Bay 36 is sitting as a Canadian stretch if Snyder stays clean. We did not force it.
+The user is not “anyone with a globe.” It is an incident briefing: dates, square kilometres, a cited perimeter, and a sentence for why the outline is real. Next fire: last pass before, next pass after, same script.
 
 ### 2:50 – 3:00 · Close
 
@@ -69,10 +65,34 @@ EchoLens: two NISAR passes, one briefing, checked against a fire we can name. Op
 
 ## Click path (memorize)
 
-1. Load the app. **Change** + **NIFC perimeter** on.
-2. Before → After → Change → Confidence → **Optical**.
-3. Toggle **NIFC perimeter** off and on once, so they see the outline is a separate layer.
-4. Leave **Change** + **NIFC** on for questions.
+Open the tab **before** you start talking. Reload takes ~15 s. Do not hook on “Loading Snyder case…”.
+
+1. Load the app. **Change** + **NIFC perimeter** on. Point at yellow vs blue.
+2. **Before** → **After** → **Change** → **Confidence** → **Optical**. Polygons hide automatically except on Change.
+3. Toggle **NIFC perimeter** off and on once.
+4. Click **Change**. Leave **NIFC** on for questions.
+
+## Rehearsal — 13 Oct 2026
+
+Timed against the live map at http://127.0.0.1:5173.
+
+| Beat | Budget | First-pass words | @150 wpm | After cut |
+|---|---|---|---|---|
+| Hook | 0:00–0:25 | 63 | 0:25 | same |
+| Exam | 0:25–0:50 | 70 | 0:28 | drop incident ID (it is on the card) |
+| Demo clicks | 0:50–1:40 | 147 | 0:59 | cut filler; clicks themselves are ~20 s |
+| Trust | 1:40–2:25 | 101 | 0:40 | drop Optical repeat |
+| Who | 2:25–2:50 | 74 | 0:30 | drop Thunder Bay (FAQ only) |
+| Close | 2:50–3:00 | 27 | 0:11 | same |
+| **Total** | **3:00** | **482 → ~3:13** | | **403 words → 2:41 @150 / 2:53 @140** |
+
+**What broke on the map**
+
+- Before/After with EchoLens polygons on looks like a pink blob. The app now hides polygons unless **Change** is selected.
+- Optical already hid polygons. Keep that.
+- First paint after reload is slow. Pre-load.
+
+**Human still to do:** read it out loud once with a phone stopwatch. This pass timed the clicks and the word count, not a mouth.
 
 If the laptop dies: `outputs/snyder/change.png` on a USB stick. Same story, no map.
 
