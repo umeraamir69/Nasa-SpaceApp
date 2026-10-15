@@ -24,10 +24,10 @@ python scripts/download_nisar.py
 python scripts/inspect_h5.py
 python scripts/preview_gcov.py
 python scripts/crop_snyder.py
-python scripts/change_snyder.py
+python scripts/pipeline_snyder.py
 ```
 
-Files land in `data/snyder/gcov/` (~7 GB × 2). `data/` is gitignored. Panoply cannot open these HDF5 files; use the preview PNGs in `data/snyder/preview/`. Change image and GeoJSON: `outputs/snyder/`.
+Or, after the two `.h5` files are already on disk: `python scripts/pipeline_snyder.py` (perimeter + change + cloudy Sentinel-2). Files land in `data/snyder/gcov/` (~7 GB × 2). `data/` is gitignored. Panoply cannot open these HDF5 files; use the preview PNGs. Change image and GeoJSON: `outputs/snyder/`.
 
 | Script | Role |
 |---|---|
@@ -38,6 +38,8 @@ Files land in `data/snyder/gcov/` (~7 GB × 2). `data/` is gitignored. Panoply c
 | `scripts/crop_snyder.py` | Crop to Snyder fire box |
 | `scripts/fetch_snyder_perimeter.py` | NIFC WFIGS Snyder polygon |
 | `scripts/change_snyder.py` | Log-ratio + confidence + GeoJSON |
+| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI (why-SAR) |
+| `scripts/pipeline_snyder.py` | Perimeter + change + optical (no download) |
 | `scripts/download_gunw.py` | GUNW coherence (second vote) |
 
 Locked pair: track `048_A_021`, 17 Jun 2026 and 23 Jul 2026, collection `NISAR_L2_GCOV_PROVISIONAL_V1`.
@@ -55,7 +57,7 @@ npm install --cache ../.npm-cache
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. API: http://127.0.0.1:8000/api/case. Pitch script: `notes/docs/Pitch.md`.
+Open http://127.0.0.1:5173. API: http://127.0.0.1:8000/api/case. Pitch script: `notes/docs/Pitch.md`. Team-page paste: `notes/docs/Team page.md`. Weekend kit: `notes/Runbooks/Weekend kit.md`.
 
 ## Layout
 

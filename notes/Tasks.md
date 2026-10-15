@@ -25,7 +25,7 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 
 ### Day 4–7 — team
 
-- [ ] Submit team page (challenge: Dancing with the SARs)
+- [ ] Submit team page (challenge: Dancing with the SARs) — copy is ready in [[docs/Team page]]
 - [ ] Recruit against gaps: SAR/data, backend, frontend, pitch
 - [x] Stand up shared GitHub repo (`umeraamir69/Nasa-SpaceApp`)
 - [ ] Stand up team channel (Discord/WhatsApp)

@@ -16,6 +16,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 - [[docs/Get the data]] — **how teammates download Snyder**
 - [[Runbooks/Run the app]] — **Week 4 map** (http://127.0.0.1:5173)
 - [[docs/Pitch]] — **3-minute script**
+- [[docs/Team page]] — **paste this on the Space Apps team page**
 - [[research/Why SAR optical]] — cloudy Sentinel-2 over Snyder
 - [[docs/What I need]] — blockers to start
 - [[docs/Score upgrades]] — what raises the score
@@ -52,7 +53,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**13 Oct 2026** — Map serves Snyder GeoJSON + cloudy Sentinel-2 (**Optical** chip). Pitch click path includes that why-SAR beat. Next: rehearse the pitch on the live map; Oct 28 full statement; Thunder Bay only if disk allows. Demo **14–15 Nov**. [[Runbooks/Run the app]] [[Tasks]]
+**15 Oct 2026** — Snyder demo + pitch are in. Paste [[docs/Team page]] onto spaceappschallenge.org. Rotate the Earthdata password. One out-loud pitch. Challenge page still summaries only. Demo **14–15 Nov**. [[Runbooks/Run the app]] [[Tasks]]
 
 ## How we use this vault
 

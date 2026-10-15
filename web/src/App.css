@@ -83,6 +83,41 @@
   border-color: #f4d35e;
 }
 
+.legend {
+  color: #c9c3b5;
+  font-size: 11px;
+  line-height: 1.35;
+  max-width: 280px;
+}
+
+.legend-keys {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  color: #9aa3ad;
+}
+
+.legend-keys span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.swatch.nifc {
+  background: #f4d35e;
+}
+
+.swatch.echo {
+  background: #c1121f;
+}
+
 .brief {
   border-left: 1px solid #2a2e33;
   padding: 18px 18px 28px;
@@ -134,6 +169,17 @@ dd {
   font-size: 13px;
   line-height: 1.5;
   color: #d5d0c4;
+}
+
+.source-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.source-links a {
+  color: #f4d35e;
+  font-size: 12px;
 }
 
 code {

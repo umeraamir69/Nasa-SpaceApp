@@ -12,6 +12,7 @@ Durable EchoLens documentation. Scratch stays in [[Inbox]] and `sessions/`.
 
 - [[docs/Product vision]]
 - [[docs/Pitch]] — **3-minute script**
+- [[docs/Team page]] — paste onto spaceappschallenge.org
 - [[docs/Why a past fire]]
 - [[docs/Complete plan]]
 - [[docs/Plan review]]

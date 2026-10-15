@@ -18,5 +18,6 @@ How to do recurring work. New runbooks use [[templates/runbook]].
 - [[Runbooks/Change Snyder]]
 - [[Runbooks/Run the app]]
 - [[Runbooks/Snyder pipeline]]
+- [[Runbooks/Weekend kit]] — USB / second drive before 14 Nov
 
 Related: [[00 Home]]

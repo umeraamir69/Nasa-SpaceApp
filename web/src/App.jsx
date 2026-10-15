@@ -15,6 +15,22 @@ function fmtKm2(n) {
   return `${Number(n).toFixed(1)} km²`;
 }
 
+function legendFor(raster) {
+  switch (raster) {
+    case "before":
+    case "after":
+      return "HVHV backscatter · brighter = stronger return";
+    case "change":
+      return "Blue: darker after the fire · red: brighter (not burn)";
+    case "confidence":
+      return "Grey: valid radar · colour: change we ship";
+    case "optical":
+      return "White: cloud · Sentinel-2 7 Jul";
+    default:
+      return "";
+  }
+}
+
 export default function App() {
   const mapEl = useRef(null);
   const mapRef = useRef(null);
@@ -188,6 +204,17 @@ export default function App() {
                 NIFC perimeter
               </button>
             </div>
+            <div className="legend">
+              <div>{legendFor(raster)}</div>
+              <div className="legend-keys">
+                <span>
+                  <i className="swatch nifc" /> NIFC
+                </span>
+                <span>
+                  <i className="swatch echo" /> EchoLens
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -246,8 +273,26 @@ export default function App() {
               </p>
               <h2>Source</h2>
               <p>
-                Perimeter: {cite.polygon}. InciWeb and ops maps linked in the vault. FIRMS is hotspots,
-                not this outline.
+                Perimeter: {cite.polygon}
+                {cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is
+                hotspots, not this outline.
+              </p>
+              <p className="source-links">
+                {cite.inciweb && (
+                  <a href={cite.inciweb} target="_blank" rel="noreferrer">
+                    InciWeb
+                  </a>
+                )}
+                {cite.wfigs_layer && (
+                  <a href={cite.wfigs_layer} target="_blank" rel="noreferrer">
+                    NIFC WFIGS
+                  </a>
+                )}
+                {cite.ops_maps && (
+                  <a href={cite.ops_maps} target="_blank" rel="noreferrer">
+                    Ops maps
+                  </a>
+                )}
               </p>
               <p className="muted">
                 Offline demo. Granules are not downloaded live.
