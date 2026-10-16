@@ -7,7 +7,7 @@ tags:
 
 # Get the data (for teammates)
 
-How to clone EchoLens, log in to NASA, and pull the **same two Snyder GCOV files** we already used. The granules are **not in git** (~14 GB). Everyone downloads them locally with the scripts.
+**Start at [[docs/Task 1]]** if you only need to **see** the Snyder map. `outputs/snyder/` is already in git. This page is **Track B**: clone, log in to NASA, and pull the **same two Snyder GCOV files**. The granules are **not in git** (~14 GB).
 
 Repo: `https://github.com/umeraamir69/Nasa-SpaceApp`
 
@@ -56,10 +56,12 @@ That writes `~/.netrc` (mode 600). The scripts then use `strategy=netrc`. Option
 | `scripts/download_gunw.py` | Same-track GUNW (coherence second vote) | `python scripts/download_gunw.py` |
 | `scripts/open_panoply.sh` | Panoply on Java 21. **Panoply cannot open these .h5 files.** | skip for data |
 
-Search the Canadian stretch (do not download until the app serves Snyder GeoJSON):
+Search stretches. Latvia download is Task 2 (`python scripts/download_latvia.py`) after Snyder **granules** are off this disk. Thunder Bay still needs ~14 GB — do not grab it here.
 
 ```text
 python scripts/search_nisar.py --event thunder-bay
+python scripts/search_nisar.py --event latvia-flood
+python scripts/search_nisar.py --event nepal-glof
 ```
 
 ## 4. What you should have after download

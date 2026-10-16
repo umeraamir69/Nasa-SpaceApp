@@ -6,7 +6,7 @@ tags:
 
 # What I need from you
 
-Blockers from Week 1 Day 1 are done. Earthdata works. MVP is wildfire. Primary event is Snyder Fire.
+Blockers from Week 1 Day 1 are done. Earthdata works. MVP is wildfire. Primary event is Snyder Fire. Teammates: [[docs/Task 1]].
 
 ## Do this now (security)
 

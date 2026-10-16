@@ -22,6 +22,8 @@ Lock two real NISAR granules and one 2026 summer event **before** any of this. [
 
 Canadian event in the 17 Jun–14 Nov 2026 window (outside 27 Jul–10 Aug gap) is a Local Impact gift. Do not force it if granules are missing.
 
+Flood as a **second case** (not a second MVP): Latvia EMSR926 is on the map (6.5 km² leftover water). [[research/Flood candidates]] [[docs/Task 2]]
+
 ## Do not add
 
 - All four change types

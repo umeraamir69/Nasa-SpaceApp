@@ -46,4 +46,4 @@ Need one more person who can (a) speak 90 seconds of the pitch, or (b) stand at 
 
 Earthdata passwords, tokens, or granule filenames that imply a secret. The pair is public PROVISIONAL; the login is not.
 
-Related: [[docs/Pitch]] [[docs/Product vision]] [[Tasks]] [[docs/Get the data]]
+Related: [[docs/Pitch]] [[docs/Product vision]] [[Tasks]] [[docs/Task 1]] [[docs/Get the data]]

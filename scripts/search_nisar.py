@@ -26,6 +26,28 @@ EVENTS = {
         "after": ("2026-08-11", "2026-09-15"),
         "notes": "Started 12 Jul. After-window starts after the 27 Jul–10 Aug NISAR gap.",
     },
+    # Flood stretch — search only until a pair exists. Do not download on a full disk.
+    "latvia-flood": {
+        "title": "Latvia–Lithuania flood (EMSR926)",
+        "bbox": (21.40, 56.40, 23.10, 57.40),
+        "before": ("2026-08-11", "2026-08-20"),
+        "after": ("2026-08-23", "2026-09-20"),
+        "notes": "Plains flood ~21–22 Aug 2026, Copernicus EMSR926. Before-window starts after the NISAR gap.",
+    },
+    "nepal-glof": {
+        "title": "Nepal Rasuwa GLOF (EMSR927)",
+        "bbox": (85.10, 27.90, 85.55, 28.35),
+        "before": ("2026-08-11", "2026-08-25"),
+        "after": ("2026-08-27", "2026-09-20"),
+        "notes": "26 Aug 2026 GLOF, Copernicus EMSR927 / UNOSAT. Himalayan layover risk. Official flood extent exists.",
+    },
+    "ottawa-flood": {
+        "title": "Ottawa Canada Day storms (1 Jul 2026)",
+        "bbox": (-76.10, 45.20, -75.40, 45.55),
+        "before": ("2026-06-17", "2026-06-30"),
+        "after": ("2026-07-02", "2026-07-26"),
+        "notes": "Urban flash / basements. Weak 80 m L-band signature likely. After-window stops before the NISAR gap.",
+    },
 }
 
 PRODUCTS = (

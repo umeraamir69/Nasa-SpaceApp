@@ -11,9 +11,11 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Start here
 
+- [[docs/Task 1]] — **teammates: see the Snyder map, then optionally rebuild it**
+- [[docs/Task 2]] — Latvia flood stretch (chip on the same map)
 - [[Tasks]] — **the checklist. This week first.**
 - [[docs/Complete plan]] — today → demo day
-- [[docs/Get the data]] — **how teammates download Snyder**
+- [[docs/Get the data]] — Track B download appendix
 - [[Runbooks/Run the app]] — **Week 4 map** (http://127.0.0.1:5173)
 - [[docs/Pitch]] — **3-minute script**
 - [[docs/Team page]] — **paste this on the Space Apps team page**
@@ -53,7 +55,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**15 Oct 2026** — Snyder demo + pitch are in. Paste [[docs/Team page]] onto spaceappschallenge.org. Rotate the Earthdata password. One out-loud pitch. Challenge page still summaries only. Demo **14–15 Nov**. [[Runbooks/Run the app]] [[Tasks]]
+**15 Oct 2026** — Snyder is still the pitch. Map has two chips: Snyder Fire + Latvia flood (6.5 km² leftover water, EMSR926). Snyder `.h5` granules were deleted on this machine; `outputs/snyder/` still in git. Teammates: [[docs/Task 1]] then [[docs/Task 2]]. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
 
 ## How we use this vault
 

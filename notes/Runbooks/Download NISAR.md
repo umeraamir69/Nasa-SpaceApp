@@ -7,7 +7,7 @@ tags:
 
 The data is **not in the cloud folder we search**. Search only returns granule IDs. Files land on disk under:
 
-`/Users/muhamamd/Documents/nasa/data/snyder/gcov/`
+`data/snyder/gcov/` (under the repo root; gitignored)
 
 That folder is gitignored. Each Snyder GCOV granule is about **7 GB**. The pair is ~14.5 GB.
 
@@ -23,7 +23,7 @@ Product: `NISAR_L2_GCOV_PROVISIONAL_V1`
 ## Manual — ASF Vertex (easiest)
 
 1. Open https://search.asf.alaska.edu/
-2. Sign in with Earthdata (`umeraamir45`).
+2. Sign in with **your** Earthdata account.
 3. Dataset: **NISAR** → collection **GCOV Provisional**.
 4. Draw a box on the CO–UT border (Westwater / Mesa County) or paste bbox `-109.45,38.85,-108.55,39.50`.
 5. Date filters: `2026-06-17` to `2026-06-26`, then again `2026-07-18` to `2026-07-26`.
@@ -42,7 +42,7 @@ Product: `NISAR_L2_GCOV_PROVISIONAL_V1`
 ## Script (already running or repeat later)
 
 ```text
-cd /Users/muhamamd/Documents/nasa
+cd <repo root>
 source venv/bin/activate
 python scripts/download_nisar.py
 ```

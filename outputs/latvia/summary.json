@@ -1,0 +1,25 @@
+{
+  "when_utc": "2026-10-15T18:20:29Z",
+  "case": "latvia",
+  "event": "Latvia\u2013Lithuania flood EMSR926",
+  "before": "2026-08-18",
+  "after": "2026-08-30",
+  "before_file": "NISAR_L2_PR_GCOV_028_080_D_059_2005_DHDH_A_20260818T180558_20260818T180634_P05023_N_F_J_001.h5",
+  "after_file": "NISAR_L2_PR_GCOV_029_080_D_059_2005_DHDH_A_20260830T180558_20260830T180634_P05023_N_F_J_001.h5",
+  "grid": "science/LSAR/GCOV/grids/frequencyB",
+  "pixel_m": 80.0,
+  "threshold_db": 2.0,
+  "water_db": -14.0,
+  "after_water_db": -12.0,
+  "despeckle": "median 3x3",
+  "primary_pol": "HHHH",
+  "hh_median_diff_db": 0.2022237777709961,
+  "change_pixels": 1008,
+  "area_km2": 6.451,
+  "permanent_water_km2": 34.048,
+  "citation": {
+    "event": "Copernicus EMS Rapid Mapping EMSR926",
+    "url": "https://mapping.emergency.copernicus.eu/activations/EMSR926/",
+    "note": "Official flood vectors were not in HDX on 15 Oct 2026. Detection is HH darkening minus permanent water."
+  }
+}

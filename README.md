@@ -1,33 +1,75 @@
 # EchoLens
 
-NASA Space Apps Toronto 2026 — **Dancing with the SARs**. Track surface change with NISAR radar.
+NASA Space Apps Toronto 2026 — **Dancing with the SARs**. Two NISAR radar passes in, an incident briefing out.
 
-Working notes: `notes/` (Obsidian). Start at `notes/00 Home.md`. **Full teammate data guide:** `notes/docs/Get the data.md`.
+**Teammates start here: [Task 1 — Snyder: reproduce and see](notes/docs/Task%201.md).**
 
-Do not put Earthdata passwords or `.h5` granules in git.
+Working notes (Obsidian): `notes/` → `notes/00 Home.md`. Do not put Earthdata passwords or `.h5` granules in git.
 
-## Get the Snyder data
+## Task 1 — two tracks
 
-Needs Python 3.11+, ~16 GB disk, a free [Earthdata](https://urs.earthdata.nasa.gov/) account. Authorize **ASF DAAC** in Earthdata Applications if asked.
+The Snyder map products (`outputs/snyder/`, ~4 MB) **are in this repo**. You can **see** the demo without NASA login. Rebuilding from radar needs ~16 GB and Earthdata.
+
+### A — See it (~15 min)
+
+Needs Python 3.11+ and Node 18+.
 
 ```text
 git clone https://github.com/umeraamir69/Nasa-SpaceApp.git
 cd Nasa-SpaceApp
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
+Terminal 1:
+
+```text
+source venv/bin/activate
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Terminal 2:
+
+```text
+cd web
+npm install --cache ../.npm-cache
+npm run dev -- --host 127.0.0.1 --port 5173
+```
+
+Open http://127.0.0.1:5173
+
+You should see Snyder Fire, **40.9 km²** EchoLens change, **122.2 km²** NIFC, precision **1.00**, Optical cloud **34%**. Click Change → Before → After → Confidence → Optical. If Vite is down you get `ERR_CONNECTION_REFUSED` — start terminal 2 again.
+
+No servers? Open `outputs/snyder/change.png`.
+
+### B — Reproduce from NASA (optional)
+
+Earthdata account + **~16 GB** free. Authorize **ASF DAAC** in Earthdata Applications.
+
+```text
 python -c "import earthaccess; earthaccess.login(persist=True)"
-
 python scripts/search_nisar.py --event snyder
 python scripts/download_nisar.py
 python scripts/inspect_h5.py
-python scripts/preview_gcov.py
-python scripts/crop_snyder.py
 python scripts/pipeline_snyder.py
 ```
 
-Or, after the two `.h5` files are already on disk: `python scripts/pipeline_snyder.py` (perimeter + change + cloudy Sentinel-2). Files land in `data/snyder/gcov/` (~7 GB × 2). `data/` is gitignored. Panoply cannot open these HDF5 files; use the preview PNGs. Change image and GeoJSON: `outputs/snyder/`.
+Then run Track A servers again. Granules land in `data/snyder/gcov/` (gitignored, ~7 GB × 2). Panoply cannot open these `.h5` files — use the map or the PNGs.
+
+Locked pair: track `048_A_021`, 17 Jun 2026 and 23 Jul 2026, `NISAR_L2_GCOV_PROVISIONAL_V1`.
+
+Task 2 flood (after Snyder products are in git; granules are optional):
+
+```text
+python scripts/search_nisar.py --event latvia-flood
+python scripts/download_latvia.py
+python scripts/change_latvia.py
+```
+
+Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md`. Task 2: `notes/docs/Task 2.md`. Pitch: `notes/docs/Pitch.md`.
+
+## Scripts
 
 | Script | Role |
 |---|---|
@@ -41,32 +83,19 @@ Or, after the two `.h5` files are already on disk: `python scripts/pipeline_snyd
 | `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI (why-SAR) |
 | `scripts/pipeline_snyder.py` | Perimeter + change + optical (no download) |
 | `scripts/download_gunw.py` | GUNW coherence (second vote) |
-
-Locked pair: track `048_A_021`, 17 Jun 2026 and 23 Jul 2026, collection `NISAR_L2_GCOV_PROVISIONAL_V1`.
-
-## Run the map
-
-```text
-source venv/bin/activate
-uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
-
-```text
-cd web
-npm install --cache ../.npm-cache
-npm run dev
-```
-
-Open http://127.0.0.1:5173. API: http://127.0.0.1:8000/api/case. Pitch script: `notes/docs/Pitch.md`. Team-page paste: `notes/docs/Team page.md`. Weekend kit: `notes/Runbooks/Weekend kit.md`.
+| `scripts/download_latvia.py` | Latvia flood GCOV pair `080_D_059` |
+| `scripts/change_latvia.py` | HH flood log-ratio + lake mask |
 
 ## Layout
 
 | Path | What |
 |---|---|
-| `notes/` | Project brain |
+| `notes/` | Project brain (Obsidian) |
+| `notes/docs/Task 1.md` | **Teammate onboarding** |
 | `scripts/` | Search, download, change |
 | `data/` | Local granules (gitignored) |
 | `ref/snyder/` | NIFC WFIGS perimeter (cited) |
-| `outputs/snyder/` | Change PNG, confidence, GeoJSON, map layers |
+| `outputs/snyder/` | Snyder change PNG, GeoJSON, map layers (in git) |
+| `outputs/latvia/` | Latvia flood products (in git once committed) |
 | `app/` | FastAPI |
 | `web/` | Vite + React + Leaflet |

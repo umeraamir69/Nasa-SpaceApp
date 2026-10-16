@@ -14,6 +14,6 @@ The challenge allows any surface-change type. Pick **one**. Best combo: clear ra
 | Glacier movement | Harder — extra time | Scientifically rich, but slow and less dramatic in a 3-minute demo |
 | Farming / wetland loss | Harder — novelty over drama | Subtler signal; harder to sell to non-expert judges quickly |
 
-Decision still open. Write the pick + event in `decisions/` once chosen. This locks data pull, demo, and pitch. [[Tasks]]
+**Primary is wildfire** ([[decisions/ADR-001 Change type wildfire]]). Flood is the stretch second case ([[decisions/ADR-003 Stretch flood Latvia]]), not a second MVP. Do not add glacier or farming.
 
 Related: [[docs/Product vision]] [[Research]]

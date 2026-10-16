@@ -18,5 +18,6 @@ Notes, sources, and explorations. New notes go in `research/`.
 - [[research/Snyder perimeter]]
 - [[research/Change detection]]
 - [[research/Why SAR optical]]
+- [[research/Flood candidates]]
 
 Related: [[00 Home]]

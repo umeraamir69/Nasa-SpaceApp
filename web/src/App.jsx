@@ -15,7 +15,20 @@ function fmtKm2(n) {
   return `${Number(n).toFixed(1)} km²`;
 }
 
-function legendFor(raster) {
+function legendFor(raster, caseId) {
+  if (caseId === "latvia") {
+    switch (raster) {
+      case "before":
+      case "after":
+        return "HHHH backscatter · dark = water";
+      case "change":
+        return "Blue: darker after (new water) · red: brighter";
+      case "confidence":
+        return "Grey: valid · steel: lakes · cyan: new water";
+      default:
+        return "";
+    }
+  }
   switch (raster) {
     case "before":
     case "after":
@@ -31,25 +44,43 @@ function legendFor(raster) {
   }
 }
 
+function layerUrl(cas, rasterId) {
+  const hit = cas?.layers?.find((l) => l.id === rasterId);
+  return hit?.url || `/media/layers/${rasterId}.png`;
+}
+
 export default function App() {
   const mapEl = useRef(null);
   const mapRef = useRef(null);
   const layersRef = useRef({});
   const [cas, setCas] = useState(null);
   const [err, setErr] = useState(null);
+  const [caseId, setCaseId] = useState("snyder");
+  const [available, setAvailable] = useState([]);
   const [raster, setRaster] = useState("change");
   const [showChange, setShowChange] = useState(true);
   const [showPerim, setShowPerim] = useState(true);
 
   useEffect(() => {
-    fetch("/api/case")
+    fetch("/api/cases")
+      .then((r) => r.json())
+      .then((d) => setAvailable(d.cases || []))
+      .catch(() => setAvailable([]));
+  }, [cas]);
+
+  useEffect(() => {
+    setCas(null);
+    setErr(null);
+    setRaster("change");
+    setShowChange(true);
+    fetch(`/api/case?name=${caseId}`)
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} from /api/case`);
         return r.json();
       })
       .then(setCas)
       .catch((e) => setErr(e.message));
-  }, []);
+  }, [caseId]);
 
   useEffect(() => {
     if (!cas || mapRef.current || !mapEl.current) return;
@@ -76,8 +107,8 @@ export default function App() {
         : null;
 
     Promise.all([
-      fetch("/api/geojson/change").then((r) => r.json()),
-      fetch("/api/geojson/perimeter").then((r) => r.json()),
+      fetch(`/api/geojson/change?name=${cas.case_id || "snyder"}`).then((r) => r.json()),
+      fetch(`/api/geojson/perimeter?name=${cas.case_id || "snyder"}`).then((r) => r.json()),
     ]).then(([change, perim]) => {
       const changeLayer = L.geoJSON(change, {
         style: {
@@ -98,12 +129,19 @@ export default function App() {
       layersRef.current.perim = perimLayer;
       if (showPerim) perimLayer.addTo(map);
       if (showChange) changeLayer.addTo(map);
-      const fit = perimLayer.getBounds();
-      if (fit.isValid()) map.fitBounds(fit, { padding: [28, 28] });
+      const perimBounds = perimLayer.getBounds();
+      if (perimBounds.isValid()) {
+        map.fitBounds(perimBounds, { padding: [28, 28] });
+      } else if (imageBounds) {
+        map.fitBounds(imageBounds, { padding: [28, 28] });
+      } else {
+        const changeBounds = changeLayer.getBounds();
+        if (changeBounds.isValid()) map.fitBounds(changeBounds, { padding: [28, 28] });
+      }
     });
 
     if (imageBounds) {
-      const img = L.imageOverlay(`/media/layers/${raster}.png`, imageBounds, {
+      const img = L.imageOverlay(layerUrl(cas, raster), imageBounds, {
         opacity: 0.88,
         pane: "rasterPane",
       });
@@ -129,7 +167,7 @@ export default function App() {
     }
     const b = cas.bounds;
     const img = L.imageOverlay(
-      `/media/layers/${raster}.png`,
+      layerUrl(cas, raster),
       [
         [b.south, b.west],
         [b.north, b.east],
@@ -165,13 +203,29 @@ export default function App() {
           <div className="brand">EchoLens</div>
           <div className="sub">NISAR surface change · Dancing with the SARs</div>
         </div>
-        <div className="incident">Snyder Fire · CO–UT</div>
+        <div className="incident">{cas?.label || "Snyder Fire · CO–UT"}</div>
       </header>
 
       <div className="body">
         <div className="map-wrap">
           <div ref={mapEl} className="map" />
           <div className="map-tools">
+            {available.filter((c) => c.ready).length > 1 && (
+              <div className="chip-row">
+                {available
+                  .filter((c) => c.ready)
+                  .map((c) => (
+                    <button
+                      key={c.id}
+                      className={caseId === c.id ? "chip on" : "chip"}
+                      onClick={() => setCaseId(c.id)}
+                      type="button"
+                    >
+                      {c.label}
+                    </button>
+                  ))}
+              </div>
+            )}
             <div className="chip-row">
               {RASTERS.filter((r) => r.id !== "optical" || cas?.has_optical).map((r) => (
                 <button
@@ -196,20 +250,24 @@ export default function App() {
               >
                 EchoLens change
               </button>
-              <button
-                className={showPerim ? "chip on" : "chip"}
-                onClick={() => setShowPerim((v) => !v)}
-                type="button"
-              >
-                NIFC perimeter
-              </button>
+              {cas?.has_perimeter && (
+                <button
+                  className={showPerim ? "chip on" : "chip"}
+                  onClick={() => setShowPerim((v) => !v)}
+                  type="button"
+                >
+                  NIFC perimeter
+                </button>
+              )}
             </div>
             <div className="legend">
-              <div>{legendFor(raster)}</div>
+              <div>{legendFor(raster, cas?.case_id)}</div>
               <div className="legend-keys">
-                <span>
-                  <i className="swatch nifc" /> NIFC
-                </span>
+                {cas?.has_perimeter && (
+                  <span>
+                    <i className="swatch nifc" /> NIFC
+                  </span>
+                )}
                 <span>
                   <i className="swatch echo" /> EchoLens
                 </span>
@@ -225,8 +283,9 @@ export default function App() {
             <>
               <h1>Incident briefing</h1>
               <p className="lede">
-                Two NISAR L-band passes around the Snyder Fire. The map is not a photo — it is radar
-                backscatter change, checked against an official perimeter.
+                {cas.case_id === "latvia"
+                  ? "Two NISAR L-band passes around the Latvia–Lithuania floods (EMSR926). Peak rain was ~21–22 Aug; this pair is 18 Aug → 30 Aug, so the map is leftover new water, not the crest. Permanent lakes are masked."
+                  : "Two NISAR L-band passes around the Snyder Fire. The map is not a photo — it is radar backscatter change, checked against an official perimeter."}
               </p>
               <dl>
                 <div>
@@ -239,18 +298,31 @@ export default function App() {
                   <dt>EchoLens change</dt>
                   <dd>{fmtKm2(cas.area_km2)}</dd>
                 </div>
-                <div>
-                  <dt>NIFC GIS area</dt>
-                  <dd>{fmtKm2(cas.nifc_km2)}</dd>
-                </div>
-                <div>
-                  <dt>Precision vs NIFC</dt>
-                  <dd>{cas.precision_vs_nifc === 1 ? "1.00 — no pixels outside the official line" : cas.precision_vs_nifc}</dd>
-                </div>
-                <div>
-                  <dt>HVHV inside perimeter</dt>
-                  <dd>{cas.inside_hv_median_db?.toFixed(2)} dB (drop)</dd>
-                </div>
+                {cas.case_id === "latvia" ? (
+                  <div>
+                    <dt>Permanent water masked</dt>
+                    <dd>{fmtKm2(cas.permanent_water_km2)}</dd>
+                  </div>
+                ) : (
+                  <>
+                    <div>
+                      <dt>NIFC GIS area</dt>
+                      <dd>{fmtKm2(cas.nifc_km2)}</dd>
+                    </div>
+                    <div>
+                      <dt>Precision vs NIFC</dt>
+                      <dd>
+                        {cas.precision_vs_nifc === 1
+                          ? "1.00 — no pixels outside the official line"
+                          : cas.precision_vs_nifc}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>HVHV inside perimeter</dt>
+                      <dd>{cas.inside_hv_median_db?.toFixed(2)} dB (drop)</dd>
+                    </div>
+                  </>
+                )}
                 {cas.has_optical && cas.optical?.cloud_cover_pct != null && (
                   <div>
                     <dt>Optical cloud cover</dt>
@@ -260,24 +332,30 @@ export default function App() {
               </dl>
               <h2>Why SAR</h2>
               <p>
-                {cas.has_optical
-                  ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. That is the point of NISAR."
-                  : "Optical would be smoke and cloud. Radar still returns a scar. Run python scripts/fetch_optical.py to load the 7 Jul Sentinel-2 scene."}
+                {cas.case_id === "latvia"
+                  ? "Cloud and rain hide optical. L-band still sees new water as a dark HH return. Lakes that were dark on both dates are not flood."
+                  : cas.has_optical
+                    ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. That is the point of NISAR."
+                    : "Optical would be smoke and cloud. Radar still returns a scar. Run python scripts/fetch_optical.py to load the 7 Jul Sentinel-2 scene."}
               </p>
               <h2>Why we trust it</h2>
               <p>
-                Valid GCOV pixels only, 3×3 median despeckle, HVHV log-ratio ≥ 1.5 dB darker after the
-                fire. Every flagged pixel sits inside NIFC WFIGS <code>{cite.unique_fire_identifier}</code>.
-                GUNW HH coherence barely drops on this arid mesa (0.73 vs 0.76) — so detection stays on
-                GCOV, not a fake second layer.
+                {cas.case_id === "latvia"
+                  ? "Valid GCOV pixels, 3×3 median despeckle, HH log-ratio ≥ 2 dB darker after, and the after pixel looks like water. Permanent water (dark on both dates) is not flagged. Copernicus EMSR926 is the named event; official flood vectors were not in HDX yet."
+                  : `Valid GCOV pixels only, 3×3 median despeckle, HVHV log-ratio ≥ 1.5 dB darker after the fire. Every flagged pixel sits inside NIFC WFIGS ${cite.unique_fire_identifier || ""}. GUNW HH coherence barely drops on this arid mesa (0.73 vs 0.76) — so detection stays on GCOV, not a fake second layer.`}
               </p>
               <h2>Source</h2>
               <p>
-                Perimeter: {cite.polygon}
-                {cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is
-                hotspots, not this outline.
+                {cas.case_id === "latvia"
+                  ? "Copernicus EMS Rapid Mapping EMSR926. Pitch still opens on Snyder."
+                  : `Perimeter: ${cite.polygon || ""}${cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is hotspots, not this outline.`}
               </p>
               <p className="source-links">
+                {cite.url && (
+                  <a href={cite.url} target="_blank" rel="noreferrer">
+                    {cite.event || "Event source"}
+                  </a>
+                )}
                 {cite.inciweb && (
                   <a href={cite.inciweb} target="_blank" rel="noreferrer">
                     InciWeb

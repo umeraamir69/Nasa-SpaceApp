@@ -10,7 +10,10 @@ How to do recurring work. New runbooks use [[templates/runbook]].
 
 ## Index
 
-- [[docs/Get the data]] — complete teammate guide
+- [[docs/Task 1]] — teammates: see + reproduce Snyder
+- [[docs/Task 2]] — Latvia flood stretch
+- [[Runbooks/Change Latvia]]
+- [[docs/Get the data]] — Track B download appendix
 - [[Runbooks/Earthdata login]]
 - [[Runbooks/Download NISAR]]
 - [[Runbooks/Reproduce Snyder search]]

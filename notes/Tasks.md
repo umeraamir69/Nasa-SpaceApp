@@ -37,6 +37,7 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [x] Download two real passes (before/after) — Snyder GCOV `048_A_021` in `data/snyder/gcov/`
 - [x] Confirm visible change in the data — keep Snyder ([[research/Scar check]]); do not switch
 - [x] Document the download process — [[docs/Get the data]] (teammates); granules also logged in [[research/NISAR data access]]
+- [x] Task 1 teammate guide (see the map + optional NASA rebuild) — [[docs/Task 1]]
 - [x] Offline Python POC: GCOV log-ratio + product mask ([[research/Change detection]]); GUNW is the second vote
 - [x] Produce one proof-of-concept change image **and** a confidence mask — `outputs/snyder/`
 - [x] Overlay a ground-truth perimeter and cite it — NIFC WFIGS `2026-UTDRD-005113` ([[research/Snyder perimeter]])
@@ -52,7 +53,8 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [ ] Cross-check Oct 28 challenge statement — [[docs/Challenge check]] (13 Oct: summaries only)
 - [x] Stretch: cloudy optical next to the SAR pair (why-SAR) — Sentinel-2 7 Jul ([[research/Why SAR optical]])
 - [x] Unattended Snyder pipeline script — `python scripts/pipeline_snyder.py` ([[Runbooks/Snyder pipeline]])
-- [ ] Stretch: second region/event only if the first pair is proven (Thunder Bay — skip until more disk)
+- [x] Stretch: search a second change type (flood) — Latvia EMSR926 ([[research/Flood candidates]])
+- [x] Stretch: Latvia flood on the map — `080_D_059` 18 Aug → 30 Aug, 6.5 km² leftover water, 34 km² lakes masked ([[docs/Task 2]]). Snyder granules deleted to free disk; Snyder **products** stay.
 
 ### Week 7 — Nov 4–13
 

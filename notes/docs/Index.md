@@ -20,11 +20,14 @@ Durable EchoLens documentation. Scratch stays in [[Inbox]] and `sessions/`.
 - [[docs/Tech stack]]
 - [[docs/Processing pipeline]]
 - [[docs/Risk log]]
-- [[docs/Get the data]] — **teammates: start here for download**
+- [[docs/Task 1]] — **teammates: reproduce and see Snyder**
+- [[docs/Task 2]] — Latvia flood stretch
+- [[docs/Get the data]] — Track B download appendix
 - [[docs/Challenge check]] — Oct 28 statement (13 Oct: summaries only)
 - [[research/Change detection]] — Snyder log-ratio POC
 - [[research/Snyder perimeter]] — NIFC citation
 - [[research/Why SAR optical]] — cloudy Sentinel-2
+- [[research/Flood candidates]] — Latvia EMSR926 (`080_D_059`, processed)
 - [[Runbooks/Run the app]] — Week 4 map
 - [[Runbooks/Snyder pipeline]] — unattended perimeter + change + optical
 - [[docs/What I need]]
