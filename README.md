@@ -80,7 +80,8 @@ Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md
 | `scripts/crop_snyder.py` | Crop to Snyder fire box |
 | `scripts/fetch_snyder_perimeter.py` | NIFC WFIGS Snyder polygon |
 | `scripts/change_snyder.py` | Log-ratio + confidence + GeoJSON |
-| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI (why-SAR) |
+| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI (why-SAR; `--case latvia` for flood) |
+| `scripts/fetch_snyder_ir.py` | NIROPS airborne IR (30 Jun + 7 Jul) |
 | `scripts/pipeline_snyder.py` | Perimeter + change + optical (no download) |
 | `scripts/download_gunw.py` | GUNW coherence (second vote) |
 | `scripts/download_latvia.py` | Latvia flood GCOV pair `080_D_059` |

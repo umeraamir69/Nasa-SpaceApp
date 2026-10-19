@@ -279,7 +279,7 @@ def main() -> int:
             "citation": {
                 "event": "Copernicus EMS Rapid Mapping EMSR926",
                 "url": "https://mapping.emergency.copernicus.eu/activations/EMSR926/",
-                "note": "Official flood vectors were not in HDX on 15 Oct 2026. Detection is HH darkening minus permanent water.",
+                "note": "Official flood vectors were not in HDX as of 19 Oct 2026. Detection is HH darkening minus permanent water. Lakes overlay is that mask.",
             },
         },
         "features": [
@@ -291,6 +291,25 @@ def main() -> int:
         ],
     }
     (OUT_PUB / "change.geojson").write_text(json.dumps(change_fc))
+
+    _perm_utm, perm_ll = polygonize(permanent, transform, src["epsg"])
+    lakes_fc = {
+        "type": "FeatureCollection",
+        "name": "echolens_latvia_permanent_water",
+        "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+        "properties": {
+            "permanent_water_km2": round(perm_km2, 3),
+            "note": "HH dark on both 18 Aug and 30 Aug — lakes, not new flood.",
+        },
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {"name": "Permanent water", "area_km2": round(perm_km2, 3)},
+                "geometry": None if perm_ll is None or perm_ll.is_empty else mapping(perm_ll),
+            }
+        ],
+    }
+    (OUT_PUB / "lakes.geojson").write_text(json.dumps(lakes_fc))
 
     layer_dir = OUT_PUB / "layers"
     finite = hh_before[np.isfinite(hh_before)]

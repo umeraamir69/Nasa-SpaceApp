@@ -33,4 +33,8 @@ Or the unattended path: `python scripts/pipeline_snyder.py`
 
 On the map, click **Optical**. Same geographic box as Before/After/Change.
 
-Related: [[research/Change detection]] [[docs/Pitch]] [[docs/Score upgrades]]
+## Latvia (flood)
+
+`python scripts/fetch_optical.py --case latvia` — Sentinel-2 `S2A_34VEJ_20260821_1_L2A`, **21 Aug 2026**, **84% cloud**, over the EMSR926 box. Tile nodata is transparent.
+
+Related: [[research/Change detection]] [[docs/Pitch]] [[docs/Score upgrades]] [[docs/Task 2]]

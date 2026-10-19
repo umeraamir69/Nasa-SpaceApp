@@ -1,5 +1,5 @@
 {
-  "when_utc": "2026-10-15T18:20:29Z",
+  "when_utc": "2026-10-19T15:45:53Z",
   "case": "latvia",
   "event": "Latvia\u2013Lithuania flood EMSR926",
   "before": "2026-08-18",
@@ -20,6 +20,6 @@
   "citation": {
     "event": "Copernicus EMS Rapid Mapping EMSR926",
     "url": "https://mapping.emergency.copernicus.eu/activations/EMSR926/",
-    "note": "Official flood vectors were not in HDX on 15 Oct 2026. Detection is HH darkening minus permanent water."
+    "note": "Official flood vectors were not in HDX as of 19 Oct 2026. Detection is HH darkening minus permanent water. Lakes overlay is that mask."
   }
 }

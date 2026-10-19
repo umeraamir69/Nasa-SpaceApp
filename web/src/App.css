@@ -118,6 +118,14 @@
   background: #c1121f;
 }
 
+.swatch.ir {
+  background: #ff6b35;
+}
+
+.swatch.lakes {
+  background: #3d5a80;
+}
+
 .brief {
   border-left: 1px solid #2a2e33;
   padding: 18px 18px 28px;

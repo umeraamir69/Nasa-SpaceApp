@@ -55,7 +55,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**15 Oct 2026** — Snyder is still the pitch. Map has two chips: Snyder Fire + Latvia flood (6.5 km² leftover water, EMSR926). Snyder `.h5` granules were deleted on this machine; `outputs/snyder/` still in git. Teammates: [[docs/Task 1]] then [[docs/Task 2]]. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
+**19 Oct 2026** — Snyder is still the pitch. Map extras: **NIROPS IR** on Snyder (airborne heat, not FIRMS); **permanent lakes** + cloudy Sentinel-2 **21 Aug** on Latvia. EMSR926 vectors still not public. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
 
 ## How we use this vault
 

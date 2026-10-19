@@ -55,6 +55,8 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [x] Unattended Snyder pipeline script — `python scripts/pipeline_snyder.py` ([[Runbooks/Snyder pipeline]])
 - [x] Stretch: search a second change type (flood) — Latvia EMSR926 ([[research/Flood candidates]])
 - [x] Stretch: Latvia flood on the map — `080_D_059` 18 Aug → 30 Aug, 6.5 km² leftover water, 34 km² lakes masked ([[docs/Task 2]]). Snyder granules deleted to free disk; Snyder **products** stay.
+- [x] Snyder NIROPS IR overlay (30 Jun heat + 7 Jul perimeter) — `python scripts/fetch_snyder_ir.py`
+- [x] Latvia permanent-lake overlay + Sentinel-2 21 Aug optical (`fetch_optical.py --case latvia`)
 
 ### Week 7 — Nov 4–13
 

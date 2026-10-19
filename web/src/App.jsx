@@ -25,6 +25,8 @@ function legendFor(raster, caseId) {
         return "Blue: darker after (new water) · red: brighter";
       case "confidence":
         return "Grey: valid · steel: lakes · cyan: new water";
+      case "optical":
+        return "White: cloud · Sentinel-2 around the storm";
       default:
         return "";
     }
@@ -60,6 +62,8 @@ export default function App() {
   const [raster, setRaster] = useState("change");
   const [showChange, setShowChange] = useState(true);
   const [showPerim, setShowPerim] = useState(true);
+  const [showIr, setShowIr] = useState(true);
+  const [showLakes, setShowLakes] = useState(true);
 
   useEffect(() => {
     fetch("/api/cases")
@@ -73,6 +77,9 @@ export default function App() {
     setErr(null);
     setRaster("change");
     setShowChange(true);
+    setShowPerim(true);
+    setShowIr(true);
+    setShowLakes(true);
     fetch(`/api/case?name=${caseId}`)
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} from /api/case`);
@@ -106,10 +113,17 @@ export default function App() {
           ]
         : null;
 
+    const cid = cas.case_id || "snyder";
     Promise.all([
-      fetch(`/api/geojson/change?name=${cas.case_id || "snyder"}`).then((r) => r.json()),
-      fetch(`/api/geojson/perimeter?name=${cas.case_id || "snyder"}`).then((r) => r.json()),
-    ]).then(([change, perim]) => {
+      fetch(`/api/geojson/change?name=${cid}`).then((r) => r.json()),
+      fetch(`/api/geojson/perimeter?name=${cid}`).then((r) => r.json()),
+      cas.has_ir
+        ? fetch(`/api/geojson/overlay?name=${cid}&layer=ir`).then((r) => r.json())
+        : Promise.resolve(null),
+      cas.has_lakes
+        ? fetch(`/api/geojson/overlay?name=${cid}&layer=lakes`).then((r) => r.json())
+        : Promise.resolve(null),
+    ]).then(([change, perim, ir, lakes]) => {
       const changeLayer = L.geoJSON(change, {
         style: {
           color: "#ee964b",
@@ -129,6 +143,40 @@ export default function App() {
       layersRef.current.perim = perimLayer;
       if (showPerim) perimLayer.addTo(map);
       if (showChange) changeLayer.addTo(map);
+      if (ir) {
+        const irLayer = L.geoJSON(ir, {
+          style: (feat) => {
+            const k = feat?.properties?.kind;
+            if (k === "heat_perimeter") return { color: "#ff6b35", weight: 2, fill: false };
+            if (k === "scattered_heat") {
+              return { color: "#ffd166", weight: 1, fillColor: "#ffd166", fillOpacity: 0.4 };
+            }
+            return { color: "#ee964b", weight: 1, fill: false };
+          },
+          pointToLayer: (_feat, latlng) =>
+            L.circleMarker(latlng, {
+              radius: 3,
+              color: "#ff6b35",
+              fillColor: "#ff6b35",
+              fillOpacity: 0.85,
+              weight: 0,
+            }),
+        });
+        layersRef.current.ir = irLayer;
+        if (showIr) irLayer.addTo(map);
+      }
+      if (lakes) {
+        const lakeLayer = L.geoJSON(lakes, {
+          style: {
+            color: "#7eb8da",
+            weight: 1,
+            fillColor: "#3d5a80",
+            fillOpacity: 0.35,
+          },
+        });
+        layersRef.current.lakes = lakeLayer;
+        if (showLakes) lakeLayer.addTo(map);
+      }
       const perimBounds = perimLayer.getBounds();
       if (perimBounds.isValid()) {
         map.fitBounds(perimBounds, { padding: [28, 28] });
@@ -193,6 +241,22 @@ export default function App() {
     if (showPerim) layer.addTo(map);
     else map.removeLayer(layer);
   }, [showPerim]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const layer = layersRef.current.ir;
+    if (!map || !layer) return;
+    if (showIr) layer.addTo(map);
+    else map.removeLayer(layer);
+  }, [showIr]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const layer = layersRef.current.lakes;
+    if (!map || !layer) return;
+    if (showLakes) layer.addTo(map);
+    else map.removeLayer(layer);
+  }, [showLakes]);
 
   const cite = cas?.citation || {};
 
@@ -259,6 +323,24 @@ export default function App() {
                   NIFC perimeter
                 </button>
               )}
+              {cas?.has_ir && (
+                <button
+                  className={showIr ? "chip on" : "chip"}
+                  onClick={() => setShowIr((v) => !v)}
+                  type="button"
+                >
+                  NIROPS IR
+                </button>
+              )}
+              {cas?.has_lakes && (
+                <button
+                  className={showLakes ? "chip on" : "chip"}
+                  onClick={() => setShowLakes((v) => !v)}
+                  type="button"
+                >
+                  Permanent lakes
+                </button>
+              )}
             </div>
             <div className="legend">
               <div>{legendFor(raster, cas?.case_id)}</div>
@@ -266,6 +348,16 @@ export default function App() {
                 {cas?.has_perimeter && (
                   <span>
                     <i className="swatch nifc" /> NIFC
+                  </span>
+                )}
+                {cas?.has_ir && (
+                  <span>
+                    <i className="swatch ir" /> NIROPS IR
+                  </span>
+                )}
+                {cas?.has_lakes && (
+                  <span>
+                    <i className="swatch lakes" /> Lakes
                   </span>
                 )}
                 <span>
@@ -317,25 +409,49 @@ export default function App() {
                           : cas.precision_vs_nifc}
                       </dd>
                     </div>
+                    {cas.recall_vs_nifc != null && (
+                      <div>
+                        <dt>Recall vs NIFC</dt>
+                        <dd>{Number(cas.recall_vs_nifc).toFixed(2)} — we under-map on purpose</dd>
+                      </div>
+                    )}
                     <div>
                       <dt>HVHV inside perimeter</dt>
                       <dd>{cas.inside_hv_median_db?.toFixed(2)} dB (drop)</dd>
                     </div>
+                    {cas.gunw_coherence && (
+                      <div>
+                        <dt>GUNW coherence</dt>
+                        <dd>
+                          {Number(cas.gunw_coherence.inside_mean).toFixed(2)} inside vs{" "}
+                          {Number(cas.gunw_coherence.outside_mean).toFixed(2)} outside
+                        </dd>
+                      </div>
+                    )}
                   </>
                 )}
                 {cas.has_optical && cas.optical?.cloud_cover_pct != null && (
                   <div>
                     <dt>Optical cloud cover</dt>
-                    <dd>{Number(cas.optical.cloud_cover_pct).toFixed(0)}% · Sentinel-2 7 Jul</dd>
+                    <dd>
+                      {Number(cas.optical.cloud_cover_pct).toFixed(0)}% · Sentinel-2{" "}
+                      {cas.optical.datetime
+                        ? String(cas.optical.datetime).slice(0, 10)
+                        : cas.case_id === "snyder"
+                          ? "7 Jul"
+                          : ""}
+                    </dd>
                   </div>
                 )}
               </dl>
               <h2>Why SAR</h2>
               <p>
                 {cas.case_id === "latvia"
-                  ? "Cloud and rain hide optical. L-band still sees new water as a dark HH return. Lakes that were dark on both dates are not flood."
+                  ? cas.has_optical
+                    ? "Click Optical: Sentinel-2 around the storm is cloud. L-band still sees new water as a dark HH return. Lakes dark on both dates are not flood."
+                    : "Cloud and rain hide optical. L-band still sees new water as a dark HH return. Lakes that were dark on both dates are not flood."
                   : cas.has_optical
-                    ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. That is the point of NISAR."
+                    ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. NIROPS IR is the aircraft heat map from the same week — not FIRMS."
                     : "Optical would be smoke and cloud. Radar still returns a scar. Run python scripts/fetch_optical.py to load the 7 Jul Sentinel-2 scene."}
               </p>
               <h2>Why we trust it</h2>

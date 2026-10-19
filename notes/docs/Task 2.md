@@ -55,7 +55,7 @@ Processed **15 Oct 2026** on this machine:
 | Permanent lakes masked | **34.0 km²** |
 | Box median HH | +0.20 dB (slightly brighter after) |
 
-Peak flood was ~21–22 Aug. The after pass is **8 days later**, so this is residual new water, not the crest. The box median going slightly *brighter* is consistent with water receding. Copernicus EMSR926 vectors were still not in HDX — no official overlay yet.
+Peak flood was ~21–22 Aug. The after pass is **8 days later**, so this is residual new water, not the crest. The box median going slightly *brighter* is consistent with water receding. Copernicus EMSR926 vectors were still not on HDX as of 19 Oct — no official flood polygon. The map instead overlays **permanent lakes** (HH dark on both dates) and a cloudy Sentinel-2 scene from **21 Aug** (84% cloud).
 
 Open `outputs/latvia/change.png` if the servers are down.
 
@@ -65,7 +65,8 @@ Open `outputs/latvia/change.png` if the servers are down.
 |---|---|---|
 | Polarization | HVHV (burn) | HHHH (open water) |
 | Threshold | 1.5 dB darker | 2 dB darker **and** after looks like water |
-| Extra mask | NIFC perimeter | Permanent lakes (dark on **both** dates) |
-| Answer key | NIFC WFIGS polygon | EMSR926 (vectors not in HDX yet) |
+| Extra mask | NIFC + NIROPS IR | Permanent lakes (dark on **both** dates) |
+| Optical | Sentinel-2 7 Jul (34% cloud) | Sentinel-2 21 Aug (84% cloud) |
+| Answer key | NIFC WFIGS polygon | EMSR926 (vectors still not in HDX) |
 
 Related: [[research/Flood candidates]] [[docs/Task 1]] [[decisions/ADR-003 Stretch flood Latvia]]

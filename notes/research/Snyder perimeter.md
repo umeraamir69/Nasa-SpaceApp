@@ -37,8 +37,20 @@ python scripts/fetch_snyder_perimeter.py
 - InciWeb: https://inciweb.wildfire.gov/incident-information/utdrd-snyder (thin after closeout)
 - Official IR and ops PDFs: https://ftp.wildfire.gov/public/incident_specific_maps/rocky_mtn/2026/2026_Snyder/
 
+## NIROPS IR (on the map)
+
+Airborne thermal from USDA Forest Service NIROPS, not FIRMS. 30 Jun = active heat (isolated + scattered). 7 Jul = heat perimeter, same day as the Optical chip.
+
+```text
+python scripts/fetch_snyder_ir.py
+```
+
+Writes `outputs/snyder/ir_nirops.geojson`. Chip on the map: **NIROPS IR**.
+
+FTP: https://ftp.wildfire.gov/public/incident_specific_maps/rocky_mtn/2026/2026_Snyder/IR/
+
 ## FIRMS
 
-NASA FIRMS VIIRS/MODIS are **thermal hotspots**, not a burn perimeter. Do not treat them as the Snyder outline. Optional: set `FIRMS_MAP_KEY` and re-run the fetch script to pull a 10-day VIIRS point file. Product page: https://firms.modaps.eosdis.nasa.gov/
+NASA FIRMS VIIRS/MODIS are **satellite hotspots**, not a burn perimeter. We overlay NIROPS instead (no FIRMS map key). Product page: https://firms.modaps.eosdis.nasa.gov/
 
 Related: [[research/Change detection]] [[research/Candidate events]] [[decisions/ADR-002 Primary event Snyder Fire]]

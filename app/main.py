@@ -107,7 +107,15 @@ def case(name: str = "snyder"):
     else:
         data["has_optical"] = False
     data["has_perimeter"] = (folder / "perimeter_nifc.geojson").exists()
+    data["has_ir"] = (folder / "ir_nirops.geojson").exists()
+    data["has_lakes"] = (folder / "lakes.geojson").exists()
     return data
+
+
+OVERLAYS = {
+    "ir": "ir_nirops.geojson",
+    "lakes": "lakes.geojson",
+}
 
 
 @app.get("/api/geojson/change")
@@ -118,6 +126,17 @@ def geojson_change(name: str = "snyder"):
 @app.get("/api/geojson/perimeter")
 def geojson_perimeter(name: str = "snyder"):
     path = _case_dir(name) / "perimeter_nifc.geojson"
+    if not path.exists():
+        return {"type": "FeatureCollection", "features": []}
+    return FileResponse(path, media_type="application/geo+json")
+
+
+@app.get("/api/geojson/overlay")
+def geojson_overlay(name: str = "snyder", layer: str = "ir"):
+    fname = OVERLAYS.get(layer)
+    if not fname:
+        raise HTTPException(404, f"unknown overlay {layer}")
+    path = _case_dir(name) / fname
     if not path.exists():
         return {"type": "FeatureCollection", "features": []}
     return FileResponse(path, media_type="application/geo+json")

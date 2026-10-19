@@ -51,7 +51,8 @@ That writes `~/.netrc` (mode 600). The scripts then use `strategy=netrc`. Option
 | `scripts/crop_snyder.py` | Crops 80 m to the Snyder fire box | `python scripts/crop_snyder.py` |
 | `scripts/fetch_snyder_perimeter.py` | Official NIFC WFIGS Snyder polygon | `python scripts/fetch_snyder_perimeter.py` |
 | `scripts/change_snyder.py` | Despeckle + log-ratio + mask + GeoJSON | `python scripts/change_snyder.py` |
-| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI over the Snyder box | `python scripts/fetch_optical.py` |
+| `scripts/fetch_optical.py` | Cloudy Sentinel-2 TCI (Snyder default; Latvia: `--case latvia`) | `python scripts/fetch_optical.py` |
+| `scripts/fetch_snyder_ir.py` | NIROPS airborne IR GeoJSON | `python scripts/fetch_snyder_ir.py` |
 | `scripts/pipeline_snyder.py` | Perimeter + change + optical (no NISAR download) | `python scripts/pipeline_snyder.py` |
 | `scripts/download_gunw.py` | Same-track GUNW (coherence second vote) | `python scripts/download_gunw.py` |
 | `scripts/open_panoply.sh` | Panoply on Java 21. **Panoply cannot open these .h5 files.** | skip for data |

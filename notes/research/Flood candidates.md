@@ -32,7 +32,7 @@ Same-track GCOV pair exists, **event sits between the two dates**, plains (not H
 
 GUNW `080_D_059` 18 Aug–30 Aug spans the flood — coherence drop over new water is a real second vote here (unlike arid Snyder). Not downloaded yet.
 
-Ground truth: Copernicus EMSR926. Vector products were not on HDX as of 15 Oct. Map cites the activation URL; no official flood polygon overlay yet.
+Ground truth: Copernicus EMSR926. Vector products were still not on HDX as of 19 Oct (S3 prefix empty). Map cites the activation URL, overlays **permanent lakes** from the HH pair, and a cloudy Sentinel-2 21 Aug scene.
 
 Processed result (`python scripts/change_latvia.py`): **6.5 km²** HH darkening that also looks like water on 30 Aug, **34.0 km²** permanent lakes masked. Box-wide HH median **+0.20 dB** — after pass is 8 days after the 21–22 Aug crest, so this is leftover water, not the peak.
 
