@@ -15,10 +15,12 @@ ROOT = Path(__file__).resolve().parents[1]
 CASES = {
     "snyder": ROOT / "outputs" / "snyder",
     "latvia": ROOT / "outputs" / "latvia",
+    "nepal": ROOT / "outputs" / "nepal",
 }
 OUT = CASES["snyder"]
 WEB_DIST = ROOT / "web" / "dist"
-LABELS = {"snyder": "Snyder Fire", "latvia": "Latvia flood"}
+LABELS = {"snyder": "Snyder Fire", "latvia": "Latvia flood", "nepal": "Nepal GLOF"}
+MEDIA = {"snyder": "/media", "latvia": "/media-latvia", "nepal": "/media-nepal"}
 
 app = FastAPI(title="EchoLens", version="0.4.1")
 app.add_middleware(
@@ -42,7 +44,7 @@ def _case_dir(name: str) -> Path:
 
 
 def _media_prefix(name: str) -> str:
-    return "/media" if name == "snyder" else "/media-latvia"
+    return MEDIA[name]
 
 
 @app.get("/api/health")
@@ -109,12 +111,16 @@ def case(name: str = "snyder"):
     data["has_perimeter"] = (folder / "perimeter_nifc.geojson").exists()
     data["has_ir"] = (folder / "ir_nirops.geojson").exists()
     data["has_lakes"] = (folder / "lakes.geojson").exists()
+    data["has_emsr"] = (folder / "emsr927.geojson").exists()
+    data["has_flood_extent"] = (folder / "flood_extent.geojson").exists()
     return data
 
 
 OVERLAYS = {
     "ir": "ir_nirops.geojson",
     "lakes": "lakes.geojson",
+    "emsr": "emsr927.geojson",
+    "flood": "flood_extent.geojson",
 }
 
 
@@ -144,7 +150,9 @@ def geojson_overlay(name: str = "snyder", layer: str = "ir"):
 
 OUT.mkdir(parents=True, exist_ok=True)
 CASES["latvia"].mkdir(parents=True, exist_ok=True)
+CASES["nepal"].mkdir(parents=True, exist_ok=True)
 app.mount("/media-latvia", StaticFiles(directory=CASES["latvia"]), name="latvia")
+app.mount("/media-nepal", StaticFiles(directory=CASES["nepal"]), name="nepal")
 app.mount("/media", StaticFiles(directory=OUT), name="media")
 
 if WEB_DIST.is_dir():

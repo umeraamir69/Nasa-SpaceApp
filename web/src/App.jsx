@@ -16,13 +16,15 @@ function fmtKm2(n) {
 }
 
 function legendFor(raster, caseId) {
-  if (caseId === "latvia") {
+  if (caseId === "latvia" || caseId === "nepal") {
     switch (raster) {
       case "before":
       case "after":
         return "HHHH backscatter · dark = water";
       case "change":
-        return "Blue: darker after (new water) · red: brighter";
+        return caseId === "nepal"
+          ? "Blue: darker after · red: brighter · flags only inside official Copernicus/HOT polygons"
+          : "Blue: darker after (new water) · red: brighter";
       case "confidence":
         return "Grey: valid · steel: lakes · cyan: new water";
       case "optical":
@@ -51,6 +53,50 @@ function layerUrl(cas, rasterId) {
   return hit?.url || `/media/layers/${rasterId}.png`;
 }
 
+function ledeFor(cas) {
+  if (cas.case_id === "latvia") {
+    return "Two NISAR L-band passes around the Latvia–Lithuania floods (EMSR926). Peak rain was ~21–22 Aug; this pair is 18 Aug → 30 Aug, so the map is leftover new water, not the crest. Permanent lakes are masked.";
+  }
+  if (cas.case_id === "nepal") {
+    return "Two NISAR L-band passes around the Rasuwa glacier-lake outburst (26 Aug, EMSR927). Pair is 16 Aug → 28 Aug. Official Copernicus landslides and the 27 Aug flood polygon sit on the same map. Himalayan layover: we only flag HH darkening inside those official polygons.";
+  }
+  return "Two NISAR L-band passes around the Snyder Fire. The map is not a photo — it is radar backscatter change, checked against an official perimeter.";
+}
+
+function whySarFor(cas) {
+  if (cas.case_id === "latvia") {
+    return cas.has_optical
+      ? "Click Optical: Sentinel-2 around the storm is cloud. L-band still sees new water as a dark HH return. Lakes dark on both dates are not flood."
+      : "Cloud and rain hide optical. L-band still sees new water as a dark HH return. Lakes that were dark on both dates are not flood.";
+  }
+  if (cas.case_id === "nepal") {
+    return "Steep Himalaya, monsoon cloud, and a gorge. Two days later the water is not a specular lake at 80 m — mixed pixels sit around −4 dB. Optical is still worse. Official Copernicus and HOT polygons are the proof; we only flag HH darkening inside them so layover slopes stay off the map.";
+  }
+  return cas.has_optical
+    ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. NIROPS IR is the aircraft heat map from the same week — not FIRMS."
+    : "Optical would be smoke and cloud. Radar still returns a scar. Run python scripts/fetch_optical.py to load the 7 Jul Sentinel-2 scene.";
+}
+
+function trustFor(cas, cite) {
+  if (cas.case_id === "latvia") {
+    return "Valid GCOV pixels, 3×3 median despeckle, HH log-ratio ≥ 2 dB darker after, and the after pixel looks like water. Permanent water (dark on both dates) is not flagged. Copernicus EMSR926 is the named event; official flood vectors were not in HDX yet.";
+  }
+  if (cas.case_id === "nepal") {
+    return "Valid GCOV pixels, 3×3 median despeckle, HH log-ratio ≥ 2 dB darker after, and every flagged pixel sits inside Copernicus EMSR927 or the HOT 27 Aug flood polygon (same idea as NIFC on Snyder). 80 m mixed gorge pixels are not Latvia lakes. UNOSAT mapped mudflow and barrier lakes for the same dates.";
+  }
+  return `Valid GCOV pixels only, 3×3 median despeckle, HVHV log-ratio ≥ 1.5 dB darker after the fire. Every flagged pixel sits inside NIFC WFIGS ${cite.unique_fire_identifier || ""}. GUNW HH coherence barely drops on this arid mesa (0.73 vs 0.76) — so detection stays on GCOV, not a fake second layer.`;
+}
+
+function sourceFor(cas, cite) {
+  if (cas.case_id === "latvia") {
+    return "Copernicus EMS Rapid Mapping EMSR926. Pitch still opens on Snyder.";
+  }
+  if (cas.case_id === "nepal") {
+    return "Copernicus EMSR927 (landslides along the GLOF path) + HOT flood extent 27 Aug (Bhote Koshi / Trishuli). UNOSAT Rasuwa mudflow and barrier-lake maps are the same event. Pitch still opens on Snyder.";
+  }
+  return `Perimeter: ${cite.polygon || ""}${cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is hotspots, not this outline.`;
+}
+
 export default function App() {
   const mapEl = useRef(null);
   const mapRef = useRef(null);
@@ -64,6 +110,8 @@ export default function App() {
   const [showPerim, setShowPerim] = useState(true);
   const [showIr, setShowIr] = useState(true);
   const [showLakes, setShowLakes] = useState(true);
+  const [showEmsr, setShowEmsr] = useState(true);
+  const [showFlood, setShowFlood] = useState(true);
 
   useEffect(() => {
     fetch("/api/cases")
@@ -80,6 +128,8 @@ export default function App() {
     setShowPerim(true);
     setShowIr(true);
     setShowLakes(true);
+    setShowEmsr(true);
+    setShowFlood(true);
     fetch(`/api/case?name=${caseId}`)
       .then((r) => {
         if (!r.ok) throw new Error(`${r.status} from /api/case`);
@@ -123,7 +173,13 @@ export default function App() {
       cas.has_lakes
         ? fetch(`/api/geojson/overlay?name=${cid}&layer=lakes`).then((r) => r.json())
         : Promise.resolve(null),
-    ]).then(([change, perim, ir, lakes]) => {
+      cas.has_emsr
+        ? fetch(`/api/geojson/overlay?name=${cid}&layer=emsr`).then((r) => r.json())
+        : Promise.resolve(null),
+      cas.has_flood_extent
+        ? fetch(`/api/geojson/overlay?name=${cid}&layer=flood`).then((r) => r.json())
+        : Promise.resolve(null),
+    ]).then(([change, perim, ir, lakes, emsr, flood]) => {
       const changeLayer = L.geoJSON(change, {
         style: {
           color: "#ee964b",
@@ -177,11 +233,38 @@ export default function App() {
         layersRef.current.lakes = lakeLayer;
         if (showLakes) lakeLayer.addTo(map);
       }
+      if (emsr) {
+        const emsrLayer = L.geoJSON(emsr, {
+          style: {
+            color: "#f4d35e",
+            weight: 2,
+            fillColor: "#f4d35e",
+            fillOpacity: 0.18,
+          },
+        });
+        layersRef.current.emsr = emsrLayer;
+        if (showEmsr) emsrLayer.addTo(map);
+      }
+      if (flood) {
+        const floodLayer = L.geoJSON(flood, {
+          style: {
+            color: "#00b4d8",
+            weight: 2,
+            fillColor: "#0077b6",
+            fillOpacity: 0.28,
+          },
+        });
+        layersRef.current.flood = floodLayer;
+        if (showFlood) floodLayer.addTo(map);
+      }
       const perimBounds = perimLayer.getBounds();
-      if (perimBounds.isValid()) {
-        map.fitBounds(perimBounds, { padding: [28, 28] });
-      } else if (imageBounds) {
+      const emsrBounds = layersRef.current.emsr?.getBounds();
+      if (imageBounds) {
         map.fitBounds(imageBounds, { padding: [28, 28] });
+      } else if (emsrBounds?.isValid()) {
+        map.fitBounds(emsrBounds, { padding: [28, 28] });
+      } else if (perimBounds.isValid()) {
+        map.fitBounds(perimBounds, { padding: [28, 28] });
       } else {
         const changeBounds = changeLayer.getBounds();
         if (changeBounds.isValid()) map.fitBounds(changeBounds, { padding: [28, 28] });
@@ -257,6 +340,22 @@ export default function App() {
     if (showLakes) layer.addTo(map);
     else map.removeLayer(layer);
   }, [showLakes]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const layer = layersRef.current.emsr;
+    if (!map || !layer) return;
+    if (showEmsr) layer.addTo(map);
+    else map.removeLayer(layer);
+  }, [showEmsr]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const layer = layersRef.current.flood;
+    if (!map || !layer) return;
+    if (showFlood) layer.addTo(map);
+    else map.removeLayer(layer);
+  }, [showFlood]);
 
   const cite = cas?.citation || {};
 
@@ -341,6 +440,24 @@ export default function App() {
                   Permanent lakes
                 </button>
               )}
+              {cas?.has_emsr && (
+                <button
+                  className={showEmsr ? "chip on" : "chip"}
+                  onClick={() => setShowEmsr((v) => !v)}
+                  type="button"
+                >
+                  EMSR927
+                </button>
+              )}
+              {cas?.has_flood_extent && (
+                <button
+                  className={showFlood ? "chip on" : "chip"}
+                  onClick={() => setShowFlood((v) => !v)}
+                  type="button"
+                >
+                  Official flood
+                </button>
+              )}
             </div>
             <div className="legend">
               <div>{legendFor(raster, cas?.case_id)}</div>
@@ -360,6 +477,16 @@ export default function App() {
                     <i className="swatch lakes" /> Lakes
                   </span>
                 )}
+                {cas?.has_emsr && (
+                  <span>
+                    <i className="swatch nifc" /> EMSR927
+                  </span>
+                )}
+                {cas?.has_flood_extent && (
+                  <span>
+                    <i className="swatch flood" /> Official flood
+                  </span>
+                )}
                 <span>
                   <i className="swatch echo" /> EchoLens
                 </span>
@@ -374,11 +501,7 @@ export default function App() {
           {cas && (
             <>
               <h1>Incident briefing</h1>
-              <p className="lede">
-                {cas.case_id === "latvia"
-                  ? "Two NISAR L-band passes around the Latvia–Lithuania floods (EMSR926). Peak rain was ~21–22 Aug; this pair is 18 Aug → 30 Aug, so the map is leftover new water, not the crest. Permanent lakes are masked."
-                  : "Two NISAR L-band passes around the Snyder Fire. The map is not a photo — it is radar backscatter change, checked against an official perimeter."}
-              </p>
+              <p className="lede">{ledeFor(cas)}</p>
               <dl>
                 <div>
                   <dt>Before / after</dt>
@@ -390,7 +513,28 @@ export default function App() {
                   <dt>EchoLens change</dt>
                   <dd>{fmtKm2(cas.area_km2)}</dd>
                 </div>
-                {cas.case_id === "latvia" ? (
+                {cas.case_id === "nepal" ? (
+                  <>
+                    <div>
+                      <dt>Official flood in crop</dt>
+                      <dd>{fmtKm2(cas.official_flood_km2_in_crop)}</dd>
+                    </div>
+                    <div>
+                      <dt>Precision vs flood</dt>
+                      <dd>
+                        {cas.precision_vs_flood == null
+                          ? "—"
+                          : Number(cas.precision_vs_flood).toFixed(2)}
+                      </dd>
+                    </div>
+                    {cas.recall_vs_flood != null && (
+                      <div>
+                        <dt>Recall vs flood</dt>
+                        <dd>{Number(cas.recall_vs_flood).toFixed(2)}</dd>
+                      </div>
+                    )}
+                  </>
+                ) : cas.case_id === "latvia" ? (
                   <div>
                     <dt>Permanent water masked</dt>
                     <dd>{fmtKm2(cas.permanent_water_km2)}</dd>
@@ -445,31 +589,25 @@ export default function App() {
                 )}
               </dl>
               <h2>Why SAR</h2>
-              <p>
-                {cas.case_id === "latvia"
-                  ? cas.has_optical
-                    ? "Click Optical: Sentinel-2 around the storm is cloud. L-band still sees new water as a dark HH return. Lakes dark on both dates are not flood."
-                    : "Cloud and rain hide optical. L-band still sees new water as a dark HH return. Lakes that were dark on both dates are not flood."
-                  : cas.has_optical
-                    ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is white cloud over this box. Radar still returns a scar. NIROPS IR is the aircraft heat map from the same week — not FIRMS."
-                    : "Optical would be smoke and cloud. Radar still returns a scar. Run python scripts/fetch_optical.py to load the 7 Jul Sentinel-2 scene."}
-              </p>
+              <p>{whySarFor(cas)}</p>
               <h2>Why we trust it</h2>
-              <p>
-                {cas.case_id === "latvia"
-                  ? "Valid GCOV pixels, 3×3 median despeckle, HH log-ratio ≥ 2 dB darker after, and the after pixel looks like water. Permanent water (dark on both dates) is not flagged. Copernicus EMSR926 is the named event; official flood vectors were not in HDX yet."
-                  : `Valid GCOV pixels only, 3×3 median despeckle, HVHV log-ratio ≥ 1.5 dB darker after the fire. Every flagged pixel sits inside NIFC WFIGS ${cite.unique_fire_identifier || ""}. GUNW HH coherence barely drops on this arid mesa (0.73 vs 0.76) — so detection stays on GCOV, not a fake second layer.`}
-              </p>
+              <p>{trustFor(cas, cite)}</p>
               <h2>Source</h2>
-              <p>
-                {cas.case_id === "latvia"
-                  ? "Copernicus EMS Rapid Mapping EMSR926. Pitch still opens on Snyder."
-                  : `Perimeter: ${cite.polygon || ""}${cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is hotspots, not this outline.`}
-              </p>
+              <p>{sourceFor(cas, cite)}</p>
               <p className="source-links">
                 {cite.url && (
                   <a href={cite.url} target="_blank" rel="noreferrer">
                     {cite.event || "Event source"}
+                  </a>
+                )}
+                {cite.hdx && (
+                  <a href={cite.hdx} target="_blank" rel="noreferrer">
+                    HDX EMSR927
+                  </a>
+                )}
+                {cite.unosat_mudflow && (
+                  <a href={cite.unosat_mudflow} target="_blank" rel="noreferrer">
+                    UNOSAT mudflow
                   </a>
                 )}
                 {cite.inciweb && (

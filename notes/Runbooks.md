@@ -12,7 +12,9 @@ How to do recurring work. New runbooks use [[templates/runbook]].
 
 - [[docs/Task 1]] — teammates: see + reproduce Snyder
 - [[docs/Task 2]] — Latvia flood stretch
+- [[docs/Task 3]] — Nepal GLOF EMSR927
 - [[Runbooks/Change Latvia]]
+- [[Runbooks/Change Nepal]]
 - NIROPS IR: `python scripts/fetch_snyder_ir.py`
 - [[docs/Get the data]] — Track B download appendix
 - [[Runbooks/Earthdata login]]

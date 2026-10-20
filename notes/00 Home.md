@@ -13,6 +13,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 - [[docs/Task 1]] — **teammates: see the Snyder map, then optionally rebuild it**
 - [[docs/Task 2]] — Latvia flood stretch (chip on the same map)
+- [[docs/Task 3]] — Nepal GLOF EMSR927 (official flood polygons)
 - [[Tasks]] — **the checklist. This week first.**
 - [[docs/Complete plan]] — today → demo day
 - [[docs/Get the data]] — Track B download appendix
@@ -55,7 +56,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**19 Oct 2026** — Snyder is still the pitch. Map extras: **NIROPS IR** on Snyder (airborne heat, not FIRMS); **permanent lakes** + cloudy Sentinel-2 **21 Aug** on Latvia. EMSR926 vectors still not public. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
+**20 Oct 2026** — Snyder is still the pitch. Three chips: Snyder (NIROPS IR), Latvia leftover water (no EMSR926 vectors), **Nepal GLOF EMSR927** with Copernicus landslides + HOT 27 Aug flood. Latvia granules off this disk so Nepal `048_D_074` fits; Latvia products stay. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
 
 ## How we use this vault
 

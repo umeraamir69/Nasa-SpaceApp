@@ -40,7 +40,7 @@ Processed result (`python scripts/change_latvia.py`): **6.5 km²** HH darkening 
 
 | Event | Dates | Granules | Why not first |
 |---|---|---|---|
-| **Nepal Rasuwa GLOF** EMSR927 | 26 Aug 2026 | Yes. Same-track `048_D_074` **16 Aug → 28 Aug**. UNOSAT + Copernicus flood polygons exist. | Himalaya: layover/shadow. After granules are mixed `QPDH` vs before `DHDH`. Better **answer key**, worse radar geometry. Backup if Latvia has no published polygon. |
+| **Nepal Rasuwa GLOF** EMSR927 | 26 Aug 2026 | Yes. Same-track `048_D_074` **16 Aug → 28 Aug**. Copernicus GRA landslides + HOT 27 Aug flood polygon on the map. UNOSAT mudflow / barrier-lake FileGDBs exist. | Added **20 Oct** as the third chip (not a Latvia replacement). Himalaya layover: flag HH darkening only inside official polygons. After is `QPDH` vs before `DHDH` — change uses HHHH. Granules are ~7 GB × 2 — use `crop_nepal.py` on this disk. |
 | **Ottawa 1 Jul 2026** | Canada Day storms, 118 mm, 4,500 basements | Yes. `098_D_065` **18 Jun → 3 Jul**. | Urban flash / sewers. 80 m L-band will not see basements. Local-impact story, weak scar. Do not process. |
 | Niagara Jul 27–Aug 2 | St. Catharines emergency | Not searched | Peak sits **inside** the 27 Jul–10 Aug NISAR gap. Water gone by 11 Aug. |
 
@@ -63,5 +63,19 @@ python scripts/change_latvia.py
 ```
 
 Map: Snyder is still the default chip. Latvia appears when `outputs/latvia/summary.json` exists. [[docs/Task 2]]
+
+## Nepal GLOF (third chip, 20 Oct)
+
+Latvia still has no EMSR926 vectors. Nepal does. Same disk cannot hold both granule pairs (~3 GB each). **Latvia `.h5` deleted 20 Oct; `outputs/latvia/` kept.**
+
+```text
+python scripts/fetch_nepal_proof.py
+python scripts/crop_nepal.py       # range-read Rasuwa crop; granules are ~7 GB × 2
+python scripts/change_nepal.py
+```
+
+Proof layers: `outputs/nepal/emsr927.geojson` (Copernicus observedEvent, landslides) and `outputs/nepal/flood_extent.geojson` (HOT, 27 Aug, 31.7 km² full Bhote Koshi / Trishuli). Change is HH darkening **inside** those polygons — mixed 80 m gorge pixels are not specular water.
+
+[[docs/Task 3]]
 
 Related: [[research/Candidate events]] [[research/Change types]] [[research/NISAR data access]] [[decisions/ADR-003 Stretch flood Latvia]]

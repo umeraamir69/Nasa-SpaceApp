@@ -67,7 +67,16 @@ python scripts/download_latvia.py
 python scripts/change_latvia.py
 ```
 
-Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md`. Task 2: `notes/docs/Task 2.md`. Pitch: `notes/docs/Pitch.md`.
+Nepal GLOF (after Latvia **granules** are off this disk; Latvia products stay):
+
+```text
+python scripts/search_nisar.py --event nepal-glof
+python scripts/fetch_nepal_proof.py
+python scripts/crop_nepal.py
+python scripts/change_nepal.py
+```
+
+Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md`. Task 2: `notes/docs/Task 2.md`. Task 3: `notes/docs/Task 3.md`. Pitch: `notes/docs/Pitch.md`.
 
 ## Scripts
 
@@ -86,6 +95,10 @@ Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md
 | `scripts/download_gunw.py` | GUNW coherence (second vote) |
 | `scripts/download_latvia.py` | Latvia flood GCOV pair `080_D_059` |
 | `scripts/change_latvia.py` | HH flood log-ratio + lake mask |
+| `scripts/download_nepal.py` | Nepal GLOF full granules (~7 GB × 2) — skip on a small disk |
+| `scripts/crop_nepal.py` | Nepal GLOF Rasuwa crop via HTTPS range-read |
+| `scripts/fetch_nepal_proof.py` | Copernicus EMSR927 + HOT 27 Aug flood |
+| `scripts/change_nepal.py` | HH GLOF log-ratio + official corridor |
 
 ## Layout
 
@@ -98,5 +111,6 @@ Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md
 | `ref/snyder/` | NIFC WFIGS perimeter (cited) |
 | `outputs/snyder/` | Snyder change PNG, GeoJSON, map layers (in git) |
 | `outputs/latvia/` | Latvia flood products (in git once committed) |
+| `outputs/nepal/` | Nepal GLOF products + EMSR927 / flood GeoJSON |
 | `app/` | FastAPI |
 | `web/` | Vite + React + Leaflet |

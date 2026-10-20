@@ -57,6 +57,7 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [x] Stretch: Latvia flood on the map — `080_D_059` 18 Aug → 30 Aug, 6.5 km² leftover water, 34 km² lakes masked ([[docs/Task 2]]). Snyder granules deleted to free disk; Snyder **products** stay.
 - [x] Snyder NIROPS IR overlay (30 Jun heat + 7 Jul perimeter) — `python scripts/fetch_snyder_ir.py`
 - [x] Latvia permanent-lake overlay + Sentinel-2 21 Aug optical (`fetch_optical.py --case latvia`)
+- [x] Stretch: Nepal Rasuwa GLOF EMSR927 on the map — `048_D_074` 16 Aug → 28 Aug, Copernicus + HOT flood polygons ([[docs/Task 3]]). Latvia granules deleted to free disk; Latvia **products** stay.
 
 ### Week 7 — Nov 4–13
 

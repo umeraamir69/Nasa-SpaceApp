@@ -12,7 +12,7 @@ Second case. **Snyder stays the pitch.** Same method, different surface: new ope
 
 Event: Latvia–Lithuania floods ~21–22 Aug 2026, Copernicus **EMSR926**. Pair: NISAR GCOV track `080_D_059`, **18 Aug → 30 Aug 2026**.
 
-Snyder **map products** stay in git (`outputs/snyder/`). Snyder **granules** were deleted on this machine on 15 Oct to free disk. Track A of [[docs/Task 1]] still works.
+Snyder **map products** stay in git (`outputs/snyder/`). Snyder **granules** were deleted on this machine on 15 Oct to free disk. Latvia **granules** were deleted on 20 Oct so Nepal GLOF could fit; Latvia **map products** stay. Track A of [[docs/Task 1]] still works. Nepal: [[docs/Task 3]].
 
 ## See it
 

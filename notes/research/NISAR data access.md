@@ -29,6 +29,9 @@ Script: `python scripts/search_nisar.py --event snyder|thunder-bay|latvia-flood|
 | 2026-10-15 | Ottawa 1 Jul GCOV | Before 17–30 Jun: **6**. After 2–26 Jul: **11** (`098_D_065` 18 Jun → 3 Jul) |
 | 2026-10-15 | Snyder GCOV + GUNW `.h5` deleted | Map products kept. Freed ~16 GB |
 | 2026-10-15 | Latvia EMSR926 GCOV download | `080_D_059` 18 Aug + 30 Aug on disk (~1.6 GB × 2). `071_A_030` downloaded then removed (empty crop) |
+| 2026-10-20 | Nepal GLOF EMSR927 GCOV search | Confirmed `048_D_074` 16 Aug DHDH → 28 Aug QPDH |
+| 2026-10-20 | Latvia GCOV `.h5` deleted | Map products kept. Freed ~3.1 GB for Nepal |
+| 2026-10-20 | Nepal EMSR927 GCOV download | Full pair is **~7 GB × 2**. Aborted. Range-read crop via `crop_nepal.py` into `data/nepal/crop/*.npz` (~1.3 MB × 2) |
 
 ## Best Snyder pair (same track)
 
@@ -48,10 +51,12 @@ GUNW (2026-10-13), same track — **removed 15 Oct**:
 
 - `...GUNW_024_048_A_021_025..._20260629..._20260711...` (~2.3 GB, **co-event**)
 
-Latvia GCOV on disk (2026-10-15), `python scripts/download_latvia.py`:
+Latvia GCOV was on disk 15–20 Oct, **deleted 20 Oct** so Nepal would fit. Map products in `outputs/latvia/` were kept.
 
-- `data/latvia/gcov/...GCOV_028_080_D_059...20260818T180558....h5` (~1.6 GB, before)
-- `data/latvia/gcov/...GCOV_029_080_D_059...20260830T180558....h5` (~1.6 GB, after)
+Nepal GCOV **crop** on disk (2026-10-20), `python scripts/crop_nepal.py` (do not store the 14 GB pair here):
+
+- `data/nepal/crop/before.npz` — 16 Aug DHDH HHHH/HVHV, Rasuwa box, 1.3 MB
+- `data/nepal/crop/after.npz` — 28 Aug QPDH HHHH/HVHV, same box, 1.4 MB
 
 The 11–23 Jul pair was downloaded then removed — disk was full. No 17–29 Jun pre-fire GUNW on `048_A_021`. Coherence barely drops inside the scar — see [[research/Change detection]].
 

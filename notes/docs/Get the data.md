@@ -57,7 +57,7 @@ That writes `~/.netrc` (mode 600). The scripts then use `strategy=netrc`. Option
 | `scripts/download_gunw.py` | Same-track GUNW (coherence second vote) | `python scripts/download_gunw.py` |
 | `scripts/open_panoply.sh` | Panoply on Java 21. **Panoply cannot open these .h5 files.** | skip for data |
 
-Search stretches. Latvia download is Task 2 (`python scripts/download_latvia.py`) after Snyder **granules** are off this disk. Thunder Bay still needs ~14 GB — do not grab it here.
+Search stretches. Latvia download is Task 2 (`python scripts/download_latvia.py`) after Snyder **granules** are off this disk. Nepal GLOF is Task 3 (`python scripts/download_nepal.py`) after Latvia **granules** are off this disk (Latvia products stay). Thunder Bay still needs ~14 GB — do not grab it here.
 
 ```text
 python scripts/search_nisar.py --event thunder-bay

@@ -7,7 +7,7 @@ tags:
 
 ## When to use
 
-Week 4+ local demo. FastAPI serves case GeoJSON; Vite is the map UI. Default case is Snyder. Latvia appears when `outputs/latvia/summary.json` exists.
+Week 4+ local demo. FastAPI serves case GeoJSON; Vite is the map UI. Default case is Snyder. Latvia / Nepal chips appear when their `outputs/*/summary.json` exists.
 
 ## Steps
 
@@ -26,7 +26,7 @@ npm run dev
 
 Open http://127.0.0.1:5173
 
-Vite proxies `/api`, `/media-latvia`, then `/media` to `:8000`. If `outputs/snyder/layers/` is missing, run `python scripts/pipeline_snyder.py` (or `change_snyder.py` then `fetch_optical.py`). Optical needs `optical.png` or the chip stays hidden. Latvia: `python scripts/change_latvia.py` then restart the API.
+Vite proxies `/api`, `/media-latvia`, `/media-nepal`, then `/media` to `:8000`. If `outputs/snyder/layers/` is missing, run `python scripts/pipeline_snyder.py` (or `change_snyder.py` then `fetch_optical.py`). Optical needs `optical.png` or the chip stays hidden. Latvia: `python scripts/change_latvia.py`. Nepal: `python scripts/fetch_nepal_proof.py` then `change_nepal.py`. Restart the API after a new case.
 
 ## If it fails
 

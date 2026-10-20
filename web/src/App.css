@@ -126,6 +126,10 @@
   background: #3d5a80;
 }
 
+.swatch.flood {
+  background: #0077b6;
+}
+
 .brief {
   border-left: 1px solid #2a2e33;
   padding: 18px 18px 28px;
