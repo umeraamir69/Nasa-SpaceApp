@@ -31,7 +31,7 @@ Script: `python scripts/search_nisar.py --event snyder|thunder-bay|latvia-flood|
 | 2026-10-15 | Latvia EMSR926 GCOV download | `080_D_059` 18 Aug + 30 Aug on disk (~1.6 GB × 2). `071_A_030` downloaded then removed (empty crop) |
 | 2026-10-20 | Nepal GLOF EMSR927 GCOV search | Confirmed `048_D_074` 16 Aug DHDH → 28 Aug QPDH |
 | 2026-10-20 | Latvia GCOV `.h5` deleted | Map products kept. Freed ~3.1 GB for Nepal |
-| 2026-10-20 | Nepal EMSR927 GCOV download | Full pair is **~7 GB × 2**. Aborted. Range-read crop via `crop_nepal.py` into `data/nepal/crop/*.npz` (~1.3 MB × 2) |
+| 2026-10-20 | Nepal EMSR927 GCOV download | Full pair is **~7 GB × 2**. First attempt aborted (4.8 GB free). After deleting idle Colima (~11 GB) + caches: **downloaded** `048_D_074` 16 Aug (6.6 GB DHDH) + 28 Aug (7.4 GB QPDH) into `data/nepal/gcov/`. Crop npz kept. |
 
 ## Best Snyder pair (same track)
 
@@ -53,10 +53,11 @@ GUNW (2026-10-13), same track — **removed 15 Oct**:
 
 Latvia GCOV was on disk 15–20 Oct, **deleted 20 Oct** so Nepal would fit. Map products in `outputs/latvia/` were kept.
 
-Nepal GCOV **crop** on disk (2026-10-20), `python scripts/crop_nepal.py` (do not store the 14 GB pair here):
+Nepal GCOV on disk (2026-10-20), `python scripts/download_nepal.py` after Colima + caches were cleared (~23 GB free, now ~7 GB free):
 
-- `data/nepal/crop/before.npz` — 16 Aug DHDH HHHH/HVHV, Rasuwa box, 1.3 MB
-- `data/nepal/crop/after.npz` — 28 Aug QPDH HHHH/HVHV, same box, 1.4 MB
+- `data/nepal/gcov/...GCOV_028_048_D_074...20260816T125812....h5` (6.6 GB, before, DHDH)
+- `data/nepal/gcov/...GCOV_029_048_D_074...20260828T125812....h5` (7.4 GB, after, QPDH)
+- `data/nepal/crop/{before,after}.npz` — Rasuwa box only (~1.3 MB each), from `crop_nepal.py`
 
 The 11–23 Jul pair was downloaded then removed — disk was full. No 17–29 Jun pre-fire GUNW on `048_A_021`. Coherence barely drops inside the scar — see [[research/Change detection]].
 

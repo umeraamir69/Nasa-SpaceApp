@@ -41,6 +41,8 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 - [[Tasks]]
 - [[Inbox]]
 - [[sessions/2026-09-23]]
+- [[sessions/2026-10-20]]
+- [[sessions/2026-10-26]] — chat backup (Nepal GLOF / Colab)
 
 ### Research
 - [[Research]]
@@ -56,7 +58,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**20 Oct 2026** — Snyder is still the pitch. Three chips: Snyder (NIROPS IR), Latvia leftover water (no EMSR926 vectors), **Nepal GLOF EMSR927** with Copernicus landslides + HOT 27 Aug flood. Latvia granules off this disk so Nepal `048_D_074` fits; Latvia products stay. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
+**26 Oct 2026** — Snyder is still the pitch. Three chips: Snyder, Latvia, **Nepal GLOF EMSR927**. Nepal pair on disk; Colab notebook + [[sessions/2026-10-26]] are the chat/ops backup. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
 
 ## How we use this vault
 

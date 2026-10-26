@@ -72,9 +72,11 @@ Nepal GLOF (after Latvia **granules** are off this disk; Latvia products stay):
 ```text
 python scripts/search_nisar.py --event nepal-glof
 python scripts/fetch_nepal_proof.py
-python scripts/crop_nepal.py
+python scripts/download_nepal.py   # ~14 GB; needs ~16 GB free
 python scripts/change_nepal.py
 ```
+
+Laptop full? `python scripts/crop_nepal.py` or Colab: `notebooks/nepal_glof_colab.ipynb`.
 
 Do not download Thunder Bay on the same disk. Full tables: `notes/docs/Task 1.md`. Task 2: `notes/docs/Task 2.md`. Task 3: `notes/docs/Task 3.md`. Pitch: `notes/docs/Pitch.md`.
 

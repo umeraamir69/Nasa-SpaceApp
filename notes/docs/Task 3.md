@@ -29,18 +29,24 @@ Open http://127.0.0.1:5173 — default is still Snyder. Click **Nepal GLOF**. Ye
 
 ## Reproduce it
 
-Needs Earthdata. Full granules are **~7 GB × 2** (not the ~3 GB plains frames). On this laptop use the range-read crop instead of `download_nepal.py`. Latvia **`.h5` granules** were deleted 20 Oct; Latvia **map products** in `outputs/latvia/` stay.
+Needs Earthdata. Full granules are **~7 GB × 2**. Need ~16 GB free, or use Colab ([[Runbooks/Nepal Colab]]). Latvia **`.h5` granules** were deleted 20 Oct; Latvia **map products** in `outputs/latvia/` stay. Snyder preview PNGs under `data/snyder/` were deleted 20 Oct (map products stay).
 
 ```text
 python scripts/search_nisar.py --event nepal-glof
 python scripts/fetch_nepal_proof.py
-python scripts/crop_nepal.py      # Rasuwa box only; do not store 14 GB
+python scripts/download_nepal.py   # ~14 GB into data/nepal/gcov/
 python scripts/change_nepal.py
 ```
 
-Writes `data/nepal/crop/*.npz` (gitignored) and `outputs/nepal/`. Then restart the API.
+Small-disk / Colab path (no 14 GB on the laptop):
 
-`python scripts/download_nepal.py` only if you have ~16 GB free. Do not download Thunder Bay.
+```text
+python scripts/crop_nepal.py       # HTTPS range-read Rasuwa box
+# or open notebooks/nepal_glof_colab.ipynb
+python scripts/change_nepal.py
+```
+
+Writes `data/nepal/` (gitignored) and `outputs/nepal/`. Then restart the API. Do not download Thunder Bay.
 
 ## What you should see
 

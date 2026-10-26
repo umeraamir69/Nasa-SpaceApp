@@ -3,7 +3,8 @@
 
 Locked: track 048_D_074, 16 Aug 2026 before (DHDH), 28 Aug 2026 after (QPDH).
 Does not download Snyder or Latvia. These Himalaya frames are ~7 GB each (~14 GB pair).
-On a small disk use `python scripts/crop_nepal.py` instead (HTTPS range-read of the Rasuwa crop).
+Need ~16 GB free. On a small disk use `python scripts/crop_nepal.py` or Colab
+(`notebooks/nepal_glof_colab.ipynb`).
 """
 
 from __future__ import annotations
