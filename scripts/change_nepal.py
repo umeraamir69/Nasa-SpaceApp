@@ -24,6 +24,8 @@ from shapely import transform as shp_xy
 from shapely.geometry import mapping, shape
 from shapely.ops import unary_union
 
+import granule_modes
+
 ROOT = Path(__file__).resolve().parents[1]
 GCOV = ROOT / "data" / "nepal" / "gcov"
 CROP = ROOT / "data" / "nepal" / "crop"
@@ -104,15 +106,15 @@ def load_npz_pair():
     }
 
 
-def load_gcov():
+def load_gcov(needle: str = "048_D_074"):
     cropped = load_npz_pair()
     if cropped is not None:
         return cropped
 
-    files = sorted(p for p in GCOV.glob("*.h5") if "048_D_074" in p.name)
+    files = sorted(p for p in GCOV.glob("*.h5") if needle in p.name)
     if len(files) < 2:
         raise SystemExit(
-            f"need data/nepal/crop/{{before,after}}.npz or 2 048_D_074 .h5 in {GCOV} — "
+            f"need data/nepal/crop/{{before,after}}.npz or 2 {needle} .h5 in {GCOV} — "
             "run python scripts/crop_nepal.py (small disk) or download_nepal.py"
         )
     dated = []
@@ -285,10 +287,24 @@ def layer_bounds(x: np.ndarray, y: np.ndarray, dx: float, dy: float, epsg: int) 
 
 
 def main() -> int:
+    import argparse as _ap
+    _parser = _ap.ArgumentParser(description="Nepal GLOF GCOV change.")
+    _parser.add_argument("--needle", default="048_D_074",
+                         help="track substring for local .h5 granules")
+    _parser.add_argument("--min-pixels", type=int, default=MIN_PIXELS,
+                         help="drop smaller blobs (default 8; gorge rivers need ~3)")
+    _parser.add_argument("--no-open", action="store_true",
+                         help="skip the 3x3 morphological opening (it erases rivers "
+                              "narrower than ~2 pixels at 80 m)")
+    _args = _parser.parse_args()
+
     if not EMSR_PATH.exists() or not FLOOD_PATH.exists():
         raise SystemExit("missing proof polygons — run python scripts/fetch_nepal_proof.py")
 
-    src = load_gcov()
+    src = load_gcov(_args.needle)
+    # Nepal shipped a DHDH→QPDH cross-mode pair once; that path now aborts.
+    # Re-run only with same beam + polarisation mode on both dates.
+    granule_modes.require_compatible(src["before_path"], src["after_path"])
     pol = src["primary_pol"]
     x, y, dx, dy = src["x"], src["y"], src["dx"], src["dy"]
     transform = affine_for(x, y, dx, dy)
@@ -332,12 +348,15 @@ def main() -> int:
         & np.isfinite(diff)
         & (diff <= -THRESH_DB)
     )
-    change = binary_opening(change, structure=np.ones((3, 3), dtype=bool))
+    opened = False
+    if not _args.no_open:
+        change = binary_opening(change, structure=np.ones((3, 3), dtype=bool))
+        opened = True
     labeled, nlab = label(change)
     keep = np.zeros_like(change)
     for i in range(1, nlab + 1):
         blob = labeled == i
-        if int(blob.sum()) >= MIN_PIXELS:
+        if int(blob.sum()) >= _args.min_pixels:
             keep |= blob
     change = keep
 
@@ -440,6 +459,8 @@ def main() -> int:
         "threshold_db": THRESH_DB,
         "water_db": WATER_DB,
         "despeckle": f"median {MEDIAN_SIZE}x{MEDIAN_SIZE}",
+        "morphology": "binary_opening 3x3" if opened else "none (keeps narrow gorge rivers)",
+        "min_pixels": _args.min_pixels,
         "primary_pol": pol,
         "pols": src["pols"],
         "mask": "official EMSR927 + HOT flood (layover)",

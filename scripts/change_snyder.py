@@ -24,6 +24,8 @@ from shapely import transform as shp_xy
 from shapely.geometry import mapping, shape
 from shapely.ops import unary_union
 
+import granule_modes
+
 ROOT = Path(__file__).resolve().parents[1]
 GCOV = ROOT / "data" / "snyder" / "gcov"
 GUNW = ROOT / "data" / "snyder" / "gunw"
@@ -280,6 +282,7 @@ def save_panel(path: Path, arr, title, cmap, vmin, vmax, overlay_fn=None, cbar="
 
 def main() -> int:
     src = load_gcov()
+    granule_modes.require_compatible(src["before_path"], src["after_path"])
     geom_ll, geom_utm, perim_props, perim_gj = load_perimeter(src["epsg"])
     x, y, dx, dy = src["x"], src["y"], src["dx"], src["dy"]
     transform = affine_for(x, y, dx, dy)

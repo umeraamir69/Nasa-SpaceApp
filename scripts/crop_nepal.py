@@ -7,6 +7,7 @@ Writes data/nepal/crop/{before,after}.npz (HHHH + mask, Rasuwa box only).
 
 from __future__ import annotations
 
+import argparse
 import sys
 from pathlib import Path
 
@@ -29,6 +30,9 @@ WINDOWS = (
 SHORT_NAME = "NISAR_L2_GCOV_PROVISIONAL_V1"
 GRID = "science/LSAR/GCOV/grids/frequencyB"
 POLS = ("HHHH", "HVHV")
+# CMR lists P (production) and X product versions of the same acquisition;
+# always compare the same version on both dates.
+PREFER_VERSION = "P05023"
 
 
 def login():
@@ -95,27 +99,58 @@ def extract(handle, out_path: Path, granule: str) -> None:
     print(f"  wrote {out_path} ({mb:.1f} MB) date={payload['date']}")
 
 
+def pick(match: list, prefer: str):
+    """Prefer one product version (P vs X) so both dates compare alike."""
+    same = [g for g in match if prefer in granule_id(g)]
+    pool = same or match
+    pool = sorted(pool, key=granule_id)
+    if same and len(match) > len(same):
+        print(f"  preferring {prefer} ({len(same)}/{len(match)} matches)")
+    return pool[0]
+
+
 def main() -> int:
+    global GLOF_BBOX, OUT
+    parser = argparse.ArgumentParser(description="Range-read a GCOV crop without the 7 GB download.")
+    parser.add_argument("--needle", default=NEEDLE, help="track substring, e.g. 048_D_074")
+    parser.add_argument("--bbox", default=",".join(map(str, BBOX)),
+                        help="lon_min,lat_min,lon_max,lat_max CMR search box")
+    parser.add_argument("--crop", default=",".join(map(str, GLOF_BBOX)),
+                        help="lon_min,lat_min,lon_max,lat_max crop box")
+    parser.add_argument("--before", default=",".join(WINDOWS[0][1:]), help="start,end before window")
+    parser.add_argument("--after", default=",".join(WINDOWS[1][1:]), help="start,end after window")
+    parser.add_argument("--out", default=str(OUT), help="output dir for before.npz/after.npz")
+    parser.add_argument("--prefer", default=PREFER_VERSION, help="product version substring")
+    args = parser.parse_args()
+
+    GLOF_BBOX = tuple(map(float, args.crop.split(",")))
+    search_bbox = tuple(map(float, args.bbox.split(",")))
+    windows = (("before", *args.before.split(",")), ("after", *args.after.split(",")))
+    out = Path(args.out)
+    OUT = out
+
     if login() is None:
         print("Not logged in. Need ~/.netrc or EARTHDATA_* env vars.", file=sys.stderr)
         return 1
 
-    for label, start, end in WINDOWS:
+    for label, start, end in windows:
         hits = earthaccess.search_data(
             short_name=SHORT_NAME,
-            bounding_box=BBOX,
+            bounding_box=search_bbox,
             temporal=(start, end),
             count=20,
         )
-        match = [g for g in hits if NEEDLE in granule_id(g) and "GCOV" in granule_id(g)]
-        print(f"{label} {start} → {end}: {len(hits)} hits, {len(match)} match {NEEDLE}")
+        match = [g for g in hits if args.needle in granule_id(g) and "GCOV" in granule_id(g)]
+        print(f"{label} {start} → {end}: {len(hits)} hits, {len(match)} match {args.needle}")
         if not match:
-            print(f"No {NEEDLE} granule in {label} window", file=sys.stderr)
+            print(f"No {args.needle} granule in {label} window", file=sys.stderr)
             return 1
-        gid = granule_id(match[0])
+        chosen = pick(match, args.prefer)
+        gid = granule_id(chosen)
         print(f"  opening {gid} remotely (no 7 GB download)")
-        opened = earthaccess.open(match[:1])
-        extract(opened[0], OUT / f"{label}.npz", gid)
+        opened = earthaccess.open([chosen])
+        out.mkdir(parents=True, exist_ok=True)
+        extract(opened[0], out / f"{label}.npz", gid)
     return 0
 
 

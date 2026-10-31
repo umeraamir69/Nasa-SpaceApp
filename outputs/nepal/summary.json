@@ -1,37 +1,79 @@
 {
-  "when_utc": "2026-10-20T16:28:09Z",
-  "case": "nepal",
-  "event": "Nepal Rasuwa GLOF EMSR927",
-  "before": "2026-08-16",
-  "after": "2026-08-28",
-  "before_file": "NISAR_L2_PR_GCOV_028_048_D_074_4005_DHDH_A_20260816T125812_20260816T125846_P05023_N_F_J_001",
-  "after_file": "NISAR_L2_PR_GCOV_029_048_D_074_2005_QPDH_A_20260828T125812_20260828T125846_P05023_N_F_J_001",
-  "grid": "science/LSAR/GCOV/grids/frequencyB",
-  "pixel_m": 80.0,
-  "threshold_db": 2.0,
-  "water_db": -14.0,
-  "despeckle": "median 3x3",
-  "primary_pol": "HHHH",
-  "pols": [
-    "HHHH",
-    "HVHV"
+ "when_utc": "2026-10-30T13:56:02Z",
+ "case": "nepal",
+ "event": "Nepal Rasuwa GLOF EMSR927",
+ "before": "2026-08-19",
+ "after": "2026-08-31",
+ "before_file": "NISAR_L2_PR_GCOV_028_098_A_016_4005_DHDH_A_20260819T233918_20260819T233953_P05023_N_F_J_001.h5",
+ "after_file": "NISAR_L2_PR_GCOV_029_098_A_016_4005_DHDH_A_20260831T233918_20260831T233952_P05023_N_F_J_001.h5",
+ "grid": "science/LSAR/GCOV/grids/frequencyB",
+ "pixel_m": 80.0,
+ "threshold_db": 2.0,
+ "water_db": -14.0,
+ "despeckle": "median 3x3",
+ "morphology": "none (keeps narrow gorge rivers)",
+ "min_pixels": 3,
+ "primary_pol": "HHHH",
+ "pols": [
+  "HHHH",
+  "HVHV"
+ ],
+ "mask": "official EMSR927 + HOT flood (layover)",
+ "hh_median_diff_db": 0.018013954162597656,
+ "change_pixels": 377,
+ "area_km2": 2.413,
+ "permanent_water_km2": 0.269,
+ "official_flood_km2_in_crop": 13.536,
+ "emsr_pixels": 1159,
+ "precision_vs_flood": 0.987,
+ "recall_vs_flood": 0.176,
+ "citation": {
+  "event": "Copernicus EMS Rapid Mapping EMSR927 + HOT flood extent 27 Aug 2026",
+  "url": "https://mapping.emergency.copernicus.eu/activations/EMSR927/",
+  "hdx": "https://data.humdata.org/dataset/npl-flood-emsr927",
+  "hot_flood": "https://production-raw-data-api.s3.amazonaws.com/ISO3/NPL/combined/hot_flood_npl_flood_extent.geojson",
+  "unosat_mudflow": "https://data.humdata.org/dataset/mudflow-rockflow-extent-as-of-26-27-august-2026-in-rasuwa-district-bagmati-province-nepal",
+  "unosat_barrier_lakes": "https://data.humdata.org/dataset/newly-formed-barrier-lakes-following-an-ice-rock-avalanche-in-rasuwa-district-nepal-as-of-",
+  "note": "Copernicus GRA observedEvent is mapped landslides along the GLOF path. Standing water is the HOT 27 Aug flood polygon (Bhote Koshi / Trishuli). UNOSAT published mudflow and barrier-lake FileGDBs for the same dates."
+ },
+ "slope_check": {
+  "dem": "Copernicus DSM 30 m (AWS Open Data)",
+  "flagged_pixels": 2890,
+  "flagged_median_slope_deg": 8.0,
+  "background_median_slope_deg": 33.0,
+  "flagged_frac_over_10deg": 0.411,
+  "background_frac_over_10deg": 0.973,
+  "flagged_frac_over_20deg": 0.156,
+  "background_frac_over_20deg": 0.879
+ },
+ "gunw_check": {
+  "gunw_file": "NISAR_L2_PR_GUNW_028_098_A_016_029_4000_SH_20260819T233918_20260819T233953_20260831T233918_20260831T233952_P05023_N_F_J_001.h5",
+  "regions": [
+   {
+    "region": "shipped_change_flags",
+    "n_px": 377,
+    "mean": 0.1091,
+    "low_frac": 0.9735
+   },
+   {
+    "region": "background",
+    "n_px": 232523,
+    "mean": 0.5928,
+    "low_frac": 0.1616
+   },
+   {
+    "region": "truth:flood_extent.geojson",
+    "n_px": 2115,
+    "mean": 0.1964,
+    "low_frac": 0.8681
+   },
+   {
+    "region": "truth:emsr927.geojson",
+    "n_px": 1159,
+    "mean": 0.1767,
+    "low_frac": 0.8921
+   }
   ],
-  "mask": "official EMSR927 + HOT flood (layover)",
-  "hh_median_diff_db": 0.3884105682373047,
-  "change_pixels": 77,
-  "area_km2": 0.493,
-  "permanent_water_km2": 0.013,
-  "official_flood_km2_in_crop": 13.536,
-  "emsr_pixels": 1159,
-  "precision_vs_flood": 0.974,
-  "recall_vs_flood": 0.041,
-  "citation": {
-    "event": "Copernicus EMS Rapid Mapping EMSR927 + HOT flood extent 27 Aug 2026",
-    "url": "https://mapping.emergency.copernicus.eu/activations/EMSR927/",
-    "hdx": "https://data.humdata.org/dataset/npl-flood-emsr927",
-    "hot_flood": "https://production-raw-data-api.s3.amazonaws.com/ISO3/NPL/combined/hot_flood_npl_flood_extent.geojson",
-    "unosat_mudflow": "https://data.humdata.org/dataset/mudflow-rockflow-extent-as-of-26-27-august-2026-in-rasuwa-district-bagmati-province-nepal",
-    "unosat_barrier_lakes": "https://data.humdata.org/dataset/newly-formed-barrier-lakes-following-an-ice-rock-avalanche-in-rasuwa-district-nepal-as-of-",
-    "note": "Copernicus GRA observedEvent is mapped landslides along the GLOF path. Standing water is the HOT 27 Aug flood polygon (Bhote Koshi / Trishuli). UNOSAT published mudflow and barrier-lake FileGDBs for the same dates."
-  }
+  "verdict": "coherence drop inside flags supports water"
+ }
 }

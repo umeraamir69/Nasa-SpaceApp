@@ -67,6 +67,18 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [ ] Confirm weekend roles
 - [ ] Offline copies of data/code; deps pre-installed
 
+### Done 29–30 Oct (see `docs/a-to-z.md`)
+
+- [x] Nepal same-mode reprocessing (098_A_016, P 0.99 / R 0.18)
+- [x] Thunder Bay 36 (235 km²; FIRMS key still pending)
+- [x] Crete EMSR933 (honest negative, DEM land mask)
+- [x] Isaias (marginal 0.5 km² fringe; 148 sliver rejected)
+- [x] Latvia 7-rule water-index experiment (negative stands)
+- [x] Polygon inspector + swipe + pitch mode + site redesign
+- [x] Accuracy review + same-mode guard + slope audit + threshold sweep
+- [x] 104 live checks + 9 unit tests green; A–Z doc + README refresh
+- [ ] Rotate Earthdata password (was pasted in chat)
+
 ## Done
 
 - [x] Stand up the Obsidian vault in `notes/`

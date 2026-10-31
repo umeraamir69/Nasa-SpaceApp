@@ -1,0 +1,130 @@
+{
+ "when_utc": "2026-10-30T17:14:34Z",
+ "case": "isaias",
+ "event": "Hurricane Isaias flood/surge",
+ "before": "2026-09-30",
+ "after": "2026-10-12",
+ "before_file": "NISAR_L2_PR_GCOV_032_004_A_017_4005_DHDH_A_20260930T111043_20260930T111118_P05023_N_F_J_001.h5",
+ "after_file": "NISAR_L2_PR_GCOV_033_004_A_017_4005_DHDH_A_20261012T111043_20261012T111118_P05023_N_F_J_001.h5",
+ "grid": "science/LSAR/GCOV/grids/frequencyB",
+ "pixel_m": 80.0,
+ "threshold_db": 1.5,
+ "water_db": -14.0,
+ "after_water_db": -10.0,
+ "despeckle": "median 3x3",
+ "primary_pol": "HHHH",
+ "hh_median_diff_db": 0.5131931304931641,
+ "change_pixels": 81,
+ "area_km2": 0.518,
+ "permanent_water_km2": 1.53,
+ "emsr_water_km2_in_crop": 0.0,
+ "citation": {
+  "event": "Hurricane Isaias \u2014 Cat 2 landfall near Destin, FL, 9 Oct 2026",
+  "url": "https://www.nhc.noaa.gov/",
+  "note": "004 pair: after 3 days post-landfall (surge receded). Gates 1.5 dB / -10 dB for turbid bay-fringe water. No USGS STN event published yet \u2014 unvalidated."
+ },
+ "slope_check": {
+  "dem": "Copernicus DSM 30 m (AWS Open Data)",
+  "flagged_pixels": 648,
+  "flagged_median_slope_deg": 0.5,
+  "background_median_slope_deg": 1.7,
+  "flagged_frac_over_10deg": 0.006,
+  "background_frac_over_10deg": 0.025,
+  "flagged_frac_over_20deg": 0.0,
+  "background_frac_over_20deg": 0.001
+ },
+ "soil_moisture_check": {
+  "product": "NISAR_L3_SME2_PROVISIONAL_V1 (beta)",
+  "box": [
+   -87.202,
+   30.15,
+   -86.622,
+   31.101
+  ],
+  "before": {
+   "file": "NISAR_L3_PR_SME2_032_004_A_017_4005_DHDH_A_20260930T111043_20260930T111118_P05023_N_F_J_001.h5",
+   "rows": [
+    646,
+    1170
+   ],
+   "cols": [
+    1529,
+    1808
+   ],
+   "land_frac": 0.687,
+   "DSG": {
+    "median_m3m3": 0.3598,
+    "n_px": 13123,
+    "flag0_frac": 0.03
+   },
+   "PMI": {
+    "median_m3m3": 0.1196,
+    "n_px": 12815,
+    "flag0_frac": 0.0149
+   },
+   "TSR": {
+    "median_m3m3": 0.204,
+    "n_px": 13399,
+    "flag0_frac": 0.0
+   }
+  },
+  "after": {
+   "file": "NISAR_L3_PR_SME2_033_004_A_017_4005_DHDH_A_20261012T111043_20261012T111118_P05023_N_F_J_001.h5",
+   "rows": [
+    646,
+    1170
+   ],
+   "cols": [
+    1529,
+    1808
+   ],
+   "land_frac": 0.687,
+   "DSG": {
+    "median_m3m3": 0.378,
+    "n_px": 13197,
+    "flag0_frac": 0.0309
+   },
+   "PMI": {
+    "median_m3m3": 0.1667,
+    "n_px": 12849,
+    "flag0_frac": 0.0158
+   },
+   "TSR": {
+    "median_m3m3": 0.256,
+    "n_px": 13399,
+    "flag0_frac": 0.0
+   }
+  },
+  "mid": {
+   "file": "NISAR_L3_PR_SME2_032_127_D_073_4005_DHDH_A_20261009T002830_20261009T002905_P05023_N_F_J_001.h5",
+   "rows": [
+    646,
+    1170
+   ],
+   "cols": [
+    179,
+    458
+   ],
+   "land_frac": 0.687,
+   "DSG": {
+    "median_m3m3": 0.3798,
+    "n_px": 76696,
+    "flag0_frac": 0.1033
+   },
+   "PMI": {
+    "median_m3m3": 0.148,
+    "n_px": 73396,
+    "flag0_frac": 0.031
+   },
+   "TSR": {
+    "median_m3m3": 0.235,
+    "n_px": 76992,
+    "flag0_frac": 0.0
+   }
+  },
+  "gcov_scene_median_db": 0.5131931304931641,
+  "delta_DSG": 0.0182,
+  "delta_PMI": 0.0471,
+  "delta_TSR": 0.052
+ }
+}

@@ -4,6 +4,7 @@ notes/.obsidian/cache
 notes/.trash/
 .DS_Store
 venv/
+.conda/
 .env
 data/**
 !data/.gitkeep

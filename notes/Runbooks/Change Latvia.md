@@ -14,8 +14,9 @@ After the two `080_D_059` GCOV `.h5` files are in `data/latvia/gcov/`. Produces 
 1. `source venv/bin/activate`
 2. `python scripts/download_latvia.py` — skip if the two `080_D_059` files are already there
 3. `python scripts/change_latvia.py`
-4. Open `outputs/latvia/summary.json` — expect ~6.5 km² new water, ~34 km² lakes
-5. Restart uvicorn; click **Latvia flood** on http://127.0.0.1:5173
+4. Open `outputs/latvia/summary.json` — expect ~6.5 km² of *unvalidated* fragments plus ~34 km² masked lakes. This pair is a negative result (post-peak dry-down), not a flood map.
+5. `python scripts/validate_latvia.py /tmp/lva_waterways/waterways.geojson` — rivers reference layer + proximity stats (needs the HOT download once; see script docstring)
+6. Restart uvicorn; click **Latvia flood** on http://127.0.0.1:5173
 
 ## If it fails
 

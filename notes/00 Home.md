@@ -58,7 +58,7 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 ## Current status
 
-**26 Oct 2026** — Snyder is still the pitch. Three chips: Snyder, Latvia, **Nepal GLOF EMSR927**. Nepal pair on disk; Colab notebook + [[sessions/2026-10-26]] are the chat/ops backup. Team page + password + out-loud pitch still human. Demo **14–15 Nov**.
+**30 Oct 2026** — Six cases live: Snyder, Thunder Bay 36, Nepal (same-mode reprocessed), Latvia (proven negative), Crete (negative), Isaias (marginal). Inspector + swipe + pitch mode + redesign shipped. Full guide: `docs/a-to-z.md` (repo root). Still open: FIRMS key (Thunder Bay truth), Earthdata password rotation, demo-day hardening. Demo **14–15 Nov**.
 
 ## How we use this vault
 

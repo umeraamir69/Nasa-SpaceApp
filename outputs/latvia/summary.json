@@ -1,25 +1,117 @@
 {
-  "when_utc": "2026-10-19T15:45:53Z",
-  "case": "latvia",
-  "event": "Latvia\u2013Lithuania flood EMSR926",
-  "before": "2026-08-18",
-  "after": "2026-08-30",
-  "before_file": "NISAR_L2_PR_GCOV_028_080_D_059_2005_DHDH_A_20260818T180558_20260818T180634_P05023_N_F_J_001.h5",
-  "after_file": "NISAR_L2_PR_GCOV_029_080_D_059_2005_DHDH_A_20260830T180558_20260830T180634_P05023_N_F_J_001.h5",
-  "grid": "science/LSAR/GCOV/grids/frequencyB",
-  "pixel_m": 80.0,
-  "threshold_db": 2.0,
-  "water_db": -14.0,
-  "after_water_db": -12.0,
-  "despeckle": "median 3x3",
-  "primary_pol": "HHHH",
-  "hh_median_diff_db": 0.2022237777709961,
-  "change_pixels": 1008,
-  "area_km2": 6.451,
-  "permanent_water_km2": 34.048,
-  "citation": {
-    "event": "Copernicus EMS Rapid Mapping EMSR926",
-    "url": "https://mapping.emergency.copernicus.eu/activations/EMSR926/",
-    "note": "Official flood vectors were not in HDX as of 19 Oct 2026. Detection is HH darkening minus permanent water. Lakes overlay is that mask."
-  }
+ "when_utc": "2026-10-19T15:45:53Z",
+ "case": "latvia",
+ "event": "Latvia\u2013Lithuania flood EMSR926",
+ "before": "2026-08-18",
+ "after": "2026-08-30",
+ "before_file": "NISAR_L2_PR_GCOV_028_080_D_059_2005_DHDH_A_20260818T180558_20260818T180634_P05023_N_F_J_001.h5",
+ "after_file": "NISAR_L2_PR_GCOV_029_080_D_059_2005_DHDH_A_20260830T180558_20260830T180634_P05023_N_F_J_001.h5",
+ "grid": "science/LSAR/GCOV/grids/frequencyB",
+ "pixel_m": 80.0,
+ "threshold_db": 2.0,
+ "water_db": -14.0,
+ "after_water_db": -12.0,
+ "despeckle": "median 3x3",
+ "primary_pol": "HHHH",
+ "hh_median_diff_db": 0.2022237777709961,
+ "change_pixels": 1008,
+ "area_km2": 6.451,
+ "permanent_water_km2": 34.048,
+ "citation": {
+  "event": "Copernicus EMS Rapid Mapping EMSR926",
+  "url": "https://mapping.emergency.copernicus.eu/activations/EMSR926/",
+  "note": "Official EMSR926 flood vectors were still not on HDX as of 29 Oct 2026 (exact-phrase search, zero hits). Detection is HH darkening minus permanent water, checked against HOTOSM waterways with no river association found."
+ },
+ "waterways_check": {
+  "reference": "HOTOSM LVA waterways (river/stream/canal), OpenStreetMap via HDX",
+  "n_change": 40,
+  "change_median_m": 1123,
+  "change_within_250m": 2,
+  "change_within_500m": 9,
+  "n_random": 300,
+  "random_median_m": 985,
+  "random_within_250m": 49,
+  "random_within_500m": 89
+ },
+ "layers_note": "Web layers keep rows 0..530 of the 993-row processing crop; rows below are mostly outside the valid swath overlap. Panel change.png/confidence.png still show the full crop.",
+ "verdict": "No confident flood detection. The 18\u219230 Aug pair falls 8+ days after the 21\u201322 Aug peak rain, the scene median brightened (+0.2 dB, dry-down), and the flagged fragments sit no closer to mapped waterways than random points. Permanent lakes (34 km\u00b2) are correctly masked. Treat this case as a negative result: L-band confirms the flood wave had passed, not a flood map.",
+ "slope_check": {
+  "dem": "Copernicus DSM 30 m (AWS Open Data)",
+  "flagged_pixels": 8245,
+  "flagged_median_slope_deg": 1.0,
+  "background_median_slope_deg": 3.5,
+  "flagged_frac_over_10deg": 0.0,
+  "background_frac_over_10deg": 0.149,
+  "flagged_frac_over_20deg": 0.0,
+  "background_frac_over_20deg": 0.015
+ },
+ "water_index_experiment": {
+  "date": "2026-10-30",
+  "pair": "080_D_059 2026-08-18 -> 2026-08-30 (raw granules, data/latvia/gcov)",
+  "script": "scripts/experiment_latvia.py",
+  "scene_hh_diff_median_db": 0.2,
+  "rules": {
+   "shipped(dHH<=-2,after<=-12)": {
+    "px": 1008,
+    "blobs": 40,
+    "km2": 6.45
+   },
+   "loose(after<=-10)": {
+    "px": 1725,
+    "blobs": 72,
+    "km2": 11.04
+   },
+   "nogate(no after-gate)": {
+    "px": 2345,
+    "blobs": 88,
+    "km2": 15.01
+   },
+   "strict(dHH<=-3)": {
+    "px": 309,
+    "blobs": 14,
+    "km2": 1.98
+   },
+   "hv(dHV<=-2,afterHV<=-18)": {
+    "px": 0,
+    "blobs": 0,
+    "km2": 0.0
+   },
+   "ratio(d(HH-HV)<=-2)": {
+    "px": 1008,
+    "blobs": 40,
+    "km2": 6.45
+   },
+   "both(dHH<=-2&dHV<=-2)": {
+    "px": 0,
+    "blobs": 0,
+    "km2": 0.0
+   }
+  },
+  "conclusion": "No water-index variant rescues Latvia: HV channel is silent (0 px), ratio degenerates to shipped rule, loosening only adds fragments. Post-peak 18->30 Aug pair; honest negative stands."
+ },
+ "pair_search": {
+  "date": "2026-10-30",
+  "peak_rain": "2026-08-21/22",
+  "window_19_29_aug": "only 100_A_030/031 on 20 Aug (pre-peak); same-track after is 1 Sep \u2014 worse than shipped",
+  "window_21_24_aug": "zero acquisitions on any track (12-day revisit: 18 -> 30 Aug)",
+  "conclusion": "080_D_059 18->30 Aug is the best-timed same-mode pair that exists."
+ },
+ "gunw_check": {
+  "gunw_file": "NISAR_L2_PR_GUNW_028_080_D_059_029_2000_SH_20260818T180558_20260818T180634_20260830T180558_20260830T180634_P05023_N_F_J_001.h5",
+  "regions": [
+   {
+    "region": "shipped_change_flags",
+    "n_px": 1008,
+    "mean": 0.1853,
+    "low_frac": 0.9921
+   },
+   {
+    "region": "background",
+    "n_px": 445660,
+    "mean": 0.386,
+    "low_frac": 0.5482
+   }
+  ],
+  "verdict": "flags decorrelated vs background \u2014 confirms real surface change; water needs the rivers/truth test"
+ }
 }

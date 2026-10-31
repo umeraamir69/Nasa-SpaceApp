@@ -22,7 +22,8 @@ After the two `048_D_074` GCOV `.h5` files are in `data/nepal/gcov/` and proof p
 - `need 2 048_D_074` — only if you meant to use local `.h5`; otherwise run `crop_nepal.py`
 - `missing proof polygons` — `python scripts/fetch_nepal_proof.py`
 - `GLOF box is outside the raster` — wrong frame; do not use `048_D_075` as the locked pair
-- `no common polarisation` — after pass is QPDH; inspect frequencyB keys with `scripts/inspect_h5.py`
+- `refusing cross-mode pair` — before/after differ in beam or polarisation mode (the shipped DHDH→QPDH pair was invalid and produced a scene-wide gradient). Find a same-beam, same-mode pair; do not bypass the guard.
+- `no common polarisation` — inspect frequencyB keys with `scripts/inspect_h5.py`
 
 ## Related
 

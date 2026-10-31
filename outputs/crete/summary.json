@@ -1,0 +1,39 @@
+{
+  "when_utc": "2026-10-30T16:26:34Z",
+  "case": "crete",
+  "event": "Crete flood EMSR933",
+  "before": "2026-09-27",
+  "after": "2026-10-09",
+  "before_file": "NISAR_L2_PR_GCOV_031_137_D_071_2005_DHDH_A_20260927T170613_20260927T170632_P05023_N_P_J_001.h5",
+  "after_file": "NISAR_L2_PR_GCOV_032_137_D_071_2005_DHDH_A_20261009T170613_20261009T170633_P05023_N_P_J_001.h5",
+  "grid": "science/LSAR/GCOV/grids/frequencyB",
+  "pixel_m": 80.0,
+  "threshold_db": 2.0,
+  "water_db": -14.0,
+  "after_water_db": -12.0,
+  "despeckle": "median 3x3",
+  "primary_pol": "HHHH",
+  "hh_median_diff_db": -0.42808985710144043,
+  "change_pixels": 27,
+  "area_km2": 0.173,
+  "permanent_water_km2": 1.338,
+  "emsr_water_km2_in_crop": 4.058,
+  "precision_vs_emsr": 0.333,
+  "recall_vs_emsr": 0.014,
+  "iou_vs_emsr": 0.014,
+  "citation": {
+    "event": "Copernicus EMS Rapid Mapping EMSR933 \u2014 Flood in Crete, Greece",
+    "url": "https://mapping.emergency.copernicus.eu/activations/EMSR933/",
+    "note": "Scored against Copernicus observedEvent flood water (AOI01/03/04). Detection is HH darkening minus permanent water."
+  },
+  "slope_check": {
+    "dem": "Copernicus DSM 30 m (AWS Open Data)",
+    "flagged_pixels": 220,
+    "flagged_median_slope_deg": 2.1,
+    "background_median_slope_deg": 5.0,
+    "flagged_frac_over_10deg": 0.036,
+    "background_frac_over_10deg": 0.398,
+    "flagged_frac_over_20deg": 0.009,
+    "background_frac_over_20deg": 0.205
+  }
+}

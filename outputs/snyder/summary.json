@@ -1,44 +1,182 @@
 {
-  "when_utc": "2026-10-13T17:02:37Z",
-  "before": "2026-06-17",
-  "after": "2026-07-23",
-  "before_file": "NISAR_L2_PR_GCOV_023_048_A_021_4005_DHDH_A_20260617T122757_20260617T122831_P05023_N_F_J_001.h5",
-  "after_file": "NISAR_L2_PR_GCOV_026_048_A_021_4005_DHDH_A_20260723T122754_20260723T122829_P05023_N_F_J_001.h5",
-  "grid": "science/LSAR/GCOV/grids/frequencyB",
-  "pixel_m": 80.0,
-  "threshold_db": 1.5,
-  "despeckle": "median 3x3",
-  "primary_pol": "HVHV",
-  "inside_hv_mean_db": -1.376484751701355,
-  "inside_hv_median_db": -1.241241455078125,
-  "outside_hv_median_db": 0.39731502532958984,
-  "inside_hh_median_db": -0.25774192810058594,
-  "sign_used": "decrease",
-  "change_pixels": 6396,
-  "area_km2": 40.934,
-  "nifc_km2": 122.218,
-  "precision_vs_nifc": 1.0,
-  "recall_vs_nifc": 0.335,
-  "iou_vs_nifc": 0.335,
-  "gunw": "NISAR_L2_PR_GUNW_024_048_A_021_025_4000_SH_20260629T122756_20260629T122831_20260711T122755_20260711T122830_P05023_N_F_J_001.h5",
-  "gunw_coherence": {
-    "inside_mean": 0.7343528866767883,
-    "outside_mean": 0.7602340579032898,
-    "change_mean": 0.7197497487068176,
-    "low_threshold": 0.4,
-    "change_low_frac": 0.003595997498436523
+ "when_utc": "2026-10-13T17:02:37Z",
+ "before": "2026-06-17",
+ "after": "2026-07-23",
+ "before_file": "NISAR_L2_PR_GCOV_023_048_A_021_4005_DHDH_A_20260617T122757_20260617T122831_P05023_N_F_J_001.h5",
+ "after_file": "NISAR_L2_PR_GCOV_026_048_A_021_4005_DHDH_A_20260723T122754_20260723T122829_P05023_N_F_J_001.h5",
+ "grid": "science/LSAR/GCOV/grids/frequencyB",
+ "pixel_m": 80.0,
+ "threshold_db": 1.5,
+ "despeckle": "median 3x3",
+ "primary_pol": "HVHV",
+ "inside_hv_mean_db": -1.376484751701355,
+ "inside_hv_median_db": -1.241241455078125,
+ "outside_hv_median_db": 0.39731502532958984,
+ "inside_hh_median_db": -0.25774192810058594,
+ "sign_used": "decrease",
+ "change_pixels": 6396,
+ "area_km2": 40.934,
+ "nifc_km2": 122.218,
+ "precision_vs_nifc": 1.0,
+ "recall_vs_nifc": 0.335,
+ "iou_vs_nifc": 0.335,
+ "gunw": "NISAR_L2_PR_GUNW_024_048_A_021_025_4000_SH_20260629T122756_20260629T122831_20260711T122755_20260711T122830_P05023_N_F_J_001.h5",
+ "gunw_coherence": {
+  "inside_mean": 0.7343528866767883,
+  "outside_mean": 0.7602340579032898,
+  "change_mean": 0.7197497487068176,
+  "low_threshold": 0.4,
+  "change_low_frac": 0.003595997498436523
+ },
+ "citation": {
+  "polygon": "NIFC WFIGS Interagency Perimeters Year-to-Date",
+  "unique_fire_identifier": "2026-UTDRD-005113",
+  "incident_name": "Snyder",
+  "gis_acres": 30202.51742521191,
+  "percent_contained": 100,
+  "wfigs_layer": "https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-interagency-fire-perimeters-to-date",
+  "wfigs_query": "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_YearToDate/FeatureServer/0",
+  "inciweb": "https://inciweb.wildfire.gov/incident-information/utdrd-snyder",
+  "ops_maps": "https://ftp.wildfire.gov/public/incident_specific_maps/rocky_mtn/2026/2026_Snyder/",
+  "firms": "https://firms.modaps.eosdis.nasa.gov/ (hotspots, not this polygon)",
+  "note": "WFIGS GIS acres are 30,202.5. NIFC situation reports later listed 28,264 acres contained. Overlay uses the WFIGS polygon."
+ },
+ "nirops_check": [
+  {
+   "kind": "heat_perimeter",
+   "acq_date": "2026-06-30",
+   "ir_km2": 122.25,
+   "overlap_km2": 40.92,
+   "recall_vs_ir": 0.335,
+   "precision_vs_ir": 1.0
   },
-  "citation": {
-    "polygon": "NIFC WFIGS Interagency Perimeters Year-to-Date",
-    "unique_fire_identifier": "2026-UTDRD-005113",
-    "incident_name": "Snyder",
-    "gis_acres": 30202.51742521191,
-    "percent_contained": 100,
-    "wfigs_layer": "https://data-nifc.opendata.arcgis.com/datasets/nifc::wfigs-interagency-fire-perimeters-to-date",
-    "wfigs_query": "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_YearToDate/FeatureServer/0",
-    "inciweb": "https://inciweb.wildfire.gov/incident-information/utdrd-snyder",
-    "ops_maps": "https://ftp.wildfire.gov/public/incident_specific_maps/rocky_mtn/2026/2026_Snyder/",
-    "firms": "https://firms.modaps.eosdis.nasa.gov/ (hotspots, not this polygon)",
-    "note": "WFIGS GIS acres are 30,202.5. NIFC situation reports later listed 28,264 acres contained. Overlay uses the WFIGS polygon."
+  {
+   "kind": "isolated_heat",
+   "acq_date": "2026-06-30",
+   "n_points": 310,
+   "inside_change": 79,
+   "frac_inside": 0.255
+  },
+  {
+   "kind": "scattered_heat",
+   "acq_date": "2026-06-30",
+   "ir_km2": 26.74,
+   "overlap_km2": 13.49,
+   "recall_vs_ir": 0.505,
+   "precision_vs_ir": 0.33
+  },
+  {
+   "kind": "possible_heat",
+   "acq_date": "2026-06-30",
+   "n_points": 25,
+   "inside_change": 9,
+   "frac_inside": 0.36
+  },
+  {
+   "kind": "heat_perimeter",
+   "acq_date": "2026-07-07",
+   "ir_km2": 122.23,
+   "overlap_km2": 40.9,
+   "recall_vs_ir": 0.335,
+   "precision_vs_ir": 0.999
+  },
+  {
+   "kind": "isolated_heat",
+   "acq_date": "2026-07-07",
+   "n_points": 40,
+   "inside_change": 14,
+   "frac_inside": 0.35
   }
+ ],
+ "slope_check": {
+  "dem": "Copernicus DSM 30 m (AWS Open Data)",
+  "flagged_pixels": 55230,
+  "flagged_median_slope_deg": 7.3,
+  "background_median_slope_deg": 6.4,
+  "flagged_frac_over_10deg": 0.337,
+  "background_frac_over_10deg": 0.357,
+  "flagged_frac_over_20deg": 0.118,
+  "background_frac_over_20deg": 0.182
+ },
+ "soil_moisture_check": {
+  "product": "NISAR_L3_SME2_PROVISIONAL_V1 (beta)",
+  "box": [
+   -109.215,
+   38.973,
+   -108.807,
+   39.207
+  ],
+  "before": {
+   "file": "NISAR_L3_PR_SME2_023_048_A_021_4005_DHDH_A_20260617T122757_20260617T122831_P05023_N_F_J_001.h5",
+   "rows": [
+    502,
+    618
+   ],
+   "cols": [
+    1449,
+    1645
+   ],
+   "land_frac": 1.0,
+   "algorithms": [
+    "DSG"
+   ],
+   "DSG": {
+    "median_m3m3": 0.1557,
+    "n_px": 22396,
+    "flag0_frac": 0.8732,
+    "west_median": 0.1249,
+    "west_n": 11275,
+    "east_median": 0.1867,
+    "east_n": 11121
+   }
+  },
+  "after": {
+   "file": "NISAR_L3_PR_SME2_026_048_A_021_4005_DHDH_A_20260723T122754_20260723T122829_P05023_N_F_J_001.h5",
+   "rows": [
+    502,
+    618
+   ],
+   "cols": [
+    1449,
+    1645
+   ],
+   "land_frac": 1.0,
+   "algorithms": [
+    "DSG",
+    "PMI",
+    "TSR"
+   ],
+   "DSG": {
+    "median_m3m3": 0.1657,
+    "n_px": 22384,
+    "flag0_frac": 0.8771,
+    "west_median": 0.1378,
+    "west_n": 11275,
+    "east_median": 0.2046,
+    "east_n": 11109
+   },
+   "PMI": {
+    "median_m3m3": 0.1794,
+    "n_px": 22377,
+    "flag0_frac": 0.6127,
+    "west_median": 0.1867,
+    "west_n": 11271,
+    "east_median": 0.1738,
+    "east_n": 11106
+   },
+   "TSR": {
+    "median_m3m3": 0.113,
+    "n_px": 22565,
+    "flag0_frac": 0.0,
+    "west_median": 0.11,
+    "west_n": 11357,
+    "east_median": 0.118,
+    "east_n": 11208
+   }
+  },
+  "gcov_scene_median_db": null,
+  "delta_DSG": 0.01,
+  "delta_PMI": null,
+  "delta_TSR": null
+ }
 }

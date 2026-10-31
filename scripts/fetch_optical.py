@@ -122,7 +122,9 @@ def write_crop(feat: dict, bounds: dict, out_dir: Path, why: str) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--case", choices=("snyder", "latvia"), default="snyder")
+    parser.add_argument("--case", choices=("snyder", "latvia", "thunderbay", "crete",
+                                            "isaias"),
+                        default="snyder")
     args = parser.parse_args()
     out = ROOT / "outputs" / args.case / "layers"
     bounds_path = out / "bounds.json"
@@ -132,6 +134,18 @@ def main() -> int:
     if args.case == "snyder":
         feat = stac_scene(SNYDER_SCENE)
         why = "Cloudy scene on 7 Jul 2026, during the Snyder Fire, same box as the NISAR pair."
+    elif args.case == "thunderbay":
+        bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
+        feat = stac_search(bbox, "2026-07-12", "2026-08-16")
+        why = "Sentinel-2 during the Thunder Bay 36 burn (smoke/cloud is the why-SAR beat)."
+    elif args.case == "crete":
+        bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
+        feat = stac_search(bbox, "2026-10-01", "2026-10-06")
+        why = "Sentinel-2 during the 2–4 Oct 2026 Crete storm. Cloud is the why-SAR beat."
+    elif args.case == "isaias":
+        bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
+        feat = stac_search(bbox, "2026-10-08", "2026-10-12")
+        why = "Sentinel-2 around the 9 Oct 2026 Isaias landfall. Cloud is the why-SAR beat."
     else:
         bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
         feat = stac_search(bbox, "2026-08-20", "2026-08-24")

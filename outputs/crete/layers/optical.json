@@ -1,0 +1,10 @@
+{
+  "id": "S2C_35SLU_20261003_0_L2A",
+  "datetime": "2026-10-03T09:10:49.345000Z",
+  "cloud_cover_pct": 69.121122,
+  "collection": "sentinel-2-l2a",
+  "visual": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/35/S/LU/2026/10/S2C_35SLU_20261003_0_L2A/TCI.tif",
+  "stac": "https://earth-search.aws.element84.com/v1/search",
+  "citation": "Sentinel-2 L2A true-color (TCI) via Element84 Earth Search / AWS sentinel-cogs. ESA Copernicus.",
+  "why": "Sentinel-2 during the 2\u20134 Oct 2026 Crete storm. Cloud is the why-SAR beat."
+}
