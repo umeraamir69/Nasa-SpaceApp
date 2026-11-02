@@ -1,5 +1,6 @@
 earthaccess>=0.11.0
 h5py>=3.10.0
+opencv-python-headless>=4.0  # KI/Otsu experiments (installed in .conda/env)
 numpy>=1.26
 matplotlib>=3.8
 pyproj>=3.6

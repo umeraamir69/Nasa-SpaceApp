@@ -60,6 +60,8 @@ Obsidian is the project brain. The vault is this `notes/` folder. Cursor reads a
 
 **30 Oct 2026** — Six cases live: Snyder, Thunder Bay 36, Nepal (same-mode reprocessed), Latvia (proven negative), Crete (negative), Isaias (marginal). Inspector + swipe + pitch mode + redesign shipped. Full guide: `docs/a-to-z.md` (repo root). Still open: FIRMS key (Thunder Bay truth), Earthdata password rotation, demo-day hardening. Demo **14–15 Nov**.
 
+**2 Nov 2026** — Nine cases: + Second Flat (detected, P 0.97), Coleman Creek (fuel negative), Spokane (WUI negative). Valencia attempted → dead end (truth off valid swath). Otsu/KI tested (IoU 0.61/0.94, recorded, not shipped). Overview mode + print briefing + timelines shipped. Log: `docs/expansion.md`.
+
 ## How we use this vault
 
 1. Capture in [[Inbox]] or a Daily Note under `sessions/`.

@@ -21,7 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-CASES = ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias")
+CASES = ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias",
+         "coleman", "secondflat", "spokane")
 # Loose lon/lat plausibility boxes per case: (west, south, east, north).
 PLAUSIBLE = {
     "snyder": (-110.0, 38.0, -108.0, 40.0),
@@ -30,6 +31,9 @@ PLAUSIBLE = {
     "thunderbay": (-91.0, 49.0, -88.0, 52.0),
     "crete": (24.0, 34.0, 27.0, 36.0),
     "isaias": (-88.0, 29.5, -85.0, 32.0),
+    "coleman": (-119.0, 43.0, -117.0, 44.2),
+    "secondflat": (-120.0, 43.2, -118.5, 44.1),
+    "spokane": (-118.0, 47.4, -117.0, 48.1),
 }
 
 
@@ -137,9 +141,13 @@ class CaseAssets(unittest.TestCase):
                 for feat in gj["features"]:
                     walk_coords(feat.get("geometry"), pts)
                 self.assertTrue(pts, "change.geojson has no coordinates")
+                # 0.01° slack: UTM grids are rotated in lon/lat, so edge
+                # pixels legitimately fall outside the corner-derived box
+                # (measured 0.006° on secondflat's south edge, 2 Nov 2026).
+                eps = 0.01
                 for lon, lat in pts:
-                    self.assertTrue(b["west"] <= lon <= b["east"]
-                                    and b["south"] <= lat <= b["north"],
+                    self.assertTrue(b["west"] - eps <= lon <= b["east"] + eps
+                                    and b["south"] - eps <= lat <= b["north"] + eps,
                                     f"change coord ({lon}, {lat}) outside layer bounds")
 
     def test_summary_fields(self):
@@ -179,7 +187,8 @@ class GranuleModes(unittest.TestCase):
         # Every shipped case must be same track/beam/mode. Nepal was the
         # cross-mode offender until the 098_A_016 reprocessing (29 Oct 2026);
         # the negative path is covered by test_guard_parses_names.
-        for case in ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias"):
+        for case in ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias",
+                     "coleman", "secondflat", "spokane"):
             with self.subTest(case=case):
                 s = json.loads((ROOT / "outputs" / case / "summary.json").read_text())
                 ok, reason = gm.modes_compatible(s["before_file"], s["after_file"])

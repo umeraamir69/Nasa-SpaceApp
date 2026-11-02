@@ -20,13 +20,18 @@ CASES = {
     "thunderbay": ROOT / "outputs" / "thunderbay",
     "crete": ROOT / "outputs" / "crete",
     "isaias": ROOT / "outputs" / "isaias",
+    "coleman": ROOT / "outputs" / "coleman",
+    "secondflat": ROOT / "outputs" / "secondflat",
+    "spokane": ROOT / "outputs" / "spokane",
 }
 OUT = CASES["snyder"]
 WEB_DIST = ROOT / "web" / "dist"
 LABELS = {"snyder": "Snyder Fire", "latvia": "Latvia flood", "nepal": "Nepal GLOF",
-          "thunderbay": "Thunder Bay 36", "crete": "Crete flood", "isaias": "Isaias surge"}
+          "thunderbay": "Thunder Bay 36", "crete": "Crete flood", "isaias": "Isaias surge",
+          "coleman": "Coleman Creek", "secondflat": "Second Flat", "spokane": "Autumn Lane"}
 MEDIA = {"snyder": "/media", "latvia": "/media-latvia", "nepal": "/media-nepal",
-         "thunderbay": "/media-thunderbay", "crete": "/media-crete", "isaias": "/media-isaias"}
+         "thunderbay": "/media-thunderbay", "crete": "/media-crete", "isaias": "/media-isaias",
+         "coleman": "/media-coleman", "secondflat": "/media-secondflat", "spokane": "/media-spokane"}
 
 app = FastAPI(title="EchoLens", version="0.5.0")
 app.add_middleware(
@@ -218,6 +223,9 @@ app.mount("/media-nepal", StaticFiles(directory=CASES["nepal"]), name="nepal")
 app.mount("/media-thunderbay", StaticFiles(directory=CASES["thunderbay"]), name="thunderbay")
 app.mount("/media-crete", StaticFiles(directory=CASES["crete"]), name="crete")
 app.mount("/media-isaias", StaticFiles(directory=CASES["isaias"]), name="isaias")
+app.mount("/media-coleman", StaticFiles(directory=CASES["coleman"]), name="coleman")
+app.mount("/media-secondflat", StaticFiles(directory=CASES["secondflat"]), name="secondflat")
+app.mount("/media-spokane", StaticFiles(directory=CASES["spokane"]), name="spokane")
 app.mount("/media", StaticFiles(directory=OUT), name="media")
 
 if WEB_DIST.is_dir():

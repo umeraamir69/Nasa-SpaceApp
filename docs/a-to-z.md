@@ -33,11 +33,12 @@ flood here."
 
 - **Name:** EchoLens. **Event:** NASA Space Apps 2026, Toronto — challenge
   *"Dancing with the SARs"* (SAR = Synthetic Aperture Radar, explained below).
-- **Demo:** a local web app — a map with 6 incident cases (2 wildfires,
+- **Demo:** a local web app — a map with 9 incident cases (5 wildfires,
   4 floods/storms), each with before/after/change layers, official overlays,
   and a written briefing with precision/recall numbers.
-- **Status:** all 6 cases processed from real NISAR satellite data, all tests
-  passing (104 live checks + 9 unit tests, 30 Oct 2026).
+- **Status:** all 9 cases processed from real NISAR satellite data, all tests
+  passing (154 live checks + 9 unit tests, 2 Nov 2026). Full expansion log:
+  [expansion.md](expansion.md).
 
 ### The 6 cases at a glance
 
@@ -49,6 +50,9 @@ flood here."
 | 4 | Latvia–Lithuania flood | Flood | 18 → 30 Aug 2026 | **Negative** | dry-down, not flood |
 | 5 | Crete flood | Flash flood | 27 Sep → 9 Oct 2026 | **Negative** | water drained before pass |
 | 6 | Hurricane Isaias (Florida) | Surge | 30 Sep → 12 Oct 2026 | **Marginal** | 0.5 km² fringe, unvalidated |
+| 7 | Second Flat (Oregon) | Wildfire | 8 Jul → 13 Aug 2026 | **Detected** | 68.9 km², precision 0.97 |
+| 8 | Coleman Creek (Oregon) | Wildfire | 8 Jul → 13 Aug 2026 | **Negative** | grass — both bands silent |
+| 9 | Autumn Lane (Spokane) | WUI fire | 23 Jul → 16 Aug 2026 | **Negative** | +0.13 dB — invisible |
 
 A **verdict** is our bottom line per case. *Detected* means we mapped real
 change and checked it against an official source. *Negative* means we looked
@@ -257,6 +261,28 @@ turned out to be a frame-edge sliver (unusable — rejected, documented); the
 usable pair is 3 days post-landfall. Result: **0.52 km²** of dark bay fringe
 in a rain-soaked (+0.9 dB) landscape — plausible residual surge water, shown
 with caveats, **unvalidated** (no USGS high-water event published yet).
+
+### 5.7 Second Flat — the pine positive (Detected)
+
+106,000 acres of sage and pine in Lake County, Oregon, ignited 24 Jul 2026.
+Pair: 8 Jul → 13 Aug, HV 1.5 dB. Result: **68.9 km² at precision 0.97 /
+recall 0.16** vs the 432 km² NIFC perimeter. Textbook canopy-loss darkening.
+
+### 5.8 Coleman Creek — the grass negative (Negative)
+
+309,000 acres of high-desert range 60 km east of Second Flat — **same
+satellite, same week, same granules**. Inside the 1,307 km² NIFC line the
+echo moves HV −0.10 dB / HH −0.03 dB: both bands silent, precision 0.48 /
+recall 0.013. Grass holds no L-band structure to lose. The pair is a
+controlled fuel experiment: pine P 0.97, grass R 0.01.
+
+### 5.9 Autumn Lane, Spokane — the invisible disaster (Negative)
+
+5,764 acres at Spokane's edge, ignited 1 Aug — part of the complex that
+burned 833 homes. Pair: 23 Jul → 16 Aug, HV 1.5 dB. Inside median **+0.13 dB**:
+the burn brightened slightly; 9 stray pixels, none inside the line, P/R 0.0.
+Buildings scatter loudly standing or burned, and the grass matrix behaves as
+at Coleman. Washington's costliest fire disaster is radar-invisible — measured.
 
 ---
 

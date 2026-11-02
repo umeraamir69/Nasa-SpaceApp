@@ -1,0 +1,29 @@
+{
+  "when_utc": "2026-11-02T18:30:21Z",
+  "case": "valencia",
+  "event": "Valencia flood EMSR935",
+  "before": "2026-10-11",
+  "after": "2026-10-23",
+  "before_file": "NISAR_L2_PR_GCOV_032_167_D_069_2005_DHDH_A_20261011T190137_20261011T190212_P05023_N_F_J_001.h5",
+  "after_file": "NISAR_L2_PR_GCOV_033_167_D_069_2005_DHDH_A_20261023T190137_20261023T190212_P05023_N_F_J_001.h5",
+  "grid": "science/LSAR/GCOV/grids/frequencyB",
+  "pixel_m": 80.0,
+  "threshold_db": 2.0,
+  "water_db": -14.0,
+  "after_water_db": -12.0,
+  "despeckle": "median 3x3",
+  "primary_pol": "HHHH",
+  "hh_median_diff_db": 0.3930494785308838,
+  "change_pixels": 0,
+  "area_km2": 0.0,
+  "permanent_water_km2": 0.032,
+  "emsr_water_km2_in_crop": 9.645,
+  "precision_vs_emsr": 0.0,
+  "recall_vs_emsr": 0.0,
+  "iou_vs_emsr": 0.0,
+  "citation": {
+    "event": "Copernicus EMS Rapid Mapping EMSR935 \u2014 Flood in Alicante-Valencia, Spain",
+    "url": "https://mapping.emergency.copernicus.eu/activations/EMSR935/",
+    "note": "Scored against Copernicus observedEvent flood water (AOI01). Detection is HH darkening minus permanent water."
+  }
+}

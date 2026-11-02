@@ -68,6 +68,9 @@ def main() -> int:
     fix_optical_aspect("thunderbay")
     fix_optical_aspect("crete")
     fix_optical_aspect("isaias")
+    fix_optical_aspect("coleman")
+    fix_optical_aspect("secondflat")
+    fix_optical_aspect("spokane")
 
     # --- Latvia recrop ---
     print("latvia recrop:")

@@ -14,9 +14,81 @@ export const CASE_META = {
   latvia: { type: "Flood", verdict: "negative", verdictNote: "Dry-down confirmed — no flood left" },
   crete: { type: "Flash flood", verdict: "negative", verdictNote: "Drained before the Oct 9 pass" },
   isaias: { type: "Hurricane surge", verdict: "marginal", verdictNote: "0.5 km² fringe, unvalidated" },
+  coleman: { type: "Wildfire", verdict: "negative", verdictNote: "Grass range — no L-band darkening" },
+  secondflat: { type: "Wildfire", verdict: "detected", verdictNote: "68.9 km² at 0.97 precision vs NIFC" },
+  spokane: { type: "WUI fire", verdict: "negative", verdictNote: "Grass + structures — no HV darkening" },
 };
 
 export const VERDICT_LABEL = { detected: "Detected", negative: "Negative", marginal: "Marginal" };
+
+export const EVENT_INFO = {
+  snyder: { label: "Fire active", date: "late Jun – Jul" },
+  thunderbay: { label: "Ignition", date: "12 Jul" },
+  nepal: { label: "GLOF", date: "26 Aug" },
+  latvia: { label: "Peak rain", date: "21–22 Aug" },
+  crete: { label: "Storm (440 mm)", date: "2–4 Oct" },
+  isaias: { label: "Landfall", date: "9 Oct" },
+  coleman: { label: "Ignition", date: "25 Jul" },
+  secondflat: { label: "Ignition", date: "24 Jul" },
+  spokane: { label: "Ignition", date: "1 Aug" },
+};
+
+/** "048_A_021 · DHDH" from a GCOV filename, or null. */
+export function pairFor(file) {
+  const m = /_(\d{3}_[AD]_\d+)_(\d+)_([A-Z]+)_A_\d{8}T/.exec(file || "");
+  return m ? `${m[1]} · ${m[3]}` : null;
+}
+
+export const LAYER_TIPS = {
+  before: "Radar brightness before the event — the baseline pass",
+  after: "Radar brightness after the event — same track, same settings",
+  swipe: "Drag the slider to wipe between before (left) and after (right)",
+  change: "After minus before, in decibels — blue got darker, red got brighter",
+  confidence: "Where the radar is valid (grey) vs change we ship (colour)",
+  optical: "Sentinel-2 photo near the event — usually cloud, that is the point",
+};
+
+export const OVERLAY_TIPS = {
+  change: "Our flagged-change polygons — click any fragment for its area",
+  perim: "Official reference outline (NIFC fire perimeter or equivalent)",
+  ir: "NIROPS aircraft heat map from the same week — independent truth",
+  lakes: "Permanent lakes and rivers, masked out so they never count as flood",
+  emsr: "Official Copernicus Emergency Mapping polygons for this event",
+  flood: "Official flood-extent polygon used to score our detection",
+  rivers: "OpenStreetMap rivers — the null test: do flags follow water?",
+};
+
+export const STAT_TIPS = {
+  "Before / after": "The two satellite passes compared — always same track, same radar mode",
+  "EchoLens change": "Total area we flag as changed. We under-map on purpose: precision over recall",
+  "Official flood in crop": "How much official flood polygon falls inside our map box",
+  "Precision vs flood": "Of what we flagged, how much is really flood — 1.00 means zero false alarms",
+  "Recall vs flood": "Of the real flood, how much we found — low means we map the core only",
+  "GUNW coherence 19→31 Aug": "Independent check: flood water destroys radar coherence (~0.1); dry land stays high (~0.6)",
+  "GUNW coherence 18→30 Aug": "Independent check: low coherence means the ground truly changed — but only rivers tell if it is water",
+  "Reported complex": "Official incident size, including unburned interior and merged fires",
+  "Mapped severe core": "What our threshold catches: the severely burned heart of the complex",
+  "Truth overlay": "Independent data that would confirm or deny our map",
+  "Permanent water masked": "Lakes and rivers dark on both dates — excluded so they never fake a flood",
+  "Waterways check": "Null test: median distance of flags vs random points to mapped rivers",
+  "Pair search": "We checked every pass near the peak — no better-timed pair exists on any track",
+  "Copernicus water in crop": "Official mapped flood water inside our box",
+  "Precision / recall vs EMSR": "Scored against Copernicus truth — low recall here means the water had drained",
+  "Bay fringe flagged": "Dark shoreline pixels that may be residual surge water — shown with caveats",
+  "NIFC GIS area": "Official US fire perimeter area for this incident",
+  "Precision vs NIFC": "Of what we flagged, how much sits inside the official line",
+  "Recall vs NIFC": "Of the official fire, how much we mapped — the severe core",
+  "NIROPS heat perimeter": "Aircraft infrared outline vs ours — a second, independent witness",
+  "Scattered heat 30 Jun": "Share of airborne heat detections falling inside our mapped core",
+  "HVHV inside perimeter": "Median echo drop in the fire channel — the physical burn signal",
+  "GUNW coherence": "Phase-stability second vote — barely split on this arid mesa, so we stayed on backscatter",
+  "Optical cloud cover": "Cloud over this box in the nearest clear-photo attempt — the why-radar beat",
+  "SME2 soil moisture": "Official NISAR soil-moisture product over our box — independent wetness witness",
+  "NISAR pair": "Same flight track and radar mode on both dates — the guard refuses mismatched pairs",
+  "NIFC perimeter": "Official US fire perimeter area for this incident",
+  "Fuel check": "Median echo move inside the fire in both bands — near zero means the fuel is radar-invisible",
+  "Homes lost": "Reported structure toll that makes this interface fire historic",
+};
 
 export const PITCH = [
   {
@@ -34,6 +106,18 @@ export const PITCH = [
     raster: "change",
     caption:
       "Thunder Bay 36: same method on boreal forest — the mapped core of Ontario's largest fire ever.",
+  },
+  {
+    caseId: "secondflat",
+    raster: "change",
+    caption:
+      "Second Flat: pine burns darken hard — 68.9 km² at 0.97 precision. Same week, 60 km away, grass-fire Coleman barely registers.",
+  },
+  {
+    caseId: "coleman",
+    raster: "change",
+    caption:
+      "Coleman Creek: 309,000 acres of range fire, nearly invisible to L-band. Fuel physics, documented with numbers — our third kind of negative.",
   },
   {
     caseId: "latvia",
@@ -133,6 +217,15 @@ export function ledeFor(cas) {
   if (cas.case_id === "isaias") {
     return "Two NISAR L-band passes (30 Sep → 12 Oct, same track and mode) around Hurricane Isaias, Cat 2 landfall near Destin FL on 9 Oct. The 9-hour-post-landfall pass turned out to be a frame-edge sliver; this pair is 3 days post-landfall — surge receded, rain brightening everywhere, and a 0.5 km² dark bay fringe that may be residual surge water. Unvalidated: no USGS water-mark event published yet.";
   }
+  if (cas.case_id === "coleman") {
+    return "Two NISAR L-band passes (8 Jul → 13 Aug, same track and mode) around the Coleman Creek fire in Harney County, Oregon — 309,000 acres of high-desert range, ignited 25 Jul. The fire barely darkens L-band in either polarization: a fuel-type negative. Sixty kilometres west, the same satellite and week caught pine-fire Second Flat cleanly.";
+  }
+  if (cas.case_id === "secondflat") {
+    return "Two NISAR L-band passes (8 Jul → 13 Aug, same track and mode — the same granules as Coleman Creek) around the Second Flat fire in Lake County, Oregon: 106,000 acres of sage and pine, ignited 24 Jul. Pine canopy loss darkens HV hard: 68.9 km² at 0.97 precision vs the NIFC perimeter.";
+  }
+  if (cas.case_id === "spokane") {
+    return "Two NISAR L-band passes (23 Jul → 16 Aug, same track and mode) around the Autumn Lane fire at Spokane's edge — 5,764 acres, ignited 1 Aug, part of the early-August complex that burned 833 homes and became Washington's costliest wildfire disaster. The burn was grass and structures at the urban edge: inside the NIFC line the echo moves +0.13 dB, indistinguishable from background — a fuel-context negative.";
+  }
   return "Two NISAR L-band passes around the Snyder Fire. The map is not a photo — it is radar backscatter change, checked against an official perimeter.";
 }
 
@@ -153,6 +246,15 @@ export function whySarFor(cas) {
   }
   if (cas.case_id === "isaias") {
     return "Surge peaks at landfall and drains in hours; our usable pass is 3 days later. What remains is a rain-soaked landscape (+0.9 dB) and a marginal dark bay fringe. We show the 0.5 km² with its caveats rather than a clean false map.";
+  }
+  if (cas.case_id === "coleman") {
+    return "Range grass holds almost no L-band structure to lose: green or charred, the echo barely changes. Optical sees the blackened acres fine — but this case asks what radar alone can say, and the answer, measured, is almost nothing.";
+  }
+  if (cas.case_id === "secondflat") {
+    return "Pine canopy is ideal L-band fuel: dense volume scattering before, char and ash after. Same sensor, same week as Coleman — the difference is what burned, not how we looked.";
+  }
+  if (cas.case_id === "spokane") {
+    return "Buildings dominate the L-band echo whether they stand or burn — rubble and cleared lots scatter almost as loudly as roofs, and the surrounding grass behaves as at Coleman Creek. Optical counts the 833 homes; radar alone cannot see this fire, and we measured exactly how invisible it is.";
   }
   return cas.has_optical
     ? "Click Optical: Sentinel-2 on 7 Jul (during the fire) is 34% cloud over this box. Radar still returns a scar. NIROPS IR is the aircraft heat map from the same week — not FIRMS."
@@ -175,6 +277,15 @@ export function trustFor(cas, cite) {
   if (cas.case_id === "isaias") {
     return "Same-mode pair (004_A_017, DHDH both dates), DEM land mask, HH ≥ 1.5 dB darker + after ≤ −10 dB for turbid surge water. Result: 81 pixels / 0.52 km² of bay fringe. Unvalidated — treat as a marginal detection, not a flood map.";
   }
+  if (cas.case_id === "coleman") {
+    return "Same-mode pair (005_A_024, DHDH both dates), HV ≥ 1.5 dB darker — Snyder parity. Inside the 1,307 km² NIFC perimeter the HV median moves −0.10 dB (HH −0.03 dB): only 4.5% of fire pixels cross the cut vs 1.2% background noise. Precision 0.48, recall 0.013 — a measured fuel limit, and the reason Second Flat exists on this map.";
+  }
+  if (cas.case_id === "secondflat") {
+    return "Same-mode pair (005_A_024, DHDH both dates — shared granules with Coleman), HV ≥ 1.5 dB darker. Precision 0.97, recall 0.16 vs the 432 km² NIFC perimeter: the pine core maps cleanly with almost nothing outside the line. The Coleman/Second Flat pair is a controlled experiment in fuel physics.";
+  }
+  if (cas.case_id === "spokane") {
+    return "Same-mode pair (042_D_065, DHDH both dates), HV ≥ 1.5 dB darker — Snyder parity — scored against the Autumn Lane NIFC perimeter. Inside median +0.13 dB (HH +0.35 dB), only 1.6% of fire pixels cross the cut vs 1.3% background noise: precision and recall 0.0. Nine stray pixels flagged, none inside the line.";
+  }
   return `Valid GCOV pixels only, 3×3 median despeckle, HVHV log-ratio ≥ 1.5 dB darker after the fire. Every flagged pixel sits inside NIFC WFIGS ${cite.unique_fire_identifier || ""}. The red patch east of the perimeter brightened between the June and July passes (likely vegetation/moisture change); detection flags darkening only, so it stays off the map. GUNW HH coherence barely drops on this arid mesa (0.73 vs 0.76) — so detection stays on GCOV, not a fake second layer.`;
 }
 
@@ -193,6 +304,15 @@ export function sourceFor(cas, cite) {
   }
   if (cas.case_id === "nepal") {
     return "Copernicus EMSR927 (landslides along the GLOF path) + HOT flood extent 27 Aug (Bhote Koshi / Trishuli). UNOSAT Rasuwa mudflow and barrier-lake maps are the same event. Pitch still opens on Snyder.";
+  }
+  if (cas.case_id === "coleman") {
+    return "NIFC WFIGS 2026-ORBUD-002696 (308,864 acres, 100% contained). Pitch still opens on Snyder.";
+  }
+  if (cas.case_id === "secondflat") {
+    return "NIFC WFIGS 2026-ORBUD-002693 (105,854 acres, 100% contained). Pitch still opens on Snyder.";
+  }
+  if (cas.case_id === "spokane") {
+    return "NIFC WFIGS 2026-WANES-001857 (5,764 acres) + WA damage reports (833 homes). Pitch still opens on Snyder.";
   }
   return `Perimeter: ${cite.polygon || ""}${cite.unique_fire_identifier ? ` · ${cite.unique_fire_identifier}` : ""}. FIRMS is hotspots, not this outline.`;
 }
@@ -213,6 +333,8 @@ export function statsFor(cas) {
     { k: "Before / after", v: `${cas.before} → ${cas.after}` },
     { k: "EchoLens change", v: fmtKm2(cas.area_km2), big: true },
   ];
+  const pair = pairFor(cas.before_file);
+  if (pair) base.push({ k: "NISAR pair", v: `${pair} both dates` });
   if (cas.case_id === "nepal") {
     base.push(
       { k: "Official flood in crop", v: fmtKm2(cas.official_flood_km2_in_crop) },
@@ -265,6 +387,25 @@ export function statsFor(cas) {
         v: `${fmt2(cas.precision_vs_emsr)} / ${fmt2(cas.recall_vs_emsr)} — drained before Oct 9`,
       },
     );
+  } else if (["coleman", "secondflat", "spokane"].includes(cas.case_id)) {
+    base.push(
+      { k: "NIFC perimeter", v: fmtKm2(cas.truth_km2) },
+      {
+        k: "Precision vs NIFC",
+        v: fmt2(cas.precision_vs_truth),
+        hl: (cas.precision_vs_truth ?? 0) > 0.5,
+      },
+      { k: "Recall vs NIFC", v: fmt2(cas.recall_vs_truth) },
+    );
+    if (cas.case_id === "coleman" && cas.fuel_check) {
+      base.push({
+        k: "Fuel check",
+        v: `HV ${fmt2(cas.fuel_check.inside_hv_median_db)} dB inside (HH ${fmt2(cas.fuel_check.inside_hh_median_db)}) — no darkening in either band`,
+      });
+    }
+    if (cas.case_id === "spokane") {
+      base.push({ k: "Homes lost", v: "833 — costliest WA fire disaster" });
+    }
   } else if (cas.case_id === "isaias") {
     base.push(
       { k: "Bay fringe flagged", v: `${fmtKm2(cas.area_km2)} — marginal, unvalidated`, hl: true },

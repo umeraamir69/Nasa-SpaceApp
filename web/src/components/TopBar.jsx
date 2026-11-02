@@ -12,11 +12,11 @@ function Mark() {
   );
 }
 
-export default function TopBar({ available, caseId, onCase, onPitch, pitching }) {
+export default function TopBar({ available, caseId, onCase, onPitch, pitching, overview, onOverview }) {
   const ready = available.filter((c) => c.ready);
   return (
     <header className="topbar">
-      <div className="brand">
+      <div className="brand" title="EchoLens: two NISAR radar passes in, an incident briefing out">
         <Mark />
         <div className="brand-text">
           <span className="brand-name">EchoLens</span>
@@ -44,7 +44,15 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching })
         </nav>
       )}
       <div className="top-actions">
-        <span className="offline-note">Offline demo</span>
+        <span className="offline-note" title="All radar products are precomputed — no live satellite downloads during the demo">Offline demo</span>
+        <button
+          type="button"
+          className={overview ? "pitch-btn on" : "pitch-btn"}
+          onClick={onOverview}
+          title="Compare all 6 cases side by side"
+        >
+          {overview ? "Map" : "Overview"}
+        </button>
         <button
           type="button"
           className={pitching ? "pitch-btn on" : "pitch-btn"}

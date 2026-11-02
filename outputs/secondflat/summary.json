@@ -1,0 +1,40 @@
+{
+  "when_utc": "2026-11-02T19:01:52Z",
+  "case": "secondflat",
+  "event": "Second Flat wildfire, Oregon",
+  "before": "2026-07-08",
+  "after": "2026-08-13",
+  "before_file": "NISAR_L2_PR_GCOV_025_005_A_024_4005_DHDH_A_20260708T125435_20260708T125510_P05023_N_F_J_001.h5",
+  "after_file": "NISAR_L2_PR_GCOV_028_005_A_024_4005_DHDH_A_20260813T125433_20260813T125508_P05023_N_F_J_001.h5",
+  "grid": "science/LSAR/GCOV/grids/frequencyB",
+  "pixel_m": 80.0,
+  "threshold_db": 1.5,
+  "despeckle": "median 3x3",
+  "primary_pol": "HVHV",
+  "sign_used": "decrease",
+  "change_pixels": 10773,
+  "area_km2": 68.947,
+  "truth": "perimeter_nifc.geojson",
+  "truth_km2": 431.536,
+  "precision_vs_truth": 0.968,
+  "recall_vs_truth": 0.155,
+  "iou_vs_truth": 0.154,
+  "citation": {
+    "event": "Second Flat fire, Lake County OR \u2014 105,854 acres sage and pine",
+    "unique_fire_identifier": "2026-ORBUD-002693",
+    "start": "2026-07-24",
+    "polygon": "NIFC WFIGS Interagency Perimeters Year-to-Date",
+    "wfigs_layer": "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_YearToDate/FeatureServer/0",
+    "note": "Scored against the NIFC perimeter via --truth."
+  },
+  "slope_check": {
+    "dem": "Copernicus DSM 30 m (AWS Open Data)",
+    "flagged_pixels": 98753,
+    "flagged_median_slope_deg": 7.7,
+    "background_median_slope_deg": 4.6,
+    "flagged_frac_over_10deg": 0.37,
+    "background_frac_over_10deg": 0.242,
+    "flagged_frac_over_20deg": 0.07,
+    "background_frac_over_20deg": 0.062
+  }
+}

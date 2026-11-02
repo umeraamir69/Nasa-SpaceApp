@@ -24,7 +24,8 @@ from rasterio.windows import from_bounds
 from shapely.geometry import shape
 
 ROOT = Path(__file__).resolve().parents[1]
-CASES = ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias")
+CASES = ("snyder", "latvia", "nepal", "thunderbay", "crete", "isaias",
+         "coleman", "secondflat", "spokane")
 
 
 def dem_url(lat: float, lon: float) -> str:

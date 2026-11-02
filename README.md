@@ -14,6 +14,9 @@ NASA Space Apps Toronto 2026 — **Dancing with the SARs**. Two NISAR radar pass
 | Latvia flood | Flood | 18 → 30 Aug 2026, HH | Negative | post-peak dry-down, proven over 7 methods |
 | Crete flood | Flash flood | 27 Sep → 9 Oct 2026, HH | Negative | drained before Oct 9 (truth itself: no darkening) |
 | Isaias surge | Hurricane | 30 Sep → 12 Oct 2026, HH | Marginal | 0.5 km² bay fringe, unvalidated |
+| Second Flat | Wildfire | 8 Jul → 13 Aug 2026, HV | Detected | 68.9 km², precision 0.97 vs NIFC |
+| Coleman Creek | Wildfire | 8 Jul → 13 Aug 2026, HV | Negative | grass range — no L-band darkening either band |
+| Autumn Lane (Spokane) | WUI fire | 23 Jul → 16 Aug 2026, HV | Negative | structures + grass read +0.13 dB — invisible |
 
 All pairs are same-track / same-mode, verified by `scripts/granule_modes.py`.
 
@@ -80,6 +83,11 @@ Live end-to-end probe (104 checks over all cases/layers/GeoJSON): `/tmp/check_al
 | `scripts/download_nisar.py` / `download_latvia.py` / `download_nepal.py` | Fetch GCOV pairs (generic flags on nepal's) |
 | `scripts/change_snyder.py` / `change_thunderbay.py` | HV fire log-ratio + confidence + GeoJSON |
 | `scripts/change_latvia.py` / `change_nepal.py` / `change_crete.py` / `change_isaias.py` | HH flood log-ratio + masks + GeoJSON |
+| `scripts/change_coleman.py` / `change_secondflat.py` / `change_spokane.py` | HV fire clones (NIFC `--truth` scoring) |
+| `scripts/change_valencia.py` | HH flood clone (dead end: truth off valid swath) |
+| `scripts/fetch_valencia_proof.py` | EMSR935 truth fetch (kept: documents the dead end) |
+| `scripts/vet_event.py` | CMR same-mode pair vetting for candidate events |
+| `scripts/experiment_otsu.py` / `experiment_ki.py` | Adaptive-threshold experiments (numpy + cv2) |
 | `scripts/download_aux.py` | Generic SME2/GUNW granule downloader |
 | `scripts/xcheck_sme2.py` | Soil-moisture cross-check vs SME2 beta (deltas) |
 | `scripts/xcheck_gunw.py` | GUNW coherence second vote for flood cases |
@@ -98,6 +106,7 @@ Live end-to-end probe (104 checks over all cases/layers/GeoJSON): `/tmp/check_al
 | Path | What |
 |---|---|
 | `docs/a-to-z.md` | Complete plain-language guide |
+| `docs/next-steps.md` | Ranked to-do list (submission, drill, demo hardening) |
 | `notes/` | Project brain (Obsidian) |
 | `scripts/` | Search, download, change, validate |
 | `data/` | Local granules (gitignored, ~35 GB) |

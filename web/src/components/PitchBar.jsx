@@ -29,19 +29,20 @@ export default function PitchBar({ step, onStep, onExit }) {
               tabIndex={-1}
               className={i === step ? "pitch-dot on" : "pitch-dot"}
               onClick={() => onStep(i)}
+              title={`Go to step ${i + 1} of ${PITCH.length}`}
             />
           ))}
         </div>
         <div className="pitch-nav">
-          <button type="button" className="btn ghost" disabled={step === 0} onClick={() => onStep(step - 1)}>
+          <button type="button" className="btn ghost" disabled={step === 0} onClick={() => onStep(step - 1)} title="Previous step (← arrow key)">
             Back
           </button>
           {step < PITCH.length - 1 ? (
-            <button type="button" className="btn solid" onClick={() => onStep(step + 1)}>
+            <button type="button" className="btn solid" onClick={() => onStep(step + 1)} title="Next step (→ arrow key)">
               Next
             </button>
           ) : (
-            <button type="button" className="btn solid" onClick={onExit}>
+            <button type="button" className="btn solid" onClick={onExit} title="End the tour and explore freely">
               Finish
             </button>
           )}

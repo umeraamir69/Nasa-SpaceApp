@@ -1,0 +1,47 @@
+{
+  "when_utc": "2026-11-02T19:00:51Z",
+  "case": "coleman",
+  "event": "Coleman Creek wildfire, Oregon",
+  "before": "2026-07-08",
+  "after": "2026-08-13",
+  "before_file": "NISAR_L2_PR_GCOV_025_005_A_024_4005_DHDH_A_20260708T125435_20260708T125510_P05023_N_F_J_001.h5",
+  "after_file": "NISAR_L2_PR_GCOV_028_005_A_024_4005_DHDH_A_20260813T125433_20260813T125508_P05023_N_F_J_001.h5",
+  "grid": "science/LSAR/GCOV/grids/frequencyB",
+  "pixel_m": 80.0,
+  "threshold_db": 1.5,
+  "despeckle": "median 3x3",
+  "primary_pol": "HVHV",
+  "sign_used": "decrease",
+  "change_pixels": 4890,
+  "area_km2": 31.296,
+  "truth": "perimeter_nifc.geojson",
+  "truth_km2": 1307.241,
+  "precision_vs_truth": 0.482,
+  "recall_vs_truth": 0.013,
+  "iou_vs_truth": 0.013,
+  "citation": {
+    "event": "Coleman Creek fire, Harney County OR \u2014 308,864 acres",
+    "unique_fire_identifier": "2026-ORBUD-002696",
+    "start": "2026-07-25",
+    "polygon": "NIFC WFIGS Interagency Perimeters Year-to-Date",
+    "wfigs_layer": "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_YearToDate/FeatureServer/0",
+    "note": "Scored against the NIFC perimeter via --truth."
+  },
+  "verdict": "Fuel-type negative. Range/grass fire: HV median -0.10 dB inside NIFC (only 4.5% of pixels <= -1.5 dB), HH -0.03 dB \u2014 no L-band darkening in either polarization. 31.3 km2 flagged at P 0.48 / R 0.013, consistent with noise + sparse brush. Same satellite/week as Second Flat (pine, P 0.97): fuel physics, not a method failure.",
+  "fuel_check": {
+    "inside_hv_median_db": -0.1,
+    "inside_hh_median_db": -0.03,
+    "frac_inside_le_-1.5db": 0.045,
+    "background_frac_le_-1.5db": 0.012
+  },
+  "slope_check": {
+    "dem": "Copernicus DSM 30 m (AWS Open Data)",
+    "flagged_pixels": 44339,
+    "flagged_median_slope_deg": 4.0,
+    "background_median_slope_deg": 7.5,
+    "flagged_frac_over_10deg": 0.255,
+    "background_frac_over_10deg": 0.385,
+    "flagged_frac_over_20deg": 0.061,
+    "background_frac_over_20deg": 0.127
+  }
+}

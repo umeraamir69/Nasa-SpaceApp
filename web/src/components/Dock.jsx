@@ -1,4 +1,4 @@
-import { RASTERS, legendFor } from "../caseContent.js";
+import { LAYER_TIPS, OVERLAY_TIPS, RASTERS, legendFor } from "../caseContent.js";
 
 export default function Dock({
   cas,
@@ -33,6 +33,7 @@ export default function Dock({
               aria-selected={raster === r.id}
               className={raster === r.id ? "seg-btn on" : "seg-btn"}
               onClick={() => onRaster(r.id)}
+              title={LAYER_TIPS[r.id] || r.label}
             >
               {r.label}
             </button>
@@ -63,6 +64,7 @@ export default function Dock({
               aria-pressed={!!overlays[t.key]}
               className={overlays[t.key] ? "toggle on" : "toggle"}
               onClick={() => onOverlay(t.key)}
+              title={OVERLAY_TIPS[t.key] || t.label}
             >
               <i className={`swatch ${t.dot}`} aria-hidden="true" />
               {t.label}

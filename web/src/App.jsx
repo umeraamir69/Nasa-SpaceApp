@@ -5,6 +5,7 @@ import TopBar from "./components/TopBar.jsx";
 import Dock from "./components/Dock.jsx";
 import Brief from "./components/Brief.jsx";
 import PitchBar from "./components/PitchBar.jsx";
+import Overview from "./components/Overview.jsx";
 import "./App.css";
 
 const OVERLAY_KEYS = ["change", "perim", "ir", "lakes", "emsr", "flood", "rivers"];
@@ -16,6 +17,9 @@ const MEDIA_PREFIX = {
   thunderbay: "/media-thunderbay",
   crete: "/media-crete",
   isaias: "/media-isaias",
+  coleman: "/media-coleman",
+  secondflat: "/media-secondflat",
+  spokane: "/media-spokane",
 };
 
 function layerUrl(cas, rasterId) {
@@ -37,6 +41,8 @@ export default function App() {
   const [overlays, setOverlays] = useState(ALL_ON);
   const [swipePos, setSwipePos] = useState(50);
   const [pitch, setPitch] = useState(null);
+  const [overview, setOverview] = useState(false);
+  const [ovCases, setOvCases] = useState(null);
   const showRef = useRef(ALL_ON);
   showRef.current = overlays;
 
@@ -46,6 +52,17 @@ export default function App() {
       .then((d) => setAvailable(d.cases || []))
       .catch(() => setAvailable([]));
   }, []);
+
+  useEffect(() => {
+    if (!overview || ovCases) return;
+    Promise.all(
+      ["snyder", "thunderbay", "nepal", "latvia", "crete", "isaias", "coleman", "secondflat", "spokane"].map((id) =>
+        fetch(`/api/case?name=${id}`).then((r) => r.json()),
+      ),
+    )
+      .then((all) => setOvCases(all.filter((c) => c && c.case_id)))
+      .catch(() => setOvCases([]));
+  }, [overview, ovCases]);
 
   useEffect(() => {
     setCas(null);
@@ -119,6 +136,7 @@ export default function App() {
           const part = p.part ? `Fragment ${p.part}` : "EchoLens change";
           const area = p.area_km2 != null ? `<br/>${Number(p.area_km2).toFixed(2)} km²` : "";
           layer.bindPopup(`<b>${part}</b>${area}<br/><span class="pop-dates">${cas.before} → ${cas.after}</span>`);
+          layer.bindTooltip(`${part}${p.area_km2 != null ? ` · ${Number(p.area_km2).toFixed(2)} km²` : ""}`, { sticky: true });
         },
       });
       const perimLayer = L.geoJSON(perim, {
@@ -324,28 +342,48 @@ export default function App() {
         caseId={caseId}
         onCase={(id) => {
           setPitch(null);
+          setOverview(false);
           setCaseId(id);
         }}
-        onPitch={() => setPitch((p) => (p == null ? 0 : null))}
+        onPitch={() => {
+          setOverview(false);
+          setPitch((p) => (p == null ? 0 : null));
+        }}
         pitching={pitch != null}
+        overview={overview}
+        onOverview={() => {
+          setPitch(null);
+          setOverview((v) => !v);
+        }}
       />
-      <div className="body">
-        <div className="map-wrap">
-          <div ref={mapEl} className="map" />
-          {cas && (
-            <Dock
-              cas={cas}
-              raster={raster}
-              onRaster={onRaster}
-              overlays={overlays}
-              onOverlay={onOverlay}
-              swipePos={swipePos}
-              onSwipe={setSwipePos}
-            />
-          )}
-          {pitch != null && <PitchBar step={pitch} onStep={setPitch} onExit={() => setPitch(null)} />}
+      <div className="stage">
+        <div className="body">
+          <div className="map-wrap">
+            <div ref={mapEl} className="map" />
+            {cas && (
+              <Dock
+                cas={cas}
+                raster={raster}
+                onRaster={onRaster}
+                overlays={overlays}
+                onOverlay={onOverlay}
+                swipePos={swipePos}
+                onSwipe={setSwipePos}
+              />
+            )}
+            {pitch != null && <PitchBar step={pitch} onStep={setPitch} onExit={() => setPitch(null)} />}
+          </div>
+          <Brief cas={cas} err={err} />
         </div>
-        <Brief cas={cas} err={err} />
+        {overview && (
+          <Overview
+            cases={ovCases}
+            onOpen={(id) => {
+              setOverview(false);
+              setCaseId(id);
+            }}
+          />
+        )}
       </div>
     </div>
   );

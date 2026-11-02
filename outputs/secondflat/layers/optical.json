@@ -1,0 +1,10 @@
+{
+  "id": "S2C_11TLJ_20260801_0_L2A",
+  "datetime": "2026-08-01T19:02:18.491000Z",
+  "cloud_cover_pct": 38.628474,
+  "collection": "sentinel-2-l2a",
+  "visual": "https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/11/T/LJ/2026/8/S2C_11TLJ_20260801_0_L2A/TCI.tif",
+  "stac": "https://earth-search.aws.element84.com/v1/search",
+  "citation": "Sentinel-2 L2A true-color (TCI) via Element84 Earth Search / AWS sentinel-cogs. ESA Copernicus.",
+  "why": "Sentinel-2 during the late-July 2026 Oregon burns. Smoke is the why-SAR beat."
+}

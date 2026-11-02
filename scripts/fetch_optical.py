@@ -123,7 +123,8 @@ def write_crop(feat: dict, bounds: dict, out_dir: Path, why: str) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--case", choices=("snyder", "latvia", "thunderbay", "crete",
-                                            "isaias"),
+                                            "isaias", "coleman", "secondflat",
+                                            "spokane"),
                         default="snyder")
     args = parser.parse_args()
     out = ROOT / "outputs" / args.case / "layers"
@@ -146,6 +147,14 @@ def main() -> int:
         bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
         feat = stac_search(bbox, "2026-10-08", "2026-10-12")
         why = "Sentinel-2 around the 9 Oct 2026 Isaias landfall. Cloud is the why-SAR beat."
+    elif args.case in ("coleman", "secondflat"):
+        bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
+        feat = stac_search(bbox, "2026-07-24", "2026-08-13")
+        why = "Sentinel-2 during the late-July 2026 Oregon burns. Smoke is the why-SAR beat."
+    elif args.case == "spokane":
+        bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
+        feat = stac_search(bbox, "2026-08-01", "2026-08-16")
+        why = "Sentinel-2 during the early-Aug 2026 Spokane fires. Smoke is the why-SAR beat."
     else:
         bbox = [bounds["west"], bounds["south"], bounds["east"], bounds["north"]]
         feat = stac_search(bbox, "2026-08-20", "2026-08-24")

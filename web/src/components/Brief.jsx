@@ -1,6 +1,8 @@
 import {
   CASE_META,
+  EVENT_INFO,
   SOURCE_LINKS,
+  STAT_TIPS,
   VERDICT_LABEL,
   ledeFor,
   sourceFor,
@@ -55,8 +57,31 @@ export default function Brief({ cas, err }) {
       {meta.verdictNote && <p className="verdict-note">{meta.verdictNote}</p>}
       <p className="lede">{ledeFor(cas)}</p>
 
+      {EVENT_INFO[cas.case_id] && (
+        <div
+          className="timeline"
+          title="The satellite passed before and after — the event happened in between"
+        >
+          <div className="tl-node">
+            <span className="tl-dot" />
+            <span className="tl-top">Before pass</span>
+            <span className="tl-date">{cas.before}</span>
+          </div>
+          <div className="tl-node mid">
+            <span className="tl-dot" />
+            <span className="tl-top">{EVENT_INFO[cas.case_id].label}</span>
+            <span className="tl-date">{EVENT_INFO[cas.case_id].date}</span>
+          </div>
+          <div className="tl-node">
+            <span className="tl-dot" />
+            <span className="tl-top">After pass</span>
+            <span className="tl-date">{cas.after}</span>
+          </div>
+        </div>
+      )}
+
       {primary && (
-        <div className="primary-stat">
+        <div className="primary-stat" title={STAT_TIPS[primary.k] || primary.k}>
           <span className="primary-value">{primary.v}</span>
           <span className="primary-label">{primary.k}</span>
         </div>
@@ -64,7 +89,11 @@ export default function Brief({ cas, err }) {
 
       <dl className="stats">
         {rest.map((r) => (
-          <div key={r.k} className={r.hl ? "stat-row hl" : "stat-row"}>
+          <div
+            key={r.k}
+            className={r.hl ? "stat-row hl" : "stat-row"}
+            title={STAT_TIPS[r.k] || r.k}
+          >
             <dt>{r.k}</dt>
             <dd>{r.v}</dd>
           </div>
@@ -91,6 +120,14 @@ export default function Brief({ cas, err }) {
         </p>
       </section>
       <p className="muted fine">Offline: 80 m GCOV, 3×3 median despeckle, fixed dB cut. No ML, no live downloads.</p>
+      <button
+        type="button"
+        className="btn ghost print-btn"
+        onClick={() => window.print()}
+        title="Print this briefing as a one-page handout"
+      >
+        Print briefing
+      </button>
     </aside>
   );
 }
