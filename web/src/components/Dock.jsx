@@ -8,6 +8,8 @@ export default function Dock({
   onOverlay,
   swipePos,
   onSwipe,
+  showAll,
+  onShowAll,
 }) {
   const layers = RASTERS.filter((r) => r.id !== "optical" || cas?.has_optical);
   const toggles = [
@@ -56,6 +58,15 @@ export default function Dock({
       )}
       <div className="dock-group">
         <span className="dock-label">Overlays</span>
+        <button
+          type="button"
+          aria-pressed={!!showAll}
+          className={showAll ? "toggle wide on" : "toggle wide"}
+          onClick={onShowAll}
+          title="Overlay all 9 cases' change polygons and zoom out to fit them"
+        >
+          {showAll ? "Showing all 9 cases — tap to clear" : "Show all 9 cases"}
+        </button>
         <div className="toggles">
           {toggles.map((t) => (
             <button

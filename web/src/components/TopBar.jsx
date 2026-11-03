@@ -12,17 +12,17 @@ function Mark() {
   );
 }
 
-export default function TopBar({ available, caseId, onCase, onPitch, pitching, overview, onOverview }) {
+export default function TopBar({ available, caseId, onCase, onPitch, pitching, overview, onOverview, onHome, onAbout }) {
   const ready = available.filter((c) => c.ready);
   return (
     <header className="topbar">
-      <div className="brand" title="EchoLens: two NISAR radar passes in, an incident briefing out">
+      <button type="button" className="brand brand-btn" onClick={onHome} title="Back to home">
         <Mark />
-        <div className="brand-text">
+        <span className="brand-text">
           <span className="brand-name">EchoLens</span>
           <span className="brand-sub">NISAR surface change · Dancing with the SARs</span>
-        </div>
-      </div>
+        </span>
+      </button>
       {ready.length > 1 && (
         <nav className="case-nav" aria-label="Cases">
           {ready.map((c) => {
@@ -49,9 +49,17 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching, o
           type="button"
           className={overview ? "pitch-btn on" : "pitch-btn"}
           onClick={onOverview}
-          title="Compare all 6 cases side by side"
+          title="Compare all cases side by side"
         >
           {overview ? "Map" : "Overview"}
+        </button>
+        <button
+          type="button"
+          className="pitch-btn ghost-btn"
+          onClick={onAbout}
+          title="About EchoLens and the team"
+        >
+          About
         </button>
         <button
           type="button"

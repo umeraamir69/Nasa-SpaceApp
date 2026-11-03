@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { PITCH } from "../caseContent.js";
+import { CASE_META, PITCH, VERDICT_LABEL } from "../caseContent.js";
 
 export default function PitchBar({ step, onStep, onExit }) {
   useEffect(() => {
@@ -12,24 +12,31 @@ export default function PitchBar({ step, onStep, onExit }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [step, onStep, onExit]);
 
+  const s = PITCH[step];
+  const verdict = (CASE_META[s.caseId] || {}).verdict || "detected";
+
   return (
     <div className="pitch-bar" role="dialog" aria-label="Guided pitch tour">
-      <div className="pitch-main">
+      <div className="pitch-head">
         <span className="pitch-count">
           {step + 1} / {PITCH.length}
         </span>
-        <p className="pitch-caption">{PITCH[step].caption}</p>
+        <span className="pitch-case">{s.label || s.caseId}</span>
+        <span className={`verdict v-${verdict}`}>{VERDICT_LABEL[verdict]}</span>
+        <span className="pitch-layer">{s.raster}</span>
       </div>
+      <p className="pitch-caption">{s.caption}</p>
+      {s.stat && <p className="pitch-stat">{s.stat}</p>}
       <div className="pitch-controls">
         <div className="pitch-dots" aria-hidden="true">
-          {PITCH.map((_, i) => (
+          {PITCH.map((p, i) => (
             <button
               key={i}
               type="button"
               tabIndex={-1}
               className={i === step ? "pitch-dot on" : "pitch-dot"}
               onClick={() => onStep(i)}
-              title={`Go to step ${i + 1} of ${PITCH.length}`}
+              title={`Go to step ${i + 1} of ${PITCH.length}: ${p.label}`}
             />
           ))}
         </div>

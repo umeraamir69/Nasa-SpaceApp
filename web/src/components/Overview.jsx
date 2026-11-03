@@ -1,11 +1,4 @@
-import { CASE_META, EVENT_INFO, VERDICT_LABEL, fmtKm2 } from "../caseContent.js";
-
-const METHOD = [
-  { n: "1", t: "Same-mode pair", d: "Two passes, one track, one radar mode — guard-verified" },
-  { n: "2", t: "Despeckle", d: "3×3 median calms the radar grain" },
-  { n: "3", t: "Subtract", d: "After minus before in dB, one fixed threshold" },
-  { n: "4", t: "Score", d: "Precision/recall vs official truth — negatives published" },
-];
+import { CASE_META, EVENT_INFO, METHOD, VERDICT_LABEL, fmtKm2 } from "../caseContent.js";
 
 function keyMetric(cas) {
   if (cas.precision_vs_nifc != null) return `P ${Number(cas.precision_vs_nifc).toFixed(2)} vs NIFC`;

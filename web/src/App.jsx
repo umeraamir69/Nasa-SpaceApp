@@ -6,7 +6,11 @@ import Dock from "./components/Dock.jsx";
 import Brief from "./components/Brief.jsx";
 import PitchBar from "./components/PitchBar.jsx";
 import Overview from "./components/Overview.jsx";
+import HomePage from "./components/HomePage.jsx";
+import AboutModal from "./components/AboutModal.jsx";
 import "./App.css";
+
+const ALL_IDS = ["snyder", "thunderbay", "nepal", "latvia", "crete", "isaias", "coleman", "secondflat", "spokane"];
 
 const OVERLAY_KEYS = ["change", "perim", "ir", "lakes", "emsr", "flood", "rivers"];
 const ALL_ON = Object.fromEntries(OVERLAY_KEYS.map((k) => [k, true]));
@@ -42,7 +46,10 @@ export default function App() {
   const [swipePos, setSwipePos] = useState(50);
   const [pitch, setPitch] = useState(null);
   const [overview, setOverview] = useState(false);
-  const [ovCases, setOvCases] = useState(null);
+  const [home, setHome] = useState(true);
+  const [about, setAbout] = useState(false);
+  const [allCases, setAllCases] = useState(null);
+  const [showAll, setShowAll] = useState(false);
   const showRef = useRef(ALL_ON);
   showRef.current = overlays;
 
@@ -54,15 +61,48 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!overview || ovCases) return;
+    setShowAll(false);
+  }, [caseId]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const store = layersRef.current;
+    if (!map) {
+      store.allCases = null;
+      return;
+    }
+    if (store.allCases) {
+      map.removeLayer(store.allCases);
+      store.allCases = null;
+    }
+    if (!showAll) return;
+    let cancelled = false;
     Promise.all(
-      ["snyder", "thunderbay", "nepal", "latvia", "crete", "isaias", "coleman", "secondflat", "spokane"].map((id) =>
-        fetch(`/api/case?name=${id}`).then((r) => r.json()),
+      ALL_IDS.map((id) =>
+        fetch(`/api/geojson/change?name=${id}`).then((r) => r.json()),
       ),
+    ).then((fcs) => {
+      if (cancelled || mapRef.current !== map) return;
+      const group = L.geoJSON(fcs.flatMap((fc) => fc.features || []), {
+        style: { color: "#e4572e", weight: 1, fillColor: "#c1121f", fillOpacity: 0.35 },
+      });
+      store.allCases = group;
+      group.addTo(map);
+      const b = group.getBounds();
+      if (b.isValid()) map.fitBounds(b, { padding: [30, 30] });
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [showAll]);
+
+  useEffect(() => {
+    Promise.all(
+      ALL_IDS.map((id) => fetch(`/api/case?name=${id}`).then((r) => r.json())),
     )
-      .then((all) => setOvCases(all.filter((c) => c && c.case_id)))
-      .catch(() => setOvCases([]));
-  }, [overview, ovCases]);
+      .then((all) => setAllCases(all.filter((c) => c && c.case_id)))
+      .catch(() => setAllCases([]));
+  }, []);
 
   useEffect(() => {
     setCas(null);
@@ -86,8 +126,8 @@ export default function App() {
       [39.06, -109.0],
       11,
     );
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> &copy; <a href=\"https://carto.com/attributions\">CARTO</a>",
+    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+      attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://www.esri.com/\">Esri</a>",
       maxZoom: 19,
     }).addTo(map);
     map.createPane("rasterPane");
@@ -343,18 +383,27 @@ export default function App() {
         onCase={(id) => {
           setPitch(null);
           setOverview(false);
+          setHome(false);
           setCaseId(id);
         }}
         onPitch={() => {
           setOverview(false);
+          setHome(false);
           setPitch((p) => (p == null ? 0 : null));
         }}
         pitching={pitch != null}
         overview={overview}
         onOverview={() => {
           setPitch(null);
+          setHome(false);
           setOverview((v) => !v);
         }}
+        onHome={() => {
+          setPitch(null);
+          setOverview(false);
+          setHome(true);
+        }}
+        onAbout={() => setAbout(true)}
       />
       <div className="stage">
         <div className="body">
@@ -369,6 +418,8 @@ export default function App() {
                 onOverlay={onOverlay}
                 swipePos={swipePos}
                 onSwipe={setSwipePos}
+                showAll={showAll}
+                onShowAll={() => setShowAll((v) => !v)}
               />
             )}
             {pitch != null && <PitchBar step={pitch} onStep={setPitch} onExit={() => setPitch(null)} />}
@@ -377,14 +428,29 @@ export default function App() {
         </div>
         {overview && (
           <Overview
-            cases={ovCases}
+            cases={allCases}
             onOpen={(id) => {
               setOverview(false);
               setCaseId(id);
             }}
           />
         )}
+        {home && (
+          <HomePage
+            cases={allCases}
+            onOpen={(id) => {
+              setHome(false);
+              if (id) setCaseId(id);
+            }}
+            onPitch={() => {
+              setHome(false);
+              setPitch(0);
+            }}
+            onAbout={() => setAbout(true)}
+          />
+        )}
       </div>
+      {about && <AboutModal onClose={() => setAbout(false)} />}
     </div>
   );
 }

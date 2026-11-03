@@ -27,6 +27,7 @@ Optional Drive copy is commented out — only if Drive has ~14 GB free.
 - Login loop — authorize ASF DAAC on https://urs.earthdata.nasa.gov/ under Applications.
 - Colab disk full — you started extra datasets. Runtime → Disconnect and delete runtime, then only this notebook.
 - `no 048_D_074` — Earthdata search glitch; re-run the search cell.
+- `fsspec` / `gcsfs` / `datasets` conflict — Colab preinstalls those; this notebook pins `fsspec==2025.12.0`. Safe to ignore for earthaccess if install finished; re-run the install cell if you still see import errors.
 
 ## Related
 

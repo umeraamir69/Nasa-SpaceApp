@@ -21,6 +21,19 @@ export const CASE_META = {
 
 export const VERDICT_LABEL = { detected: "Detected", negative: "Negative", marginal: "Marginal" };
 
+export const METHOD = [
+  { n: "1", t: "Same-mode pair", d: "Two passes, one track, one radar mode — guard-verified" },
+  { n: "2", t: "Despeckle", d: "3×3 median calms the radar grain" },
+  { n: "3", t: "Subtract", d: "After minus before in dB, one fixed threshold" },
+  { n: "4", t: "Score", d: "Precision/recall vs official truth — negatives published" },
+];
+
+export const VERDICT_MEANING = [
+  { v: "detected", t: "Detected", d: "Real change mapped and checked against official truth" },
+  { v: "negative", t: "Negative", d: "We looked carefully — the honest answer is no, with proof" },
+  { v: "marginal", t: "Marginal", d: "A faint signal shown with caveats, awaiting confirmation" },
+];
+
 export const EVENT_INFO = {
   snyder: { label: "Fire active", date: "late Jun – Jul" },
   thunderbay: { label: "Ignition", date: "12 Jul" },
@@ -93,59 +106,93 @@ export const STAT_TIPS = {
 export const PITCH = [
   {
     caseId: "snyder",
-    raster: "change",
-    caption: "Snyder Fire: 40.9 km² of radar darkening — every pixel inside the official NIFC line.",
+    label: "Snyder Fire",
+    raster: "before",
+    stat: "Before · 17 Jun 2026 · HV channel",
+    caption: "It starts with two radar pictures. This is Snyder before the fire — every bright patch is live vegetation.",
   },
   {
     caseId: "snyder",
+    label: "Snyder Fire",
+    raster: "after",
+    stat: "After · 23 Jul 2026 · same track, same mode",
+    caption: "Five weeks later the middle has gone dark. Same satellite, same settings — the scar is forming.",
+  },
+  {
+    caseId: "snyder",
+    label: "Snyder Fire",
+    raster: "change",
+    stat: "40.9 km² · precision 1.00 vs NIFC",
+    caption: "Subtract: 40.9 km² of darkening, every pixel inside the official NIFC line — and aircraft heat maps agree.",
+  },
+  {
+    caseId: "snyder",
+    label: "Snyder Fire",
     raster: "optical",
-    caption: "Same week, Sentinel-2: cloud and smoke. The radar saw straight through it.",
+    stat: "34% cloud · Sentinel-2 7 Jul",
+    caption: "Same week from a normal camera: cloud and smoke. The radar saw straight through it.",
   },
   {
     caseId: "thunderbay",
+    label: "Thunder Bay 36",
     raster: "change",
+    stat: "235 km² severe core · Ontario's largest fire",
     caption:
-      "Thunder Bay 36: same method on boreal forest — the mapped core of Ontario's largest fire ever.",
+      "Same method on boreal forest — the mapped core of Ontario's largest fire ever, one day after ignition began.",
   },
   {
     caseId: "secondflat",
+    label: "Second Flat",
     raster: "change",
+    stat: "68.9 km² · precision 0.97 vs NIFC",
     caption:
-      "Second Flat: pine burns darken hard — 68.9 km² at 0.97 precision. Same week, 60 km away, grass-fire Coleman barely registers.",
+      "Second Flat: pine burns darken hard. Same week, 60 km away, grass-fire Coleman barely registers.",
   },
   {
     caseId: "coleman",
+    label: "Coleman Creek",
     raster: "change",
+    stat: "Recall 0.01 — grass is radar-invisible",
     caption:
-      "Coleman Creek: 309,000 acres of range fire, nearly invisible to L-band. Fuel physics, documented with numbers — our third kind of negative.",
+      "Coleman Creek: 309,000 acres of range fire, nearly invisible to L-band. Fuel physics, documented with numbers.",
   },
   {
     caseId: "latvia",
+    label: "Latvia flood",
     raster: "change",
+    stat: "Fragments 1.1 km vs 1.0 km random",
     caption:
       "Latvia, 8 days after peak rain: fragments match rivers no better than random. An honest negative.",
   },
   {
     caseId: "crete",
+    label: "Crete flood",
     raster: "change",
+    stat: "Recall 0.01 — truth itself shows no darkening",
     caption:
       "Crete: the flash flood drained before Oct 9 — Copernicus truth itself shows no darkening. Timing is everything.",
   },
   {
     caseId: "isaias",
+    label: "Isaias surge",
     raster: "change",
+    stat: "0.52 km² bay fringe · unvalidated",
     caption:
       "Isaias: 3 days after landfall only a 0.5 km² bay fringe remains — marginal, unvalidated, shown with caveats.",
   },
   {
     caseId: "nepal",
+    label: "Nepal GLOF",
     raster: "change",
+    stat: "2.4 km² · precision 0.99 vs HOT flood",
     caption:
-      "Nepal: same-mode pair maps the wet GLOF channel at 0.99 precision against the official flood polygon.",
+      "Nepal: same-mode pair maps the wet GLOF channel at 0.99 precision — and coherence data independently agrees.",
   },
   {
     caseId: "snyder",
+    label: "Snyder Fire",
     raster: "confidence",
+    stat: "Grey valid · colour shipped · nothing faked",
     caption: "Confidence: grey is valid radar, colour only where we ship. No fake second layers.",
   },
 ];
