@@ -464,7 +464,7 @@ export default function App() {
             cases={allCases}
             onOpen={(id) => {
               setHome(false);
-              if (id) setCaseId(id);
+              if (typeof id === "string") setCaseId(id);
             }}
             onPitch={() => {
               setHome(false);

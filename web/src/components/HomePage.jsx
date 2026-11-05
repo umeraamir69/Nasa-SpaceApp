@@ -23,7 +23,7 @@ export default function HomePage({ cases, onOpen, onPitch, onAbout }) {
           <button type="button" className="btn solid big" onClick={onPitch} title="Guided 12-step tour">
             Start the pitch
           </button>
-          <button type="button" className="btn ghost big" onClick={onOpen} title="Open the interactive map">
+          <button type="button" className="btn ghost big" onClick={() => onOpen()} title="Open the interactive map">
             Explore the map
           </button>
         </div>
