@@ -47,7 +47,11 @@ hardening, submission, or optional depth. Check off as you go.*
 
 ## Deliberately skipped (low leverage)
 
-Adaptive thresholds, ML comparison classifier, SMAP extras, 3D globe, mobile
+Adaptive thresholds, ML comparison classifier, SMAP extras, mobile
 app, live Earthdata on demo day. The science already exceeds demo needs —
 more numbers won't convert to votes. Revisit only after everything above
 is done.
+
+Shipped from this list: 3D globe (Overview hero, three.js lazy chunk,
+verified headless with zero console errors; also fixed Leaflet controls
+bleeding over the home/overview overlays).

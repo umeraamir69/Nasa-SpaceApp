@@ -112,5 +112,5 @@ Live end-to-end probe (104 checks over all cases/layers/GeoJSON): `/tmp/check_al
 | `data/` | Local granules (gitignored, ~35 GB) |
 | `outputs/<case>/` | `summary.json`, `change.geojson`, `layers/*.png` (in git) |
 | `app/` | FastAPI (`/api/cases`, `/api/case`, `/api/geojson/*`) |
-| `web/` | Vite + React + Leaflet briefing console |
+| `web/` | Vite + React + Leaflet briefing console + three.js globe (lazy chunk on Overview) |
 | `tests/` | Asset + API contract tests |

@@ -1461,3 +1461,71 @@
     padding: 18px 16px 32px;
   }
 }
+
+.globe-wrap {
+  margin: 4px 0 18px;
+  border: 1px solid var(--line, #223040);
+  border-radius: 12px;
+  background: radial-gradient(ellipse at 50% 40%, #101a26 0%, #0a0c0d 70%);
+  padding: 8px 8px 10px;
+}
+
+.globe-canvas {
+  width: 100%;
+  height: 380px;
+}
+
+.globe-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+}
+
+.globe-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 4px 2px;
+}
+
+.globe-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line, #223040);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.globe-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.globe-fallback {
+  padding: 24px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* The map stays mounted behind the home/overview overlays; keep its
+   floating controls (z-index 1000) from painting over those screens. */
+.stage:has(.overview) .leaflet-top,
+.stage:has(.overview) .leaflet-bottom,
+.stage:has(.home) .leaflet-top,
+.stage:has(.home) .leaflet-bottom {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .globe-canvas {
+    height: 260px;
+  }
+}

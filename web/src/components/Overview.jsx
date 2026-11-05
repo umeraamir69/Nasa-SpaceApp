@@ -1,4 +1,7 @@
+import { Suspense, lazy } from "react";
 import { CASE_META, EVENT_INFO, METHOD, VERDICT_LABEL, fmtKm2 } from "../caseContent.js";
+
+const Globe = lazy(() => import("./Globe.jsx"));
 
 function keyMetric(cas) {
   if (cas.precision_vs_nifc != null) return `P ${Number(cas.precision_vs_nifc).toFixed(2)} vs NIFC`;
@@ -60,6 +63,9 @@ export default function Overview({ cases, onOpen }) {
           </span>
         </div>
       </div>
+      <Suspense fallback={<div className="globe-fallback">Loading 3D globe…</div>}>
+        <Globe cases={cases} onOpen={onOpen} />
+      </Suspense>
       <div className="ov-grid">
         {cases.map((cas) => {
           const meta = CASE_META[cas.case_id] || {};
