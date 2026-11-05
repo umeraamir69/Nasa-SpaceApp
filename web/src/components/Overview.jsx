@@ -2,6 +2,8 @@ import { CASE_META, EVENT_INFO, METHOD, VERDICT_LABEL, fmtKm2 } from "../caseCon
 
 function keyMetric(cas) {
   if (cas.precision_vs_nifc != null) return `P ${Number(cas.precision_vs_nifc).toFixed(2)} vs NIFC`;
+  if (cas.case_id === "thunderbay" && cas.precision_vs_truth != null)
+    return `P ${Number(cas.precision_vs_truth).toFixed(2)} / R ${Number(cas.recall_vs_truth).toFixed(2)} vs FIRMS`;
   if (cas.precision_vs_truth != null)
     return `P ${Number(cas.precision_vs_truth).toFixed(2)} / R ${Number(cas.recall_vs_truth).toFixed(2)} vs NIFC`;
   if (cas.precision_vs_flood != null)
@@ -9,7 +11,7 @@ function keyMetric(cas) {
   if (cas.precision_vs_emsr != null)
     return `P ${Number(cas.precision_vs_emsr).toFixed(2)} / R ${Number(cas.recall_vs_emsr).toFixed(2)} vs EMSR`;
   if (cas.waterways_check) return "No river association — negative";
-  if (cas.case_id === "thunderbay") return "Severe core · FIRMS pending";
+  if (cas.case_id === "thunderbay") return "Severe core · FIRMS scored";
   if (cas.case_id === "isaias") return "Unvalidated fringe";
   return "";
 }

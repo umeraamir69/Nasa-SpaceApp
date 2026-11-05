@@ -292,7 +292,7 @@ def main() -> int:
         "event": "Thunder Bay 36 (THU036), Wabakimi, Ontario — largest in Ontario history (~314,000 ha)",
         "start": "2026-07-12",
         "affes": "Ontario Aviation, Forest Fire and Emergency Services (sizes; no 2026 perimeter layer yet)",
-        "firms": "NASA FIRMS VIIRS hotspots (pending free API key)",
+        "firms": "NASA FIRMS VIIRS NRT hotspots (SNPP + NOAA-20/21, fetched Nov 2026 via MAP_KEY)",
         "note": "Ontario LIO Fire Disturbance Area stops at 2025. Metrics vs truth appear when --truth is given.",
     }
     change_fc = {"type": "FeatureCollection", "name": "echolens_thunderbay_gcov_change",

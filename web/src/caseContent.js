@@ -69,6 +69,7 @@ export const OVERLAY_TIPS = {
   emsr: "Official Copernicus Emergency Mapping polygons for this event",
   flood: "Official flood-extent polygon used to score our detection",
   rivers: "OpenStreetMap rivers — the null test: do flags follow water?",
+  firms: "NASA FIRMS VIIRS hotspots for the event window — orbited eyes that saw the same fire",
 };
 
 export const STAT_TIPS = {
@@ -136,7 +137,7 @@ export const PITCH = [
     caseId: "thunderbay",
     label: "Thunder Bay 36",
     raster: "change",
-    stat: "235 km² severe core · Ontario's largest fire",
+    stat: "235 km² severe core · P 0.34 / R 0.04 vs FIRMS",
     caption:
       "Same method on boreal forest — the mapped core of Ontario's largest fire ever, one day after ignition began.",
   },
@@ -256,7 +257,7 @@ export function ledeFor(cas) {
     return "Two NISAR L-band passes (19 → 31 Aug, same track and mode) around the Rasuwa glacier-lake outburst (26 Aug, EMSR927). 2.4 km² of HH darkening traces the wet gorge at 0.99 precision vs the HOT 27 Aug flood polygon — five days after the peak, the wettest channel still shows. Official Copernicus landslides and the HOT polygon sit on the same map.";
   }
   if (cas.case_id === "thunderbay") {
-    return "Two NISAR L-band passes (11 Jul → 16 Aug, same track and mode) around Thunder Bay 36 in Wabakimi, Ontario — the largest fire in Ontario history (~314,000 ha). The before pass is one day pre-ignition. We map the severe burn core; Ontario publishes no 2026 perimeter yet, so FIRMS hotspots are the pending check.";
+    return "Two NISAR L-band passes (11 Jul → 16 Aug, same track and mode) around Thunder Bay 36 in Wabakimi, Ontario — the largest fire in Ontario history (~314,000 ha). The before pass is one day pre-ignition. We map the severe burn core; Ontario publishes no 2026 perimeter yet, so 31,401 FIRMS VIIRS hotspots are the truth: precision 0.34, recall 0.04 — we map the core, FIRMS maps everything that burned.";
   }
   if (cas.case_id === "crete") {
     return "Two NISAR L-band passes (27 Sep → 9 Oct, same track and mode) around the Crete flash flood (2–4 Oct, EMSR933, 440 mm in 48 h). By Oct 9 the water had drained — the mapped polygons show no darkening, so this case is an honest negative: sea masked, rain brightening visible, no flood left to map.";
@@ -316,7 +317,7 @@ export function trustFor(cas, cite) {
     return "Same-mode pair (098_A_016, DHDH both dates), 3×3 despeckle, HH ≥ 2 dB darker — the knee of a threshold sweep against the HOT flood polygon and EMSR landslides. Precision 0.99, recall 0.18 vs HOT: we under-map the receded flood on purpose, and slope audit confirms flags sit on valley floors (8° median vs 33° background). GUNW coherence independently agrees: 0.11 inside flags vs 0.59 background.";
   }
   if (cas.case_id === "thunderbay") {
-    return "Same-mode pair (041_D_063, DHDH both dates), 3×3 despeckle, HV ≥ 1.5 dB darker — Snyder parity for a like-for-like boreal comparison. We map the severe core only (~7% of the reported 314,000 ha complex, which includes unburned interior and merged fires). FIRMS hotspot overlay pending.";
+    return "Same-mode pair (041_D_063, DHDH both dates), 3×3 despeckle, HV ≥ 1.5 dB darker — Snyder parity for a like-for-like boreal comparison. We map the severe core only (~7% of the reported 314,000 ha complex, which includes unburned interior and merged fires). Precision 0.34, recall 0.04 vs the 2,282 km² FIRMS hotspot union (31,401 VIIRS detections, carried by NOAA-21 — SNPP/NRT missed the mid-July blowup).";
   }
   if (cas.case_id === "crete") {
     return "Same-mode pair (137_D_071, DHDH both dates), DEM land mask (sea-state change would fake flood), HH ≥ 2 dB darker + water-like after. Result: 27 pixels, precision 0.33 / recall 0.01 vs 748 Copernicus polygons — the truth pixels themselves read −9 dB with zero darkening. Water gone by Oct 9.";
@@ -403,7 +404,11 @@ export function statsFor(cas) {
         k: "Mapped severe core",
         v: `${fmtKm2(cas.area_km2)} — ≈${cas.area_km2 != null ? Number((cas.area_km2 / 3140) * 100).toFixed(0) : "—"}% of reported`,
       },
-      { k: "Truth overlay", v: "FIRMS hotspots pending" },
+      { k: "Truth overlay", v: "31,401 VIIRS hotspots (SNPP + NOAA-20/21)" },
+      {
+        k: "Precision / recall vs FIRMS",
+        v: `${fmt2(cas.precision_vs_truth)} / ${fmt2(cas.recall_vs_truth)} — severe core vs whole-fire footprint`,
+      },
     );
   } else if (cas.case_id === "latvia") {
     base.push({ k: "Permanent water masked", v: fmtKm2(cas.permanent_water_km2) });

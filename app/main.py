@@ -127,6 +127,7 @@ def case(name: str = "snyder"):
     ).exists()
     data["has_flood_extent"] = (folder / "flood_extent.geojson").exists()
     data["has_rivers"] = (folder / "rivers.geojson").exists()
+    data["has_firms"] = (folder / "firms.geojson").exists()
     return data
 
 
@@ -136,6 +137,7 @@ OVERLAYS = {
     "emsr": ["emsr933.geojson", "emsr927.geojson"],
     "flood": ["flood_extent.geojson"],
     "rivers": ["rivers.geojson"],
+    "firms": ["firms.geojson"],
 }
 
 

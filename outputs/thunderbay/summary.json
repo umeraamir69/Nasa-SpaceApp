@@ -1,5 +1,5 @@
 {
-  "when_utc": "2026-10-30T14:32:33Z",
+  "when_utc": "2026-11-05T02:40:09Z",
   "case": "thunderbay",
   "event": "Thunder Bay 36 wildfire, Ontario",
   "before": "2026-07-11",
@@ -14,21 +14,16 @@
   "sign_used": "decrease",
   "change_pixels": 36714,
   "area_km2": 234.97,
+  "truth": "firms_truth.geojson",
+  "truth_km2": 2281.735,
+  "precision_vs_truth": 0.34,
+  "recall_vs_truth": 0.035,
+  "iou_vs_truth": 0.033,
   "citation": {
     "event": "Thunder Bay 36 (THU036), Wabakimi, Ontario \u2014 largest in Ontario history (~314,000 ha)",
     "start": "2026-07-12",
     "affes": "Ontario Aviation, Forest Fire and Emergency Services (sizes; no 2026 perimeter layer yet)",
-    "firms": "NASA FIRMS VIIRS hotspots (pending free API key)",
+    "firms": "NASA FIRMS VIIRS NRT hotspots (SNPP + NOAA-20/21, fetched Nov 2026 via MAP_KEY)",
     "note": "Ontario LIO Fire Disturbance Area stops at 2025. Metrics vs truth appear when --truth is given."
-  },
-  "slope_check": {
-    "dem": "Copernicus DSM 30 m (AWS Open Data)",
-    "flagged_pixels": 273495,
-    "flagged_median_slope_deg": 3.9,
-    "background_median_slope_deg": 2.7,
-    "flagged_frac_over_10deg": 0.092,
-    "background_frac_over_10deg": 0.087,
-    "flagged_frac_over_20deg": 0.007,
-    "background_frac_over_20deg": 0.011
   }
 }

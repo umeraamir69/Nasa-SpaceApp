@@ -9,7 +9,7 @@ NASA Space Apps Toronto 2026 — **Dancing with the SARs**. Two NISAR radar pass
 | Case | Type | Pair | Verdict | Headline |
 |---|---|---|---|---|
 | Snyder Fire | Wildfire | 17 Jun → 23 Jul 2026, HV | Detected | 40.9 km², precision 1.00 vs NIFC + NIROPS |
-| Thunder Bay 36 | Wildfire | 11 Jul → 16 Aug 2026, HV | Detected | 235 km² severe core (~7% of complex) |
+| Thunder Bay 36 | Wildfire | 11 Jul → 16 Aug 2026, HV | Detected | 235 km² severe core (~7% of complex) · FIRMS P 0.34 / R 0.04 |
 | Nepal Rasuwa GLOF | Glacier flood | 19 → 31 Aug 2026, HH | Detected | 2.4 km², precision 0.99 vs HOT flood |
 | Latvia flood | Flood | 18 → 30 Aug 2026, HH | Negative | post-peak dry-down, proven over 7 methods |
 | Crete flood | Flash flood | 27 Sep → 9 Oct 2026, HH | Negative | drained before Oct 9 (truth itself: no darkening) |

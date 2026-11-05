@@ -12,7 +12,7 @@ import "./App.css";
 
 const ALL_IDS = ["snyder", "thunderbay", "nepal", "latvia", "crete", "isaias", "coleman", "secondflat", "spokane"];
 
-const OVERLAY_KEYS = ["change", "perim", "ir", "lakes", "emsr", "flood", "rivers"];
+const OVERLAY_KEYS = ["change", "perim", "ir", "lakes", "emsr", "flood", "rivers", "firms"];
 const ALL_ON = Object.fromEntries(OVERLAY_KEYS.map((k) => [k, true]));
 
 const MEDIA_PREFIX = {
@@ -162,7 +162,10 @@ export default function App() {
       cas.has_rivers
         ? fetch(`/api/geojson/overlay?name=${cid}&layer=rivers`).then((r) => r.json())
         : Promise.resolve(null),
-    ]).then(([change, perim, ir, lakes, emsr, flood, rivers]) => {
+      cas.has_firms
+        ? fetch(`/api/geojson/overlay?name=${cid}&layer=firms`).then((r) => r.json())
+        : Promise.resolve(null),
+    ]).then(([change, perim, ir, lakes, emsr, flood, rivers, firms]) => {
       const show = showRef.current;
       const changeLayer = L.geoJSON(change, {
         style: {
@@ -258,6 +261,26 @@ export default function App() {
         });
         layersRef.current.rivers = riverLayer;
         if (show.rivers) riverLayer.addTo(map);
+      }
+      if (firms) {
+        const firmsLayer = L.geoJSON(firms, {
+          pointToLayer: (_feat, latlng) =>
+            L.circleMarker(latlng, {
+              radius: 3,
+              color: "#ff9e00",
+              fillColor: "#ff9e00",
+              fillOpacity: 0.85,
+              weight: 0,
+            }),
+          onEachFeature: (feat, layer) => {
+            const p = feat?.properties || {};
+            layer.bindPopup(
+              `<b>FIRMS hotspot</b><br/>${p.acq_date || ""} ${p.acq_time || ""}<br/>${p.satellite || ""} · ${p.confidence || ""} · FRP ${p.frp || "—"}`
+            );
+          },
+        });
+        layersRef.current.firms = firmsLayer;
+        if (show.firms) firmsLayer.addTo(map);
       }
       const perimBounds = perimLayer.getBounds();
       const emsrBounds = layersRef.current.emsr?.getBounds();
@@ -359,6 +382,7 @@ export default function App() {
       ["emsr", "emsr"],
       ["flood", "flood"],
       ["rivers", "rivers"],
+      ["firms", "firms"],
     ];
     for (const [key, ref] of pairs) {
       const layer = store[ref];

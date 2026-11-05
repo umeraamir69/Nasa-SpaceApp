@@ -20,8 +20,12 @@ hardening, submission, or optional depth. Check off as you go.*
 
 ## Medium — product depth (if days to spare)
 
-- [ ] **Thunder Bay FIRMS overlay.** Needs free FIRMS key from human, then wire
-  `--truth` overlay + precision/recall (~1 h).
+- [x] **Thunder Bay FIRMS overlay.** Key received; shipped
+  `scripts/fetch_thunderbay_firms.py` (31,401 VIIRS detections 11 Jul–19 Aug,
+  overlay thinned to 5,391 pts; union truth 2,282 km²; P 0.34 / R 0.04 / IoU 0.03
+  wired into summary + map toggle). Finding: NOAA-21 carried the event
+  (30,932, peak 14k on 15 Jul); SNPP + NOAA-20 NRT archives hold almost nothing
+  for the mid-July blowup — always pull all three sensors.
 - [x] **Cases-at-a-glance landing.** Now 9 verdicts/areas/dates side by side
   (Overview mode, shipped 31 Oct).
 - [ ] **Screenshots/GIFs** of swipe + pitch mode for the project page.

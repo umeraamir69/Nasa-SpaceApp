@@ -20,6 +20,7 @@ export default function Dock({
     { key: "emsr", label: cas?.case_id === "crete" ? "EMSR933" : "EMSR927", flag: cas?.has_emsr, dot: "nifc" },
     { key: "flood", label: "Official flood", flag: cas?.has_flood_extent, dot: "flood" },
     { key: "rivers", label: "Rivers (OSM)", flag: cas?.has_rivers, dot: "rivers" },
+    { key: "firms", label: "FIRMS hotspots", flag: cas?.has_firms, dot: "ir" },
   ].filter((t) => t.flag);
 
   return (
