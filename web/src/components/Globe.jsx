@@ -92,12 +92,27 @@ export default function Globe({ cases, onOpen }) {
     sun.position.set(-4, 2, 3);
     scene.add(sun);
 
-    const globe = new THREE.Mesh(
-      new THREE.SphereGeometry(RADIUS, 48, 32),
-      new THREE.MeshStandardMaterial({ color: 0x18242f, roughness: 0.95, metalness: 0 }),
-    );
+    const globeMat = new THREE.MeshStandardMaterial({
+      color: 0x8f9aa6, // dims the day map into the app's dark palette
+      roughness: 1.0,
+      metalness: 0,
+    });
+    const globe = new THREE.Mesh(new THREE.SphereGeometry(RADIUS, 48, 32), globeMat);
     scene.add(globe);
-    scene.add(graticule(0x33506a, 0.55));
+    // Earth map ships with the app (web/public/earth_day.jpg) so the demo
+    // stays offline; the plain dark sphere remains if it fails to load.
+    new THREE.TextureLoader().load(
+      "/earth_day.jpg",
+      (tex) => {
+        tex.colorSpace = THREE.SRGBColorSpace;
+        globeMat.map = tex;
+        globeMat.color.set(0x9aa7b5);
+        globeMat.needsUpdate = true;
+      },
+      undefined,
+      () => {},
+    );
+    scene.add(graticule(0x33506a, 0.35));
     scene.add(stars());
 
     const markers = [];

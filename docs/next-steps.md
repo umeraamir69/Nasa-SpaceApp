@@ -53,5 +53,5 @@ more numbers won't convert to votes. Revisit only after everything above
 is done.
 
 Shipped from this list: 3D globe (Overview hero, three.js lazy chunk,
-verified headless with zero console errors; also fixed Leaflet controls
-bleeding over the home/overview overlays).
+offline earth texture, verified headless with zero console errors; also
+fixed Leaflet controls bleeding over the home/overview overlays).
