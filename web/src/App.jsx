@@ -7,7 +7,7 @@ import Brief from "./components/Brief.jsx";
 import PitchBar from "./components/PitchBar.jsx";
 import Overview from "./components/Overview.jsx";
 import HomePage from "./components/HomePage.jsx";
-import AboutModal from "./components/AboutModal.jsx";
+import AboutPage from "./components/AboutPage.jsx";
 import "./App.css";
 
 const ALL_IDS = ["snyder", "thunderbay", "nepal", "latvia", "crete", "isaias", "coleman", "secondflat", "spokane"];
@@ -473,8 +473,17 @@ export default function App() {
             onAbout={() => setAbout(true)}
           />
         )}
+        {about && (
+          <AboutPage
+            onClose={() => setAbout(false)}
+            onExplore={() => {
+              setAbout(false);
+              setHome(false);
+              setOverview(false);
+            }}
+          />
+        )}
       </div>
-      {about && <AboutModal onClose={() => setAbout(false)} />}
     </div>
   );
 }
