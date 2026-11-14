@@ -59,13 +59,18 @@ From [[docs/Complete plan]]. Capture extras in [[Inbox]].
 - [x] Latvia permanent-lake overlay + Sentinel-2 21 Aug optical (`fetch_optical.py --case latvia`)
 - [x] Stretch: Nepal Rasuwa GLOF EMSR927 on the map — `048_D_074` 16 Aug → 28 Aug, Copernicus + HOT flood polygons ([[docs/Task 3]]). Latvia granules deleted to free disk; Latvia **products** stay.
 
-### Week 7 — Nov 4–13
+### Week 7 — Nov 4–13 / demo weekend
 
-- [ ] Full pipeline runs unattended once (script exists; run it on a machine with free disk)
-- [ ] Case study data + processed output saved locally and backed up
+- [x] One-command demo — `./demo.sh`
+- [x] Submission paste package — `docs/submission.md` (page text, 30 s shot list, 7 slides, Q&A, SI disclosure)
+- [x] Team page copy refreshed for nine cases — [[docs/Team page]]
+- [ ] Full pipeline runs unattended once (script exists; run it on a machine with free disk) — **not needed for demo**; `outputs/` already ships
+- [ ] Case study data + processed output saved locally and backed up — **human:** USB per [[Runbooks/Weekend kit]]
 - [x] Rehearse the Week 5 pitch on the live map — first pass 13 Oct ([[docs/Pitch]] rehearsal log). Still need one out-loud stopwatch.
-- [ ] Confirm weekend roles
-- [ ] Offline copies of data/code; deps pre-installed
+- [ ] Confirm weekend roles — **human**
+- [ ] Offline copies of data/code; deps pre-installed — **human:** USB stick
+- [ ] Paste + submit on spaceappschallenge.org Project tab — **human** (deadline Sun 15 Nov 11:59 PM local)
+- [ ] Record 30 s video or export ≤7 slides — **human** (shot list in `docs/submission.md`)
 
 ### Done 29–30 Oct (see `docs/a-to-z.md`)
 

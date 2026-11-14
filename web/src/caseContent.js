@@ -7,6 +7,15 @@ export const RASTERS = [
   { id: "optical", label: "Optical" },
 ];
 
+export const RASTER_KEYS = {
+  before: "b",
+  after: "a",
+  swipe: "s",
+  change: "c",
+  confidence: "f",
+  optical: "o",
+};
+
 export const CASE_META = {
   snyder: { type: "Wildfire", verdict: "detected", verdictNote: "40.9 km² inside the official line" },
   thunderbay: { type: "Wildfire", verdict: "detected", verdictNote: "Severe core of Ontario's largest fire" },

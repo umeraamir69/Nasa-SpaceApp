@@ -32,14 +32,18 @@ source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Terminal 1 (API):
+One command:
+
+```text
+./demo.sh
+```
+
+Or two terminals — API then web:
 
 ```text
 source venv/bin/activate
 uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
-
-Terminal 2 (web):
 
 ```text
 cd web
@@ -48,6 +52,8 @@ npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 Open http://127.0.0.1:5173 — case tabs, layer dock, swipe slider, fragment inspector, guided **Pitch** mode (arrow keys work).
+
+**Demo weekend submit:** paste from `docs/submission.md` onto the Space Apps Project tab (30 s video or ≤7 slides).
 
 No servers? Open any `outputs/*/layers/change.png`.
 
@@ -106,7 +112,8 @@ Live end-to-end probe (104 checks over all cases/layers/GeoJSON): `/tmp/check_al
 | Path | What |
 |---|---|
 | `docs/a-to-z.md` | Complete plain-language guide |
-| `docs/next-steps.md` | Ranked to-do list (submission, drill, demo hardening) |
+| `docs/next-steps.md` | Demo-weekend status (human leftovers only) |
+| `docs/submission.md` | Paste-ready Space Apps project page + 30 s / 7-slide kit |
 | `notes/` | Project brain (Obsidian) |
 | `scripts/` | Search, download, change, validate |
 | `data/` | Local granules (gitignored, ~35 GB) |

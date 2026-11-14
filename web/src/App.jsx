@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
-import { PITCH } from "./caseContent.js";
+import { PITCH, RASTER_KEYS } from "./caseContent.js";
 import TopBar from "./components/TopBar.jsx";
 import Dock from "./components/Dock.jsx";
 import Brief from "./components/Brief.jsx";
@@ -397,6 +397,41 @@ export default function App() {
     // Polygons hide on Before/After/Optical so the raster is the beat.
     setOverlays((o) => ({ ...o, change: id === "change" }));
   };
+
+  useEffect(() => {
+    const onKey = (e) => {
+      const t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === "Escape") {
+        if (pitch == null && about) setAbout(false);
+        return;
+      }
+      if (pitch != null) return; // pitch tour owns the keyboard
+      const digit = parseInt(e.key, 10);
+      if (digit >= 1 && digit <= ALL_IDS.length) {
+        const id = ALL_IDS[digit - 1];
+        if (id === caseId) return;
+        setPitch(null);
+        setOverview(false);
+        setHome(false);
+        setAbout(false);
+        setCaseId(id);
+        return;
+      }
+      const hit = Object.entries(RASTER_KEYS).find(([, key]) => key === e.key.toLowerCase());
+      if (hit) {
+        const [id] = hit;
+        if (id === "optical" && !cas?.has_optical) return;
+        setHome(false);
+        setOverview(false);
+        onRaster(id);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pitch, about, cas, caseId]);
   const onOverlay = (key) => setOverlays((o) => ({ ...o, [key]: !o[key] }));
 
   return (
@@ -448,7 +483,21 @@ export default function App() {
             )}
             {pitch != null && <PitchBar step={pitch} onStep={setPitch} onExit={() => setPitch(null)} />}
           </div>
-          <Brief cas={cas} err={err} />
+          <Brief
+            cas={cas}
+            err={err}
+            raster={raster}
+            onRaster={onRaster}
+            onZoom={(b) =>
+              mapRef.current?.fitBounds(
+                [
+                  [b.south, b.west],
+                  [b.north, b.east],
+                ],
+                { padding: [30, 30] },
+              )
+            }
+          />
         </div>
         {overview && (
           <Overview

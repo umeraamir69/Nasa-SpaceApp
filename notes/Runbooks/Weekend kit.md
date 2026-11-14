@@ -31,7 +31,15 @@ outputs/snyder/change.png   # USB fallback if the map will not start
 - Phone stopwatch
 - Offline: this runbook + [[docs/Pitch]] printed or in Obsidian
 
-## Start (two terminals, repo root)
+## Start
+
+One command (preferred):
+
+```text
+./demo.sh
+```
+
+Or two terminals from repo root:
 
 ```text
 source venv/bin/activate
@@ -44,8 +52,9 @@ npm run dev -- --host 127.0.0.1 --port 5173
 ```
 
 Open http://127.0.0.1:5173 **before** the pitch. Reload is ~15 s. Click path: [[docs/Pitch]]
+Submission paste: `docs/submission.md`.
 
-If Vite dies: `ERR_CONNECTION_REFUSED` on :5173 means the process is gone, not a bad URL. Restart the two commands.
+If Vite dies: `ERR_CONNECTION_REFUSED` on :5173 means the process is gone, not a bad URL. Restart `./demo.sh`.
 
 If the laptop dies: hold up `outputs/snyder/change.png`. Same story: yellow NIFC is in `outputs/snyder/perimeter_nifc.geojson` / the PNG overlay.
 

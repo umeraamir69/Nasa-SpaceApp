@@ -10,8 +10,9 @@ import {
   trustFor,
   whySarFor,
 } from "../caseContent.js";
+import Fragments from "./Fragments.jsx";
 
-export default function Brief({ cas, err }) {
+export default function Brief({ cas, err, raster, onRaster, onZoom }) {
   if (err) {
     return (
       <aside className="brief">
@@ -59,24 +60,39 @@ export default function Brief({ cas, err }) {
 
       {EVENT_INFO[cas.case_id] && (
         <div
-          className="timeline"
-          title="The satellite passed before and after — the event happened in between"
+          className="timeline scrub"
+          title="Click a node to jump the map: before pass, detected change, after pass"
         >
-          <div className="tl-node">
+          <button
+            type="button"
+            className={raster === "before" ? "tl-node on" : "tl-node"}
+            onClick={() => onRaster && onRaster("before")}
+            title="Show the before pass on the map"
+          >
             <span className="tl-dot" />
             <span className="tl-top">Before pass</span>
             <span className="tl-date">{cas.before}</span>
-          </div>
-          <div className="tl-node mid">
+          </button>
+          <button
+            type="button"
+            className={raster === "change" ? "tl-node mid on" : "tl-node mid"}
+            onClick={() => onRaster && onRaster("change")}
+            title="Show the detected change on the map"
+          >
             <span className="tl-dot" />
             <span className="tl-top">{EVENT_INFO[cas.case_id].label}</span>
             <span className="tl-date">{EVENT_INFO[cas.case_id].date}</span>
-          </div>
-          <div className="tl-node">
+          </button>
+          <button
+            type="button"
+            className={raster === "after" ? "tl-node on" : "tl-node"}
+            onClick={() => onRaster && onRaster("after")}
+            title="Show the after pass on the map"
+          >
             <span className="tl-dot" />
             <span className="tl-top">After pass</span>
             <span className="tl-date">{cas.after}</span>
-          </div>
+          </button>
         </div>
       )}
 
@@ -99,6 +115,8 @@ export default function Brief({ cas, err }) {
           </div>
         ))}
       </dl>
+
+      <Fragments caseId={cas.case_id} onZoom={onZoom} />
 
       <section>
         <h2>Why radar sees it</h2>

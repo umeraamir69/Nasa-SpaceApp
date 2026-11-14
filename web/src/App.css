@@ -396,6 +396,55 @@
   padding-top: 9px;
 }
 
+/* ---------- confidence readout ---------- */
+
+.conf-block {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 9px;
+}
+
+.conf-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--panel-3);
+}
+
+.conf-seg {
+  display: block;
+  min-width: 2px;
+}
+
+.conf-legend {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.conf-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--ink-dim);
+}
+
+.conf-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.conf-km2 {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
 /* ---------- pitch bar ---------- */
 
 .pitch-bar {
@@ -918,6 +967,92 @@
   gap: 12px;
 }
 
+.ov-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.ov-filter {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ov-filter:hover {
+  color: var(--ink);
+  border-color: #3d4750;
+}
+
+.ov-filter.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---------- fragment table ---------- */
+
+.frag-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  vertical-align: middle;
+}
+
+.frag-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.frag-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.frag-row:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.frag-row:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.frag-part {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.frag-area {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+
 .ov-card {
   text-align: left;
   background: var(--panel);
@@ -1071,6 +1206,29 @@
   background: var(--panel-3);
   border: 2px solid #4a545e;
   z-index: 1;
+}
+
+.timeline.scrub .tl-node {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.timeline.scrub .tl-node:hover .tl-dot {
+  border-color: var(--accent);
+}
+
+.timeline.scrub .tl-node.on .tl-dot {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.timeline.scrub .tl-node:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .tl-node.mid .tl-dot {
@@ -1602,6 +1760,31 @@
   .overview {
     padding: 18px 16px 32px;
   }
+
+  .about-page {
+    padding: 24px 18px 32px;
+  }
+
+  .about-inner h1 {
+    font-size: 28px;
+  }
+
+  .frag-list {
+    max-height: 160px;
+  }
+
+  .timeline {
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .tl-node {
+    min-width: 96px;
+  }
+
+  .conf-legend li {
+    font-size: 11px;
+  }
 }
 
 .globe-wrap {
@@ -1662,7 +1845,9 @@
 .stage:has(.overview) .leaflet-top,
 .stage:has(.overview) .leaflet-bottom,
 .stage:has(.home) .leaflet-top,
-.stage:has(.home) .leaflet-bottom {
+.stage:has(.home) .leaflet-bottom,
+.stage:has(.about-page) .leaflet-top,
+.stage:has(.about-page) .leaflet-bottom {
   display: none;
 }
 

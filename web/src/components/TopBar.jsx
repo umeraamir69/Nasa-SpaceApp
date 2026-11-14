@@ -25,7 +25,7 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching, o
       </button>
       {ready.length > 1 && (
         <nav className="case-nav" aria-label="Cases">
-          {ready.map((c) => {
+          {ready.map((c, i) => {
             const meta = CASE_META[c.id] || {};
             return (
               <button
@@ -34,7 +34,7 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching, o
                 className={caseId === c.id ? "case-tab on" : "case-tab"}
                 onClick={() => onCase(c.id)}
                 aria-current={caseId === c.id ? "true" : undefined}
-                title={meta.verdictNote || c.label}
+                title={`${meta.verdictNote || c.label} (key ${i + 1})`}
               >
                 <i className={`dot v-${meta.verdict || "detected"}`} aria-hidden="true" />
                 {c.label}

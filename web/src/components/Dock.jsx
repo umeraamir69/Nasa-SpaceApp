@@ -1,4 +1,5 @@
-import { LAYER_TIPS, OVERLAY_TIPS, RASTERS, legendFor } from "../caseContent.js";
+import { LAYER_TIPS, OVERLAY_TIPS, RASTERS, RASTER_KEYS, legendFor } from "../caseContent.js";
+import ConfidenceBar from "./ConfidenceBar.jsx";
 
 export default function Dock({
   cas,
@@ -36,7 +37,7 @@ export default function Dock({
               aria-selected={raster === r.id}
               className={raster === r.id ? "seg-btn on" : "seg-btn"}
               onClick={() => onRaster(r.id)}
-              title={LAYER_TIPS[r.id] || r.label}
+              title={`${LAYER_TIPS[r.id] || r.label}${RASTER_KEYS[r.id] ? ` (key ${RASTER_KEYS[r.id].toUpperCase()})` : ""}`}
             >
               {r.label}
             </button>
@@ -85,6 +86,10 @@ export default function Dock({
         </div>
       </div>
       <p className="dock-legend">{legendFor(raster, cas?.case_id)}</p>
+      {raster === "confidence" && cas?.case_id && <ConfidenceBar caseId={cas.case_id} />}
+      <p className="muted fine" title="Keys 1–9 switch cases · B/A/S/C/F/O switch layers · Esc closes About">
+        Keys 1–9 cases · B/A/S/C/F/O layers
+      </p>
     </div>
   );
 }

@@ -96,14 +96,24 @@ Timed against the live map at http://127.0.0.1:5173.
 
 If the laptop dies: `outputs/snyder/change.png` on a USB stick. Same story, no map.
 
+## Weekend click path (14–15 Nov)
+
+1. `./demo.sh` (or two terminals — [[Runbooks/Run the app]]). Pre-load Snyder **before** you talk.
+2. **Pitch** button for the guided tour, or manual: Change + NIFC → Before → After → Change → Confidence → Optical.
+3. Optional 10 s: Overview (nine verdicts) or Nepal (0.99 precision) or Coleman (grass negative).
+4. USB fallback: `outputs/snyder/change.png`.
+
+Submission paste + 30 s shot list + 7 slides: `docs/submission.md`.
+
 ## If they ask
 
 | Question | Answer |
 |---|---|
 | Why only 41 km² of 122? | We threshold at 1.5 dB HV drop after despeckle. Mixed burn, river, and unburned mesa stay out. Precision 1.0 is the point. |
-| Why not train a model? | Two dates, one event. A log-ratio we can explain in a sentence beats a black box we cannot. |
+| Why not train a model? | Two dates, one event. A log-ratio we can explain in a sentence beats a black box we cannot. SI tools helped us code; they do not draw the scar. |
 | Why not live Earthdata? | Demo weekend has no network budget. Granules are already on disk. |
-| Why Snyder, not Canada? | Snyder had a contained, dated pair **before** the July 27–August 10 NISAR gap. Thunder Bay is next, not instead. |
+| Why Snyder, not Canada? | Snyder had a contained, dated pair **before** the July 27–August 10 NISAR gap. Thunder Bay is on the same map (235 km² core). |
+| Latvia / Coleman found nothing? | Feature, not bug. Flood wave gone; grass barely darkens at L-band. Same week pine at Second Flat hits P 0.97. |
 | Is GUNW useless? | No. It did not split **this** scar. We still show it. We do not invent a drop. |
 | What is GCOV? | Geocoded polarimetric covariance. Calibrated backscatter on a map grid. Not a JPEG. |
 | Why the Optical chip? | Sentinel-2, 7 Jul, 34% cloud over this box. That is the why-SAR beat, not a second scar map. |

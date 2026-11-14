@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import { CASE_META, EVENT_INFO, METHOD, VERDICT_LABEL, fmtKm2 } from "../caseContent.js";
 
 const Globe = lazy(() => import("./Globe.jsx"));
@@ -31,6 +31,7 @@ export default function Overview({ cases, onOpen }) {
       </div>
     );
   }
+  const [filter, setFilter] = useState("all");
   const counts = { detected: 0, negative: 0, marginal: 0 };
   let total = 0;
   for (const c of cases) {
@@ -38,6 +39,10 @@ export default function Overview({ cases, onOpen }) {
     counts[v] = (counts[v] || 0) + 1;
     total += c.area_km2 || 0;
   }
+  const visible =
+    filter === "all"
+      ? cases
+      : cases.filter((c) => ((CASE_META[c.case_id] || {}).verdict || "detected") === filter);
   return (
     <div className="overview">
       <div className="ov-head">
@@ -64,10 +69,29 @@ export default function Overview({ cases, onOpen }) {
         </div>
       </div>
       <Suspense fallback={<div className="globe-fallback">Loading 3D globe…</div>}>
-        <Globe cases={cases} onOpen={onOpen} />
+        <Globe cases={visible} onOpen={onOpen} />
       </Suspense>
+      <div className="ov-filters" role="tablist" aria-label="Filter cases by verdict">
+        {[
+          ["all", `All ${cases.length}`],
+          ["detected", `Detected ${counts.detected}`],
+          ["negative", `Negative ${counts.negative}`],
+          ["marginal", `Marginal ${counts.marginal}`],
+        ].map(([v, label]) => (
+          <button
+            key={v}
+            type="button"
+            role="tab"
+            aria-selected={filter === v}
+            className={filter === v ? "ov-filter on" : "ov-filter"}
+            onClick={() => setFilter(v)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
       <div className="ov-grid">
-        {cases.map((cas) => {
+        {visible.map((cas) => {
           const meta = CASE_META[cas.case_id] || {};
           const verdict = meta.verdict || "detected";
           const ev = EVENT_INFO[cas.case_id];

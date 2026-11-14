@@ -11,7 +11,13 @@ Week 4+ local demo. FastAPI serves case GeoJSON; Vite is the map UI. Default cas
 
 ## Steps
 
-From the repo root, two terminals:
+Preferred (repo root):
+
+```text
+./demo.sh
+```
+
+Or two terminals:
 
 ```text
 source venv/bin/activate
