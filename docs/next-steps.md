@@ -17,7 +17,6 @@
 - [ ] Out-loud pitch once with phone stopwatch ([[docs/Pitch]])
 - [ ] USB backup: repo + `outputs/` + `venv/` + `web/node_modules/` ([[Runbooks/Weekend kit]])
 - [ ] Cold-start: `./demo.sh` on the demo laptop **before** you leave home
-- [ ] Replace placeholder teammates in `web/src/team.js` if anyone joins
 - [ ] Rotate Earthdata password (was pasted in an old chat)
 
 ## Deliberately skipped

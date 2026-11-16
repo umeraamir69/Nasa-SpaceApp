@@ -1,123 +1,152 @@
 # EchoLens
 
-NASA Space Apps Toronto 2026 — **Dancing with the SARs**. Two NISAR radar passes in, an incident briefing out.
+**Two NISAR radar passes in. An incident briefing out.**
 
-**New here? Read [docs/a-to-z.md](docs/a-to-z.md)** — the complete plain-language guide (what we did, how, the numbers, how we compare). Working notes (Obsidian): `notes/` → `notes/00 Home.md`. Do not put Earthdata passwords or `.h5` granules in git.
+[![NASA Space Apps 2026](https://img.shields.io/badge/NASA%20Space%20Apps-2026-0B3D91?logo=nasa&logoColor=white)](https://www.spaceappschallenge.org/)
+[![Challenge](https://img.shields.io/badge/Challenge-Dancing%20with%20the%20SARs-f0b429)](https://www.spaceappschallenge.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3d4750.svg)](LICENSE)
+[![Repo](https://img.shields.io/badge/GitHub-umeraamir69%2FNasa--SpaceApp-181717?logo=github)](https://github.com/umeraamir69/Nasa-SpaceApp)
 
-## The 6 cases
+Solo project by **[Muhammad Umer Aamir](https://github.com/umeraamir69)** for **NASA Space Apps Toronto 2026** — challenge *Dancing with the SARs*.
 
-| Case | Type | Pair | Verdict | Headline |
-|---|---|---|---|---|
-| Snyder Fire | Wildfire | 17 Jun → 23 Jul 2026, HV | Detected | 40.9 km², precision 1.00 vs NIFC + NIROPS |
-| Thunder Bay 36 | Wildfire | 11 Jul → 16 Aug 2026, HV | Detected | 235 km² severe core (~7% of complex) · FIRMS P 0.34 / R 0.04 |
-| Nepal Rasuwa GLOF | Glacier flood | 19 → 31 Aug 2026, HH | Detected | 2.4 km², precision 0.99 vs HOT flood |
-| Latvia flood | Flood | 18 → 30 Aug 2026, HH | Negative | post-peak dry-down, proven over 7 methods |
-| Crete flood | Flash flood | 27 Sep → 9 Oct 2026, HH | Negative | drained before Oct 9 (truth itself: no darkening) |
-| Isaias surge | Hurricane | 30 Sep → 12 Oct 2026, HH | Marginal | 0.5 km² bay fringe, unvalidated |
-| Second Flat | Wildfire | 8 Jul → 13 Aug 2026, HV | Detected | 68.9 km², precision 0.97 vs NIFC |
-| Coleman Creek | Wildfire | 8 Jul → 13 Aug 2026, HV | Negative | grass range — no L-band darkening either band |
-| Autumn Lane (Spokane) | WUI fire | 23 Jul → 16 Aug 2026, HV | Negative | structures + grass read +0.13 dB — invisible |
+EchoLens turns a before/after **NISAR L-band** pair into a map a human can brief in under a minute: what changed, how many km², and why the outline is trustworthy — including when the honest answer is **no**.
 
-All pairs are same-track / same-mode, verified by `scripts/granule_modes.py`.
+**Repository:** https://github.com/umeraamir69/Nasa-SpaceApp
 
-## Run it (~2 min)
+---
 
-Needs Python 3.11+ and Node 18+. Map products (`outputs/`, ~30 MB) are in this repo — no NASA login needed to view.
+## What you get
 
-```text
+- **9 real incidents** — wildfire, glacier flood, flash flood, hurricane surge
+- **Same-mode NISAR pairs only** — track + radar mode verified before any pixel is scored
+- **Truth-checked** against NIFC, Copernicus EMSR, HOT, NASA FIRMS, NIROPS
+- **Honest negatives published** — grass fires and drained floods that L-band should not invent
+- **Live briefing UI** — globe overview, case map, swipe, confidence, pitch tour, printable one-pager
+
+No neural net. Classical SAR: despeckle → log-ratio → fixed threshold → precision/recall vs official truth.
+
+| Case | Type | Verdict | Headline |
+|---|---|---|---|
+| Snyder Fire | Wildfire | Detected | 40.9 km² · precision **1.00** vs NIFC |
+| Thunder Bay 36 | Wildfire | Detected | 235 km² severe core · FIRMS-scored |
+| Second Flat | Wildfire | Detected | 68.9 km² · precision **0.97** vs NIFC |
+| Nepal Rasuwa GLOF | Glacier flood | Detected | 2.4 km² · precision **0.99** vs HOT |
+| Latvia flood | Flood | Negative | Post-peak dry-down — flood wave gone |
+| Crete flood | Flash flood | Negative | Drained before the Oct 9 pass |
+| Coleman Creek | Wildfire | Negative | Grass/range — no L-band darkening |
+| Autumn Lane (Spokane) | WUI fire | Negative | Structures + grass — invisible to HV |
+| Isaias surge | Hurricane | Marginal | 0.5 km² bay fringe, unvalidated |
+
+![Snyder change map](outputs/snyder/layers/change.png)
+
+---
+
+## Quick start (~2 min)
+
+Map products in `outputs/` are already in the repo (~30 MB). **No Earthdata login** needed to view the demo.
+
+```bash
 git clone https://github.com/umeraamir69/Nasa-SpaceApp.git
 cd Nasa-SpaceApp
 python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-One command:
-
-```text
+cd web && npm install --cache ../.npm-cache && cd ..
 ./demo.sh
 ```
 
-Or two terminals — API then web:
+Opens **http://127.0.0.1:5173** (API on `:8000`).
 
-```text
+Manual start:
+
+```bash
+# terminal 1
 source venv/bin/activate
 uvicorn app.main:app --host 127.0.0.1 --port 8000
+
+# terminal 2
+cd web && npm run dev -- --host 127.0.0.1 --port 5173
 ```
-
-```text
-cd web
-npm install --cache ../.npm-cache
-npm run dev -- --host 127.0.0.1 --port 5173
-```
-
-Open http://127.0.0.1:5173 — case tabs, layer dock, swipe slider, fragment inspector, guided **Pitch** mode (arrow keys work).
-
-**Demo weekend submit:** paste from `docs/submission.md` onto the Space Apps Project tab (30 s video or ≤7 slides).
 
 No servers? Open any `outputs/*/layers/change.png`.
 
-## Reproduce from NASA (optional)
+---
 
-Earthdata account + ~15–35 GB free. Authorize **ASF DAAC** in Earthdata Applications. Credentials via env vars only (`EARTHDATA_USERNAME` / `EARTHDATA_PASSWORD`) — never in files.
+## Method (one paragraph)
 
-```text
-python scripts/search_nisar.py --event snyder        # find the pair
-python scripts/download_nisar.py                     # ~14 GB to data/snyder/gcov/
-python scripts/change_snyder.py                      # → outputs/snyder/
-```
+Same-track, same-mode NISAR L2 **GCOV** pair → γ⁰ to dB → 3×3 median despeckle → log-ratio. Fires use **HV** (≥ 1.5 dB darker). Floods use **HH** with permanent water masked. Score against official truth; ship detected / negative / marginal with numbers. GUNW coherence is a second vote when it helps — never faked when it does not.
 
-Per-case pairs (`download_*.py` → `change_*.py`): latvia (`080_D_059`), nepal (`098_A_016` + `fetch_nepal_proof.py`), thunderbay (`041_D_063`), crete (`137_D_071` + `fetch_crete_proof.py`), isaias (`004_A_017`). Validation: `validate_slopes.py`, `threshold_sweep.py`, `experiment_latvia.py`.
+Full walkthrough: **[docs/a-to-z.md](docs/a-to-z.md)** · Space Apps paste kit: **[docs/submission.md](docs/submission.md)**
 
-Processing (h5py/rasterio/shapely) needs the pinned env: `.conda/env/bin/python` (Python 3.12; the default venv is a 3.16 alpha that cannot build numpy/Pillow). App/tests run on `venv/bin/python`.
+---
 
-## Verify
+## NASA & partner data
 
-```text
-venv/bin/python -m unittest discover -s tests   # 9 tests, <1 s
-cd web && npm run build
-```
-
-Live end-to-end probe (104 checks over all cases/layers/GeoJSON): `/tmp/check_all_cases.py` against running servers.
-
-## Scripts
-
-| Script | Role |
+| Source | Role |
 |---|---|
-| `scripts/search_nisar.py` | Find same-track pairs per event (CMR) |
-| `scripts/granule_modes.py` | Same-mode guard — refuses cross-mode pairs |
-| `scripts/download_nisar.py` / `download_latvia.py` / `download_nepal.py` | Fetch GCOV pairs (generic flags on nepal's) |
-| `scripts/change_snyder.py` / `change_thunderbay.py` | HV fire log-ratio + confidence + GeoJSON |
-| `scripts/change_latvia.py` / `change_nepal.py` / `change_crete.py` / `change_isaias.py` | HH flood log-ratio + masks + GeoJSON |
-| `scripts/change_coleman.py` / `change_secondflat.py` / `change_spokane.py` | HV fire clones (NIFC `--truth` scoring) |
-| `scripts/change_valencia.py` | HH flood clone (dead end: truth off valid swath) |
-| `scripts/fetch_valencia_proof.py` | EMSR935 truth fetch (kept: documents the dead end) |
-| `scripts/vet_event.py` | CMR same-mode pair vetting for candidate events |
-| `scripts/experiment_otsu.py` / `experiment_ki.py` | Adaptive-threshold experiments (numpy + cv2) |
-| `scripts/download_aux.py` | Generic SME2/GUNW granule downloader |
-| `scripts/xcheck_sme2.py` | Soil-moisture cross-check vs SME2 beta (deltas) |
-| `scripts/xcheck_gunw.py` | GUNW coherence second vote for flood cases |
-| `scripts/experiment_latvia.py` | 7-rule water-index comparison (raw granules) |
-| `scripts/threshold_sweep.py` | precision/recall/IoU vs truth at many dB cuts |
-| `scripts/validate_slopes.py` | DEM slope audit per case |
-| `scripts/validate_snyder.py` / `validate_latvia.py` | Overlap scores vs NIFC/NIROPS, rivers null test |
-| `scripts/fetch_optical.py --case X` | Cloudy Sentinel-2 TCI (the why-SAR layer) |
-| `scripts/fetch_snyder_ir.py` / `fetch_snyder_perimeter.py` / `fetch_nepal_proof.py` / `fetch_crete_proof.py` | Truth polygons |
-| `scripts/crop_nepal.py` / `crop_snyder.py` / `preview_gcov.py` / `inspect_h5.py` | Crops, previews, HDF5 inspection |
-| `scripts/fix_layer_frames.py` | Idempotent layer-frame registration fixes |
-| `scripts/pipeline_snyder.py` / `download_gunw.py` | Unattended Snyder run / coherence second vote |
+| [NISAR L2 GCOV](https://www.earthdata.nasa.gov/) Provisional | Primary change detection |
+| NISAR L2 GUNW Provisional | Coherence second vote |
+| [NASA FIRMS](https://firms.modaps.eosdis.nasa.gov/) VIIRS | Thunder Bay hotspot truth |
+| NIFC WFIGS | Fire perimeter truth |
+| Copernicus EMSR / HOT | Flood & GLOF truth |
+| Sentinel-2 L2A | Cloudy optical “why SAR” chip |
 
-## Layout
+Credentials (only if you re-download granules): `EARTHDATA_USERNAME` / `EARTHDATA_PASSWORD` via env — **never** commit secrets.
+
+---
+
+## Stack
+
+| Layer | Tech |
+|---|---|
+| Processing | Python · h5py · numpy · scipy · shapely · rasterio · earthaccess |
+| API | FastAPI · uvicorn |
+| UI | React · Vite · Leaflet · three.js (overview globe) |
+
+---
+
+## Repo layout
 
 | Path | What |
 |---|---|
-| `docs/a-to-z.md` | Complete plain-language guide |
-| `docs/next-steps.md` | Demo-weekend status (human leftovers only) |
-| `docs/submission.md` | Paste-ready Space Apps project page + 30 s / 7-slide kit |
-| `notes/` | Project brain (Obsidian) |
+| `app/` | FastAPI — `/api/cases`, `/api/case`, `/api/geojson/*`, `/api/confidence` |
+| `web/` | Briefing console (Overview globe is the landing page) |
 | `scripts/` | Search, download, change, validate |
+| `outputs/<case>/` | `summary.json`, GeoJSON, `layers/*.png` (in git) |
 | `data/` | Local granules (gitignored, ~35 GB) |
-| `outputs/<case>/` | `summary.json`, `change.geojson`, `layers/*.png` (in git) |
-| `app/` | FastAPI (`/api/cases`, `/api/case`, `/api/geojson/*`) |
-| `web/` | Vite + React + Leaflet briefing console + three.js globe (lazy chunk on Overview) |
-| `tests/` | Asset + API contract tests |
+| `docs/` | Guides + submission package |
+| `notes/` | Obsidian project brain |
+| `tests/` | Asset / API contract tests |
+| `demo.sh` | One-command API + web |
+
+---
+
+## Reproduce a case from NASA (optional)
+
+Earthdata account + disk. Authorize **ASF DAAC**. Example Snyder:
+
+```bash
+python scripts/search_nisar.py --event snyder
+python scripts/download_nisar.py
+python scripts/change_snyder.py
+```
+
+Other cases: `download_*.py` → `change_*.py` (see script table in older docs / `scripts/`). Processing with h5py/rasterio prefers `.conda/env/bin/python` (3.12) if the default venv cannot build wheels.
+
+---
+
+## Author
+
+**Muhammad Umer Aamir** — solo builder (SAR pipeline, validation, UI, demo).
+
+- GitHub: [umeraamir69](https://github.com/umeraamir69)
+- LinkedIn: [umeraamir69](https://www.linkedin.com/in/umeraamir69/)
+- Location: Waterloo, Ontario, Canada
+
+---
+
+## License
+
+[MIT](LICENSE) © 2026 Muhammad Umer Aamir
+
+NISAR / FIRMS / Sentinel-2 / NIFC / Copernicus data remain under their respective terms; this repo ships derived briefing products and code only.

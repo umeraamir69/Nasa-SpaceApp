@@ -24,7 +24,7 @@ Final project link: `https://github.com/umeraamir69/Nasa-SpaceApp`
 
 ## About the team (short)
 
-EchoLens is a NASA Space Apps Toronto 2026 project. We turn a before/after NISAR L2 pair into a map a human can brief in under a minute. Nine cases live — Snyder Fire as the answer key, plus Thunder Bay, Second Flat, Nepal GLOF, and honest negatives (Latvia, Coleman, Crete, Spokane) where the radar correctly says nothing left.
+EchoLens is a solo NASA Space Apps Toronto 2026 project by **Muhammad Umer Aamir**. One person built the NISAR pipeline, validation, and map. Nine cases live — Snyder Fire as the answer key, plus Thunder Bay, Second Flat, Nepal GLOF, and honest negatives (Latvia, Coleman, Crete, Spokane) where the radar correctly says nothing left.
 
 ## Project summary (short)
 
@@ -42,10 +42,6 @@ EchoLens maps surface change from **NISAR L-band GCOV**, not photographs. Same-t
 ## SI / AI disclosure (required)
 
 Coding assistants (Cursor) sped up UI and docs. Detection is classical SAR math, not an SI classifier. Map layers are real satellite / truth data — not AI-generated imagery.
-
-## Seeking members (optional)
-
-Need one more person who can (a) speak 90 seconds of the pitch, or (b) run the laptop clicks while someone else talks.
 
 ## Do not paste
 

@@ -1,4 +1,4 @@
-import { PROJECT_LINKS, TEAM } from "../team.js";
+import { AUTHOR, PROJECT_LINKS } from "../team.js";
 
 function GithubIcon() {
   return (
@@ -16,16 +16,6 @@ function LinkedinIcon() {
   );
 }
 
-function InstagramIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-      <rect x="1" y="1" width="14" height="14" rx="4" />
-      <circle cx="8" cy="8" r="3.2" />
-      <circle cx="12" cy="4" r="1.1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
 const STEPS = [
   { n: "1", t: "Two NISAR passes", d: "Same track, same mode. Verified pair dates per case, so change is ground change, not orbit geometry." },
   { n: "2", t: "Change map", d: "Backscatter shifts (HV for fire, HH for flood) become polygons with km² areas and before → after dates." },
@@ -34,7 +24,6 @@ const STEPS = [
 ];
 
 export default function AboutPage({ onClose, onExplore }) {
-  const sorted = [...TEAM].sort((a, b) => Number(b.lead || false) - Number(a.lead || false));
   return (
     <div className="about-page" role="main" aria-label="About EchoLens">
       <div className="about-inner">
@@ -54,6 +43,45 @@ export default function AboutPage({ onClose, onExplore }) {
             Back
           </button>
         </div>
+
+        <section aria-label="Builder">
+          <h2>Solo project</h2>
+          <p className="muted">One person — research, code, validation, and demo.</p>
+          <div className="about-author">
+            <img
+              className="about-author-photo"
+              src={AUTHOR.photo}
+              alt={AUTHOR.name}
+              width={112}
+              height={112}
+            />
+            <div>
+              <b className="about-author-name">{AUTHOR.name}</b>
+              <p className="about-role">{AUTHOR.role}</p>
+              {AUTHOR.location && <p className="about-loc">{AUTHOR.location}</p>}
+              {AUTHOR.bio && <p className="about-bio">{AUTHOR.bio}</p>}
+              <p className="author-socials">
+                {AUTHOR.github && (
+                  <a href={AUTHOR.github} target="_blank" rel="noreferrer" title="GitHub">
+                    <GithubIcon />
+                    <span>{AUTHOR.handle}</span>
+                  </a>
+                )}
+                {AUTHOR.linkedin && (
+                  <a href={AUTHOR.linkedin} target="_blank" rel="noreferrer" title="LinkedIn">
+                    <LinkedinIcon />
+                    <span>LinkedIn</span>
+                  </a>
+                )}
+                {AUTHOR.website && (
+                  <a href={AUTHOR.website} target="_blank" rel="noreferrer" title="Website">
+                    Website
+                  </a>
+                )}
+              </p>
+            </div>
+          </div>
+        </section>
 
         <section aria-label="How it works">
           <h2>How it works</h2>
@@ -77,48 +105,6 @@ export default function AboutPage({ onClose, onExplore }) {
             NIROPS airborne infrared · Copernicus Emergency Mapping · HOT
             OpenStreetMap · Sentinel-2 optical · NASA FIRMS
           </p>
-        </section>
-
-        <section aria-label="The team">
-          <h2>The team</h2>
-          <p className="muted">
-            Edit names, roles, and links in <code>web/src/team.js</code> — empty
-            link fields hide their icons.
-          </p>
-          <div className="about-team-grid">
-            {sorted.map((m) => (
-              <div key={m.name} className={`about-team-card${m.lead ? " lead" : ""}`}>
-                <span className="team-avatar" aria-hidden="true">
-                  {m.name.slice(0, 1).toUpperCase()}
-                </span>
-                <div>
-                  <b>
-                    {m.name}{" "}
-                    {m.lead && <span className="lead-badge">Team Lead</span>}
-                  </b>
-                  <p className="about-role">{m.role}</p>
-                  {m.bio && <p className="about-bio">{m.bio}</p>}
-                  <p className="team-socials">
-                    {m.github && (
-                      <a href={m.github} target="_blank" rel="noreferrer" title="GitHub">
-                        <GithubIcon />
-                      </a>
-                    )}
-                    {m.linkedin && (
-                      <a href={m.linkedin} target="_blank" rel="noreferrer" title="LinkedIn">
-                        <LinkedinIcon />
-                      </a>
-                    )}
-                    {m.instagram && (
-                      <a href={m.instagram} target="_blank" rel="noreferrer" title="Instagram">
-                        <InstagramIcon />
-                      </a>
-                    )}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
         </section>
 
         <section aria-label="Project links">

@@ -19,7 +19,7 @@ function keyMetric(cas) {
   return "";
 }
 
-export default function Overview({ cases, onOpen }) {
+export default function Overview({ cases, onOpen, onPitch, onAbout }) {
   if (!cases) {
     return (
       <div className="overview">
@@ -48,10 +48,25 @@ export default function Overview({ cases, onOpen }) {
       <div className="ov-head">
         <div>
           <p className="eyebrow">
-            {cases.length} incidents · {cases.filter((c) => ["snyder", "thunderbay", "coleman", "secondflat"].includes(c.case_id)).length} fires ·{" "}
-            {cases.filter((c) => !["snyder", "thunderbay", "coleman", "secondflat"].includes(c.case_id)).length} floods, storms & interface
+            NASA Space Apps 2026 · Dancing with the SARs · {cases.length} incidents
           </p>
-          <h1>Every case, one verdict each</h1>
+          <h1>Two radar passes in. An incident briefing out.</h1>
+          <p className="ov-lede">
+            Click a pin on the globe or a case card to open the map. Every outline is scored against
+            official truth — including honest negatives.
+          </p>
+          <div className="ov-ctas">
+            {onPitch && (
+              <button type="button" className="btn solid" onClick={onPitch} title="Guided pitch tour">
+                Start the pitch
+              </button>
+            )}
+            {onAbout && (
+              <button type="button" className="btn ghost" onClick={onAbout} title="About EchoLens">
+                About
+              </button>
+            )}
+          </div>
         </div>
         <div className="ov-totals">
           <span className="ov-total">

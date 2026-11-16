@@ -6,7 +6,6 @@ import Dock from "./components/Dock.jsx";
 import Brief from "./components/Brief.jsx";
 import PitchBar from "./components/PitchBar.jsx";
 import Overview from "./components/Overview.jsx";
-import HomePage from "./components/HomePage.jsx";
 import AboutPage from "./components/AboutPage.jsx";
 import "./App.css";
 
@@ -45,8 +44,7 @@ export default function App() {
   const [overlays, setOverlays] = useState(ALL_ON);
   const [swipePos, setSwipePos] = useState(50);
   const [pitch, setPitch] = useState(null);
-  const [overview, setOverview] = useState(false);
-  const [home, setHome] = useState(true);
+  const [overview, setOverview] = useState(true);
   const [about, setAbout] = useState(false);
   const [allCases, setAllCases] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -414,7 +412,6 @@ export default function App() {
         if (id === caseId) return;
         setPitch(null);
         setOverview(false);
-        setHome(false);
         setAbout(false);
         setCaseId(id);
         return;
@@ -423,7 +420,6 @@ export default function App() {
       if (hit) {
         const [id] = hit;
         if (id === "optical" && !cas?.has_optical) return;
-        setHome(false);
         setOverview(false);
         onRaster(id);
       }
@@ -442,25 +438,22 @@ export default function App() {
         onCase={(id) => {
           setPitch(null);
           setOverview(false);
-          setHome(false);
           setCaseId(id);
         }}
         onPitch={() => {
           setOverview(false);
-          setHome(false);
           setPitch((p) => (p == null ? 0 : null));
         }}
         pitching={pitch != null}
         overview={overview}
         onOverview={() => {
           setPitch(null);
-          setHome(false);
           setOverview((v) => !v);
         }}
         onHome={() => {
           setPitch(null);
-          setOverview(false);
-          setHome(true);
+          setAbout(false);
+          setOverview(true);
         }}
         onAbout={() => setAbout(true)}
       />
@@ -506,17 +499,8 @@ export default function App() {
               setOverview(false);
               setCaseId(id);
             }}
-          />
-        )}
-        {home && (
-          <HomePage
-            cases={allCases}
-            onOpen={(id) => {
-              setHome(false);
-              if (typeof id === "string") setCaseId(id);
-            }}
             onPitch={() => {
-              setHome(false);
+              setOverview(false);
               setPitch(0);
             }}
             onAbout={() => setAbout(true)}
@@ -527,7 +511,6 @@ export default function App() {
             onClose={() => setAbout(false)}
             onExplore={() => {
               setAbout(false);
-              setHome(false);
               setOverview(false);
             }}
           />

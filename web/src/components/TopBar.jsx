@@ -16,7 +16,7 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching, o
   const ready = available.filter((c) => c.ready);
   return (
     <header className="topbar">
-      <button type="button" className="brand brand-btn" onClick={onHome} title="Back to home">
+      <button type="button" className="brand brand-btn" onClick={onHome} title="Back to overview globe">
         <Mark />
         <span className="brand-text">
           <span className="brand-name">EchoLens</span>
@@ -57,7 +57,7 @@ export default function TopBar({ available, caseId, onCase, onPitch, pitching, o
           type="button"
           className="pitch-btn ghost-btn"
           onClick={onAbout}
-          title="About EchoLens and the team"
+          title="About EchoLens"
         >
           About
         </button>

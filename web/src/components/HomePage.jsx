@@ -62,7 +62,7 @@ export default function HomePage({ cases, onOpen, onPitch, onAbout }) {
             GitHub
           </a>
           <button type="button" className="linklike" onClick={onAbout}>
-            About the team
+            About
           </button>
         </span>
       </div>

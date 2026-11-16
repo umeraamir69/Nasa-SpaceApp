@@ -125,7 +125,8 @@ Full spoken 3-minute script: `notes/docs/Pitch.md`
 
 - [ ] Paste this page into Space Apps Project tab and **Submit**
 - [ ] Record the 30 s video *or* export the 7 slides; upload; paste link
-- [ ] Replace placeholder names in `web/src/team.js` if teammates join
 - [ ] Out-loud pitch once with a phone stopwatch
 - [ ] Rotate Earthdata password (was pasted in an old chat)
 - [ ] USB stick: repo + `outputs/` + `venv/` + `web/node_modules/` (see `notes/Runbooks/Weekend kit.md`)
+
+Solo build: About page shows Muhammad Umer Aamir only (`web/src/team.js` → `AUTHOR`).
