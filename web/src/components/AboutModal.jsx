@@ -43,12 +43,14 @@ export default function AboutModal({ onClose }) {
             <b>{AUTHOR.name}</b>
             <p className="about-role">{AUTHOR.role}</p>
             <p className="author-socials">
-              <a href={AUTHOR.github} target="_blank" rel="noreferrer" title="GitHub">
-                <GithubIcon />
+              <a href={PROJECT_LINKS.live} target="_blank" rel="noreferrer">
+                {PROJECT_LINKS.live.replace(/^https:\/\//, "")}
               </a>
-              <a href={PROJECT_LINKS.github} target="_blank" rel="noreferrer">
-                Project repo
-              </a>
+              {AUTHOR.github && (
+                <a href={AUTHOR.github} target="_blank" rel="noreferrer" title="GitHub">
+                  <GithubIcon />
+                </a>
+              )}
             </p>
           </div>
         </div>

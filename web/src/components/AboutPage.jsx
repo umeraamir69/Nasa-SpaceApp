@@ -108,14 +108,10 @@ export default function AboutPage({ onClose, onExplore }) {
         </section>
 
         <section aria-label="Project links">
-          <h2>Project</h2>
+          <h2>Live demo</h2>
           <p className="source-links">
             <a href={PROJECT_LINKS.live} target="_blank" rel="noreferrer">
-              Live demo
-            </a>
-            {" · "}
-            <a href={PROJECT_LINKS.github} target="_blank" rel="noreferrer">
-              GitHub
+              {PROJECT_LINKS.live.replace(/^https:\/\//, "")}
             </a>
           </p>
         </section>

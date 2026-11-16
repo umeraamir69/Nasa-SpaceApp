@@ -58,8 +58,8 @@ export default function HomePage({ cases, onOpen, onPitch, onAbout }) {
       <div className="home-foot">
         <span>{PROJECT_LINKS.challenge}</span>
         <span className="home-links">
-          <a href={PROJECT_LINKS.github} target="_blank" rel="noreferrer">
-            GitHub
+          <a href={PROJECT_LINKS.live} target="_blank" rel="noreferrer">
+            {PROJECT_LINKS.live.replace(/^https:\/\//, "")}
           </a>
           <button type="button" className="linklike" onClick={onAbout}>
             About
