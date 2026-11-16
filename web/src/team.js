@@ -13,5 +13,6 @@ export const AUTHOR = {
 
 export const PROJECT_LINKS = {
   github: "https://github.com/umeraamir69/Nasa-SpaceApp",
+  live: "https://echolens-theta.vercel.app",
   challenge: "NASA Space Apps 2026 · Dancing with the SARs",
 };

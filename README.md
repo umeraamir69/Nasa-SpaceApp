@@ -2,6 +2,7 @@
 
 **Two NISAR radar passes in. An incident briefing out.**
 
+[![Live demo](https://img.shields.io/badge/Live-echolens--theta.vercel.app-000?logo=vercel&logoColor=white)](https://echolens-theta.vercel.app)
 [![NASA Space Apps 2026](https://img.shields.io/badge/NASA%20Space%20Apps-2026-0B3D91?logo=nasa&logoColor=white)](https://www.spaceappschallenge.org/)
 [![Challenge](https://img.shields.io/badge/Challenge-Dancing%20with%20the%20SARs-f0b429)](https://www.spaceappschallenge.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-3d4750.svg)](LICENSE)
@@ -11,7 +12,10 @@ Solo project by **[Muhammad Umer Aamir](https://github.com/umeraamir69)** for **
 
 EchoLens turns a before/after **NISAR L-band** pair into a map a human can brief in under a minute: what changed, how many km², and why the outline is trustworthy — including when the honest answer is **no**.
 
-**Repository:** https://github.com/umeraamir69/Nasa-SpaceApp
+| | URL |
+|---|---|
+| **Live demo** | https://echolens-theta.vercel.app |
+| **Repository** | https://github.com/umeraamir69/Nasa-SpaceApp |
 
 ---
 
@@ -41,7 +45,11 @@ No neural net. Classical SAR: despeckle → log-ratio → fixed threshold → pr
 
 ---
 
-## Quick start (~2 min)
+## Live demo
+
+**https://echolens-theta.vercel.app** — globe overview, nine cases, pitch tour. No install.
+
+## Quick start (local, ~2 min)
 
 Map products in `outputs/` are already in the repo (~30 MB). **No Earthdata login** needed to view the demo.
 
@@ -50,7 +58,7 @@ git clone https://github.com/umeraamir69/Nasa-SpaceApp.git
 cd Nasa-SpaceApp
 python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements.txt   # API + demo; for reprocessing: requirements-process.txt
 cd web && npm install --cache ../.npm-cache && cd ..
 ./demo.sh
 ```

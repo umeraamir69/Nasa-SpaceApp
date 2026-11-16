@@ -3,7 +3,8 @@
 Paste into the Team **Project** tab on [spaceappschallenge.org](https://www.spaceappschallenge.org/).
 Submission window: **Sat 14 Nov 9:00 AM → Sun 15 Nov 11:59 PM local**.
 Demo for judges: **≤ 30-second video** *or* **≤ 7 slides** (title + close count). English required.
-Final project link: `https://github.com/umeraamir69/Nasa-SpaceApp`
+Final project link: `https://github.com/umeraamir69/Nasa-SpaceApp`  
+Live demo: `https://echolens-theta.vercel.app`
 
 Local demo: `./demo.sh` → http://127.0.0.1:5173
 
@@ -48,7 +49,8 @@ Python (h5py, numpy, scipy, shapely, rasterio, earthaccess, FastAPI, uvicorn), R
 
 ## Final project link
 
-https://github.com/umeraamir69/Nasa-SpaceApp
+- Live: https://echolens-theta.vercel.app
+- Code: https://github.com/umeraamir69/Nasa-SpaceApp
 
 ## References
 

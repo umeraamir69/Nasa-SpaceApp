@@ -1,0 +1,11 @@
+# Offline NISAR processing (local only — not needed to run the map)
+-r requirements.txt
+earthaccess>=0.11.0
+h5py>=3.10.0
+opencv-python-headless>=4.0
+numpy>=1.26
+matplotlib>=3.8
+pyproj>=3.6
+scipy>=1.11
+shapely>=2.0
+rasterio>=1.3

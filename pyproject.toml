@@ -1,0 +1,15 @@
+[project]
+name = "echolens"
+version = "0.5.0"
+description = "EchoLens — NISAR surface-change briefing (NASA Space Apps 2026)"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.32",
+]
+
+[tool.vercel]
+entrypoint = "app.main:app"
+
+[tool.vercel.scripts]
+build = "cd web && npm install --cache ../.npm-cache && npm run build"
