@@ -370,8 +370,7 @@ Swipe slider, click any red fragment, press **Pitch** for the guided tour.
 **Reproduce from NASA (hours, ~15–35 GB disk, free Earthdata account):** each
 case has a download + change script pair, e.g.
 `scripts/download_latvia.py` → `scripts/change_latvia.py`. Never put your
-password in a file — use environment variables. (And rotate the password after
-hackathon season if you ever pasted it in chat. Ask us how we know.)
+password in a file — use environment variables only; never commit credentials.
 
 **Verify:** `venv/bin/python -m unittest discover -s tests` (9 tests, <1 s),
 `cd web && npm run build`, and the 104-check live probe in `/tmp` on request.

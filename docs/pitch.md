@@ -9,7 +9,7 @@ date: 2026-10-13
 
 Say this next to the live map at http://127.0.0.1:5173. Target **~450 spoken words**. Do not discover Snyder for the judges — they already know there was a fire. Sell the **method**.
 
-Demo weekend: 14–15 Nov. Challenge: Dancing with the SARs. [[docs/Product vision]] [[docs/Why a past fire]]
+Demo weekend: 14–15 Nov. Challenge: Dancing with the SARs.
 
 ## 30-second version (if cut short)
 
@@ -98,7 +98,7 @@ If the laptop dies: `outputs/snyder/change.png` on a USB stick. Same story, no m
 
 ## Weekend click path (14–15 Nov)
 
-1. `./demo.sh` (or two terminals — [[Runbooks/Run the app]]). Pre-load Snyder **before** you talk.
+1. `./demo.sh` (or two terminals — see README). Pre-load Snyder **before** you talk.
 2. **Pitch** button for the guided tour, or manual: Change + NIFC → Before → After → Change → Confidence → Optical.
 3. Optional 10 s: Overview (nine verdicts) or Nepal (0.99 precision) or Coleman (grass negative).
 4. USB fallback: `outputs/snyder/change.png`.
@@ -118,12 +118,4 @@ Submission paste + 30 s shot list + 7 slides: `docs/submission.md`.
 | What is GCOV? | Geocoded polarimetric covariance. Calibrated backscatter on a map grid. Not a JPEG. |
 | Why the Optical chip? | Sentinel-2, 7 Jul, 34% cloud over this box. That is the why-SAR beat, not a second scar map. |
 
-## Speaking split (if not solo)
-
-- **A (0:00–0:50)** hook + Snyder as the answer key
-- **B (0:50–1:40)** demo clicks
-- **C (1:40–3:00)** method, honesty, user, close
-
-Solo: read it in one voice. Do not add a fourth person pointing at the legend.
-
-Related: [[research/Change detection]] [[research/Snyder perimeter]] [[research/Why SAR optical]] [[Runbooks/Run the app]] [[docs/Score upgrades]]
+Related: `docs/a-to-z.md`, `docs/submission.md`, `README.md`

@@ -17,8 +17,6 @@
 - [ ] Out-loud pitch once with phone stopwatch ([[docs/Pitch]])
 - [ ] USB backup: repo + `outputs/` + `venv/` + `web/node_modules/` ([[Runbooks/Weekend kit]])
 - [ ] Cold-start: `./demo.sh` on the demo laptop **before** you leave home
-- [ ] Rotate Earthdata password (was pasted in an old chat)
-
 ## Deliberately skipped
 
 New cases, Azure/GCP Global Offers, adaptive thresholds, ML classifier, live Earthdata on stage.

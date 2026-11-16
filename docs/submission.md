@@ -57,7 +57,7 @@ https://github.com/umeraamir69/Nasa-SpaceApp
 - Copernicus Emergency Management Service (EMSR926, EMSR927, EMSR933, …)
 - NASA FIRMS (VIIRS)
 - Sentinel-2 L2A via Element84/AWS
-- Repo docs: `README.md`, `docs/a-to-z.md`, `docs/expansion.md`, `notes/docs/Pitch.md`
+- Repo docs: `README.md`, `docs/a-to-z.md`, `docs/expansion.md`, `docs/pitch.md`
 
 ---
 
@@ -117,7 +117,7 @@ Export 1080p, English audio (or English subs). Upload to YouTube/unlisted or Dri
 | What is GCOV? | Geocoded polarimetric covariance — calibrated backscatter on a map grid. |
 | Can this run next fire? | Yes: last pass before, next pass after, same track/mode, same script. |
 
-Full spoken 3-minute script: `notes/docs/Pitch.md`
+Full spoken 3-minute script: `docs/pitch.md`
 
 ---
 
@@ -126,7 +126,6 @@ Full spoken 3-minute script: `notes/docs/Pitch.md`
 - [ ] Paste this page into Space Apps Project tab and **Submit**
 - [ ] Record the 30 s video *or* export the 7 slides; upload; paste link
 - [ ] Out-loud pitch once with a phone stopwatch
-- [ ] Rotate Earthdata password (was pasted in an old chat)
-- [ ] USB stick: repo + `outputs/` + `venv/` + `web/node_modules/` (see `notes/Runbooks/Weekend kit.md`)
+- [ ] USB stick: repo + `outputs/` + `venv/` + `web/node_modules/`
 
 Solo build: About page shows Muhammad Umer Aamir only (`web/src/team.js` → `AUTHOR`).

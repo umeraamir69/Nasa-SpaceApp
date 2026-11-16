@@ -76,7 +76,7 @@ No servers? Open any `outputs/*/layers/change.png`.
 
 Same-track, same-mode NISAR L2 **GCOV** pair → γ⁰ to dB → 3×3 median despeckle → log-ratio. Fires use **HV** (≥ 1.5 dB darker). Floods use **HH** with permanent water masked. Score against official truth; ship detected / negative / marginal with numbers. GUNW coherence is a second vote when it helps — never faked when it does not.
 
-Full walkthrough: **[docs/a-to-z.md](docs/a-to-z.md)** · Space Apps paste kit: **[docs/submission.md](docs/submission.md)**
+Full walkthrough: **[docs/a-to-z.md](docs/a-to-z.md)** · Pitch: **[docs/pitch.md](docs/pitch.md)** · Space Apps paste kit: **[docs/submission.md](docs/submission.md)**
 
 ---
 
@@ -115,9 +115,10 @@ Credentials (only if you re-download granules): `EARTHDATA_USERNAME` / `EARTHDAT
 | `outputs/<case>/` | `summary.json`, GeoJSON, `layers/*.png` (in git) |
 | `data/` | Local granules (gitignored, ~35 GB) |
 | `docs/` | Guides + submission package |
-| `notes/` | Obsidian project brain |
 | `tests/` | Asset / API contract tests |
 | `demo.sh` | One-command API + web |
+
+Private working notes stay on the author’s machine (not in this public repo).
 
 ---
 

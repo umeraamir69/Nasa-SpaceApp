@@ -1,13 +1,19 @@
-notes/.obsidian/workspace.json
-notes/.obsidian/workspace-mobile.json
-notes/.obsidian/cache
-notes/.trash/
+# Local Obsidian vault + editor — not for the public repo
+notes/
+.cursor/
+
 .DS_Store
 venv/
 .conda/
 .env
+.env.local
+*.pem
+id_rsa*
+.netrc
+
 data/**
 !data/.gitkeep
+
 __pycache__/
 *.pyc
 .pytest_cache/
