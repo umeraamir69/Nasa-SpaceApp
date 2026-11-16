@@ -22,3 +22,7 @@ web/dist/
 .npm-cache/
 .vercel
 .env*
+
+# demo video build
+scripts/demo-video/node_modules/
+scripts/demo-video/out/

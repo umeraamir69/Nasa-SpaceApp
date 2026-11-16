@@ -1,0 +1,34 @@
+[
+  {
+    "id": "01-hook",
+    "text": "EchoLens turns two NISAR radar passes into an incident briefing: what changed, how many square kilometres, and why we trust it. Smoke and cloud hide fires from cameras. L-band radar still sees."
+  },
+  {
+    "id": "02-globe",
+    "text": "Nine real incidents on one globe. Detected, negative, and marginal — including honest negatives where the radar correctly says nothing left."
+  },
+  {
+    "id": "03-snyder",
+    "text": "Snyder Fire is the exam with an answer key. Same NISAR track, June seventeen before, July twenty-three after. Official NIFC perimeter in yellow."
+  },
+  {
+    "id": "04-layers",
+    "text": "This is not a photograph. Blue is darker after the fire — the scar. Our change sits inside the official line. Precision one point zero. Forty point nine square kilometres."
+  },
+  {
+    "id": "05-before-after",
+    "text": "Before. After. Same look angle, same track. Then change — July minus June in decibels."
+  },
+  {
+    "id": "06-optical",
+    "text": "Same week in optical: Sentinel-two is thirty-four percent cloud. That is why we do not wait for a clear photo."
+  },
+  {
+    "id": "07-negative",
+    "text": "Coleman Creek is a grass fire. Almost invisible to L-band. Publishing no is part of the product."
+  },
+  {
+    "id": "08-close",
+    "text": "EchoLens: two NISAR passes, one briefing. Built solo by Muhammad Umer Aamir. Live at echolens-theta.vercel.app."
+  }
+]

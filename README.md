@@ -126,6 +126,15 @@ Full narrative: **[docs/a-to-z.md](docs/a-to-z.md)** · Pitch: **[docs/pitch.md]
 
 **https://echolens-theta.vercel.app** — no install. Globe → case map → Pitch.
 
+### Demo video
+
+| | |
+|---|---|
+| Full (~86 s) | [docs/assets/echolens-demo.mp4](docs/assets/echolens-demo.mp4) |
+| Space Apps cut (30 s) | [docs/assets/echolens-demo-30s.mp4](docs/assets/echolens-demo-30s.mp4) |
+
+Rebuild locally: `cd scripts/demo-video && npm run make` (see [docs/demo-video.md](docs/demo-video.md)).
+
 ---
 
 ## Quick start (local)
